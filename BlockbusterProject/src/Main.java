@@ -12,6 +12,8 @@ public class Main extends Application {
         primaryStage.setTitle("Bustblocker");
         primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
+
+        System.out.println("Hej hej hej");
     }
 
 
