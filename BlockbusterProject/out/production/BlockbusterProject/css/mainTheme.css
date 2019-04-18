@@ -1,0 +1,31 @@
+.root{
+    -fx-background-color: white;
+}
+
+.tab{
+    -fx-pref-width: 175;
+    -fx-pref-height: 40;
+    -fx-opacity: 90;
+}
+
+.button {
+    -fx-background-color: red;
+    -fx-border: no;
+    -fx-color: white;
+    -fx-padding: 12px 24px;
+    -fx-text-align: center;
+    -fx-text-decoration: yes;
+    -fx-display: inline-block;
+    -fx-font-size: 16px;
+    -fx-margin: 4px 2px;
+    -fx-cursor: pointer;
+}
+
+.button:hover {
+    -fx-background-color: white;
+    -fx-border-color: red;
+}
+
+.text-field {
+
+}

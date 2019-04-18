@@ -11,10 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Admin;
-
 import java.io.IOException;
 
-public class Controller {
+public class LoginScreenController {
     @FXML
     Button btnLogin = new Button();
 
@@ -29,22 +28,26 @@ public class Controller {
 
     public void signIn() {
         Admin admin = new Admin(username.getText(), password.getText(), true);
-        //if (){
-        //changeScene();  //Om sant, ändra scenen till huvudmeny (Admin eller User, beroende på inlogg)
-        //}
+        if (true){//Om sant, ändra scenen till huvudmeny (Admin eller User, beroende på inlogg)
+        }
         username.clear();
         password.clear();
     }
 
-    /*public void changeScene(ActionEvent event) {            //Byta sida!!!
+    public void changeSceneToMainMenu (ActionEvent event){  //Byta sida!!!
         try {
-            Parent parentPage = FXMLLoader.load(getClass().getResource("Page2.fxml"));
-            Scene loginScene = new Scene(parentPage);
-            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            app_stage.setScene(loginScene);
-            app_stage.show();
+            Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMainMenu.fxml"));
+            Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene loginScreen = new Scene(mainMenuAdmin);
+            adminMainMenu.setScene(loginScreen);
+            adminMainMenu.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+
+    public void exitProgram(){
+        System.exit(0);
+        System.out.println("Program closed");
+    }
 }
