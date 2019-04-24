@@ -10,4 +10,5 @@ public abstract class Account {
         this.password = password;
         this.admin = admin;
     }
+
 }
