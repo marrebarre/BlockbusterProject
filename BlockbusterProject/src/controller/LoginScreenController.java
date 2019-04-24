@@ -36,7 +36,7 @@ public class LoginScreenController {
 
     public void changeSceneToMainMenu (ActionEvent event){  //Byta sida!!!
         try {
-            Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMainMenu.fxml"));
+            Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMenu.fxml"));
             Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene loginScreen = new Scene(mainMenuAdmin);
             adminMainMenu.setScene(loginScreen);
