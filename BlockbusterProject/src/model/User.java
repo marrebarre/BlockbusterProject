@@ -4,11 +4,15 @@ public class User extends Account {
     private String firstName;
     private String lastName;
     private double balance;
+    private String address;
+    private String phone;
 
-    public User(String email, String password, boolean admin, String firstName, String lastName, double balance) {
+    public User(String email, String password, boolean admin, String firstName, String lastName, double balance, String address, String phone) {
         super(email, password, admin);
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
+        this.address = address;
+        this.phone = phone;
     }
 }

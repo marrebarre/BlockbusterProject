@@ -14,8 +14,6 @@ import model.Admin;
 import java.io.IOException;
 
 public class LoginScreenController {
-    @FXML
-    Button btnLogin = new Button();
 
     @FXML
     TextField username = new TextField();
