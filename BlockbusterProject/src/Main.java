@@ -23,7 +23,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, width, height));
         primaryStage.show();
 
-        System.out.println("Hej hej hej");
     }
 
     public static void main(String[] args) {
@@ -31,6 +30,7 @@ public class Main extends Application {
         DbConnector connection = new DbConnector();
         connection.connect();
         connection.findMovieInDB("Inglorious Basterds");
+
         connection.disconnect();
     }
 }

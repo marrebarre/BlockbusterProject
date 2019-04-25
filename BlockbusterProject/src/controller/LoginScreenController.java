@@ -11,9 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Admin;
+import model.Logic;
+
 import java.io.IOException;
 
 public class LoginScreenController {
+    Logic logic = new Logic();
 
     @FXML
     TextField username = new TextField();
@@ -31,6 +34,7 @@ public class LoginScreenController {
         username.clear();
         password.clear();
     }
+
 
     public void changeSceneToMainMenu (ActionEvent event){  //Byta sida!!!
         try {
