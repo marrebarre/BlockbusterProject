@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -12,12 +16,23 @@
          <center>
             <TabPane minHeight="480.0" minWidth="680.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab text="BROWSE">
+                <Tab text="Movie">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Button layoutX="581.0" layoutY="411.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add Movie" />
+                              <TextField fx:id="titleTxt" layoutX="569.0" layoutY="215.0" />
+                              <TextField fx:id="directorTxt" layoutX="569.0" layoutY="261.0" />
+                              <TextField fx:id="priceTxt" layoutX="569.0" layoutY="310.0" />
+                              <Label layoutX="505.0" layoutY="219.0" text="Title" />
+                              <Label layoutX="505.0" layoutY="265.0" text="Director" />
+                              <Label layoutX="505.0" layoutY="314.0" text="Price" />
+                              <Label layoutX="505.0" layoutY="363.0" text="Genre" />
+                              <ComboBox fx:id="genreComboBox" layoutX="569.0" layoutY="359.0" prefWidth="150.0" visibleRowCount="6" />
+                           </children></AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="MY RENTALS">
+                <Tab text="User">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>

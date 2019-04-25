@@ -1,5 +1,7 @@
 package data;
 
+import model.Movie;
+
 import java.sql.*;
 
 public class DbConnector {
@@ -15,6 +17,42 @@ public class DbConnector {
             System.err.println("Connection failed" + sql);
         }
     }
+
+    public int tableSize(String tableName){
+        String temp = null;
+        try {
+
+            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
+            resultSet = ps.executeQuery();
+
+            if (resultSet.next()){
+                temp = resultSet.getString("COUNT(idMovie)");
+            }
+
+        }catch(SQLException e){
+            System.out.println("Table Empty or does not exist.");
+            e.printStackTrace();
+            }
+
+            return Integer.parseInt(temp);
+    }
+
+    public void addMovieToDB(Movie movie){
+        try{
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre) VALUES (?,?,?,?,?)");
+            ps.setInt(1,tableSize("movie")+1);
+            ps.setString(2,movie.getTitle());
+            ps.setString(3,movie.getDirector());
+            ps.setDouble(4,movie.getPrice());
+            ps.setString(5,movie.getGenreAsString());
+
+            ps.executeUpdate();
+
+        }catch (SQLException e){
+            System.out.println("Error yall");
+        }
+    }
+
 
     public void findMovieInDB(String title) {
         try {
