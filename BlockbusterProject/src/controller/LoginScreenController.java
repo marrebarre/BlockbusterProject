@@ -3,12 +3,14 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.Admin;
 import model.Logic;
@@ -44,6 +46,12 @@ public class LoginScreenController {
             Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMenu.fxml"));
             Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene loginScreen = new Scene(mainMenuAdmin);
+
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            adminMainMenu.setWidth(bounds.getWidth());
+            adminMainMenu.setHeight(bounds.getHeight());
+
             adminMainMenu.setMaximized(true);
             adminMainMenu.setScene(loginScreen);
             adminMainMenu.show();
