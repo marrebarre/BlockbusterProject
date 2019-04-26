@@ -44,6 +44,7 @@ public class LoginScreenController {
             Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMenu.fxml"));
             Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene loginScreen = new Scene(mainMenuAdmin);
+            adminMainMenu.setMaximized(true);
             adminMainMenu.setScene(loginScreen);
             adminMainMenu.show();
         } catch (IOException e) {

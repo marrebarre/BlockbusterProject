@@ -15,12 +15,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/view/loginScreen.fxml"));
         root.getStylesheets().add(getClass().getResource("css/mainTheme.css").toExternalForm());
         primaryStage.setTitle("Bustblocker");
-
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        int width = gd.getDisplayMode().getWidth();
-        int height = gd.getDisplayMode().getHeight();
-
-        primaryStage.setScene(new Scene(root, width, height));
+        primaryStage.setMaximized(true);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
     }
@@ -30,7 +26,6 @@ public class Main extends Application {
         DbConnector connection = new DbConnector();
         connection.connect();
         connection.findMovieInDB("Inglorious Basterds");
-
         connection.disconnect();
     }
 }
