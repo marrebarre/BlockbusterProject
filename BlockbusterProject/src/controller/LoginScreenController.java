@@ -51,8 +51,8 @@ public class LoginScreenController {
         }
     }
     public void createAccountbuttonPressed(ActionEvent event) throws IOException {
-        Parent ceateAccountParent = FXMLLoader.load(getClass().getResource("/view/createAccountScreen.fxml"));
-        Scene createAccountScene = new Scene(ceateAccountParent);
+        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/createAccountScreen.fxml"));
+        Scene createAccountScene = new Scene(createAccountParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(createAccountScene);
         window.show();

@@ -39,6 +39,6 @@
           </Menu>
         </menus>
       </MenuBar>
-      <Button fx:id="createAccountbtn" layoutX="203.0" layoutY="370.0" mnemonicParsing="false" onAction="#createAccountbuttonPressed" prefHeight="35.0" prefWidth="121.0" text="Create Account" />
+      <Button fx:id="createAccountbtn" layoutX="203.0" layoutY="370.0" mnemonicParsing="false" onAction="#createAccountbuttonPressed" prefHeight="49.0" prefWidth="185.0" stylesheets="@../css/mainTheme.css" text="Create Account" />
    </children>
 </AnchorPane>
