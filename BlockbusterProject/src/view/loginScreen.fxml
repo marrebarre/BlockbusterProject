@@ -24,7 +24,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Close program"/>
+              <MenuItem mnemonicParsing="false" onAction="#exitProgram" text="Close program" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -39,5 +39,6 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Button fx:id="createAccountbtn" layoutX="203.0" layoutY="370.0" mnemonicParsing="false" onAction="#createAccountbuttonPressed" prefHeight="35.0" prefWidth="121.0" text="Create Account" />
    </children>
 </AnchorPane>
