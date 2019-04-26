@@ -27,6 +27,9 @@ public class LoginScreenController {
     @FXML
     Label forgotPW = new Label();
 
+    @FXML
+    Button createAccountbtn;
+
     public void signIn() {
         Admin admin = new Admin(username.getText(), password.getText(), true);
         if (true){//Om sant, ändra scenen till huvudmeny (Admin eller User, beroende på inlogg)
@@ -46,6 +49,13 @@ public class LoginScreenController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void createAccountbuttonPressed(ActionEvent event) throws IOException {
+        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/createAccountScreen.fxml"));
+        Scene createAccountScene = new Scene(createAccountParent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(createAccountScene);
+        window.show();
     }
 
     public void exitProgram(){
