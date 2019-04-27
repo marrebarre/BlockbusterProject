@@ -1,5 +1,5 @@
 .root{
-    -fx-background-color: linear-gradient(#F757FC,#731676);
+    -fx-background-color: teal;
 }
 
 .tab{
@@ -12,12 +12,12 @@
     -fx-background-color: red;
     -fx-border: no;
     -fx-color: white;
-    -fx-padding: 12px 24px;
+    -fx-padding: 8px 16px;
     -fx-text-align: center;
     -fx-text-decoration: yes;
     -fx-display: inline-block;
     -fx-font-size: 16px;
-    -fx-margin: 4px 2px;
+    -fx-margin: 3px 2px;
     -fx-cursor: pointer;
     -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 6, 0);
     -fx-background-radius: 8;
