@@ -34,17 +34,11 @@ public class CreateAccountController {
     @FXML
     TextField passwordtxtField;
 
-
-
-
-
-
     public void backtoLogin(ActionEvent event) throws IOException {
-        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/loginScreen.fxml"));
+        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
         Scene createAccountScene = new Scene(createAccountParent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(createAccountScene);
         window.show();
     }
-
 }

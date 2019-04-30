@@ -92,25 +92,19 @@ public class DbConnector {
         String email = "";
 
         try {
-            System.out.println("test0");
             preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =?");
-            System.out.println("test");
             preparedStatement.setString(1, username);
-            System.out.println("test1");
             resultSet = preparedStatement.executeQuery();
-            System.out.println("test2");
+
             if (resultSet.next()) {
-                System.out.println("test3");
                 email = resultSet.getString(1);
-                System.out.println("test4");
-                //loginScreenController.isConnected.setText("Connected!");
                 resultSet.close();
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-        System.out.println(email);
+        System.out.println("Email: " + email);
         disconnect();
         return email;
     }
@@ -130,7 +124,7 @@ public class DbConnector {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        System.out.println(pw);
+        System.out.println("Password: " + pw);
         disconnect();
         return pw;
     }
