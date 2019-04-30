@@ -26,9 +26,9 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        DbConnector connection = new DbConnector();
+        /*DbConnector connection = new DbConnector();
         connection.connect();
         connection.findMovieInDB("Inglorious Basterds");
-        connection.disconnect();
+        connection.disconnect();*/
     }
 }

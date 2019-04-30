@@ -1,5 +1,6 @@
 package data;
 
+import controller.LoginScreenController;
 import model.Movie;
 
 import java.sql.*;
@@ -9,6 +10,9 @@ public class DbConnector {
     Connection connection = null;
     Statement statement;
     ResultSet resultSet;
+    PreparedStatement preparedStatement;
+    LoginScreenController loginScreenController;
+    //ResultSet resultSet;
 
     public Connection connect() {
         try {
@@ -83,9 +87,51 @@ public class DbConnector {
         }
     }
 
-    public Connection getConnection() {
-        Connection connection = null;
+    public String getEmail(String username) {
+        connect();
+        String email = "";
 
-        return connection;
+        try {
+            System.out.println("test0");
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =?");
+            System.out.println("test");
+            preparedStatement.setString(1, username);
+            System.out.println("test1");
+            resultSet = preparedStatement.executeQuery();
+            System.out.println("test2");
+            if (resultSet.next()) {
+                System.out.println("test3");
+                email = resultSet.getString(1);
+                System.out.println("test4");
+                //loginScreenController.isConnected.setText("Connected!");
+                resultSet.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        System.out.println(email);
+        disconnect();
+        return email;
+    }
+
+    public String getPassword(String password) {
+        connect();
+        String pw = "";
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ?");
+            preparedStatement.setString(1, password);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                pw = resultSet.getString(2);
+                resultSet.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println(pw);
+        disconnect();
+        return pw;
     }
 }
