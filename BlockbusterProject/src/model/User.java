@@ -15,4 +15,24 @@ public class User extends Account {
         this.address = address;
         this.phone = phone;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
 }

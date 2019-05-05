@@ -2,6 +2,7 @@ package data;
 
 import controller.LoginScreenController;
 import model.Movie;
+import model.User;
 
 import java.sql.*;
 
@@ -39,6 +40,20 @@ public class DbConnector {
             e.printStackTrace();
         }
 
+        return Integer.parseInt(temp);
+    }
+    public int tableSizeAccount(String accountTable){
+        String temp = null;
+        try{
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(idUser) FROM account");
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                temp = resultSet.getString("COUNT(idUser)");
+            }
+        }catch (SQLException e){
+            System.out.println("Wrong insert");
+            e.printStackTrace();
+        }
         return Integer.parseInt(temp);
     }
 
@@ -127,5 +142,27 @@ public class DbConnector {
         System.out.println("Password: " + pw);
         disconnect();
         return pw;
+    }
+    public void addUserToDb(User user){
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `account` (email, password,idUser, balance, firstName, lastName," +
+                    "address, phoneNr) VALUES (?,?,?,?,?,?,?,?)");
+
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setInt(3,tableSizeAccount("account")+ 1);
+            preparedStatement.setDouble(4, user.getBalance());
+            preparedStatement.setString(5, user.getFirstName());
+            preparedStatement.setString(6, user.getLastName());
+            preparedStatement.setString(7,user.getAddress());
+            preparedStatement.setString(8,user.getPhone());
+
+            preparedStatement.executeUpdate();
+            //preparedStatement.executeUpdate();
+
+        }catch (SQLException e){
+            System.out.println("Something went wrong!");
+            e.printStackTrace();
+        }
     }
 }
