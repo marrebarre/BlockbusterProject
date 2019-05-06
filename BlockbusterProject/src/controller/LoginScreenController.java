@@ -11,11 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import model.Admin;
 import model.Logic;
 
 import java.io.IOException;
-import java.sql.*;
 
 public class LoginScreenController {
     @FXML
@@ -37,26 +35,48 @@ public class LoginScreenController {
     Button btnCreateAccount;
 
     DbConnector dbConnector = new DbConnector();
+    Logic logic;
 
     public void handleLogin(ActionEvent event) {
         if (username.getText().equals(dbConnector.getEmail(username.getText())) && password.getText().equals(dbConnector.getPassword(password.getText()))) {
-            try {
-                Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMenu.fxml"));
-                Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene loginScreen = new Scene(mainMenuAdmin);
+            if (dbConnector.isAdmin(true)){
+                try {
+                    Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMenu.fxml"));
+                    Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Scene loginScreen = new Scene(mainMenuAdmin);
 
-                Screen screen = Screen.getPrimary();
-                Rectangle2D bounds = screen.getVisualBounds();
-                adminMainMenu.setWidth(bounds.getWidth());
-                adminMainMenu.setHeight(bounds.getHeight());
+                    Screen screen = Screen.getPrimary();
+                    Rectangle2D bounds = screen.getVisualBounds();
+                    adminMainMenu.setWidth(bounds.getWidth());
+                    adminMainMenu.setHeight(bounds.getHeight());
 
-                adminMainMenu.setMaximized(true);
-                adminMainMenu.setScene(loginScreen);
-                adminMainMenu.show();
+                    adminMainMenu.setMaximized(true);
+                    adminMainMenu.setScene(loginScreen);
+                    adminMainMenu.show();
 
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (dbConnector.isAdmin(false)){
+                try {
+                    Parent mainMenuUser = FXMLLoader.load(getClass().getResource("/view/userMenu.fxml"));
+                    Stage userMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Scene loginScreen = new Scene(mainMenuUser);
+
+                    Screen screen = Screen.getPrimary();
+                    Rectangle2D bounds = screen.getVisualBounds();
+                    userMainMenu.setWidth(bounds.getWidth());
+                    userMainMenu.setHeight(bounds.getHeight());
+
+                    userMainMenu.setMaximized(true);
+                    userMainMenu.setScene(loginScreen);
+                    userMainMenu.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         } else {
             //isConnected.setText("Login failed. Try again!");
             Alert alert = new Alert(Alert.AlertType.NONE, "Invalid Email or Password entered", ButtonType.OK);
@@ -69,12 +89,7 @@ public class LoginScreenController {
             Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/createAccountScreen.fxml"));
             Stage createAccountMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene createAccountScene = new Scene(createAccountParent);
-
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            createAccountMenu.setWidth(bounds.getWidth());
-            createAccountMenu.setHeight(bounds.getHeight());
-
+            logic.setToFullscreen(createAccountMenu);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(createAccountScene);
             window.show();
