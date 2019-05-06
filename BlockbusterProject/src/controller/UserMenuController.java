@@ -1,8 +1,7 @@
 package controller;
 
-import data.DbConnector;
+/*import data.DbConnector;*/
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 
 public class UserMenuController {
@@ -11,7 +10,7 @@ public class UserMenuController {
     ImageView aStarIsBorn, inception;
 
 
-    DbConnector dbConnector = new DbConnector();
+    /*private DbConnector dbConnector = new DbConnector();*/
 
 
     public void hoverOverPictureEntered(){

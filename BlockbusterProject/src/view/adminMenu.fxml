@@ -12,9 +12,9 @@
 
 <StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminMenuController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <BorderPane prefHeight="720.0" prefWidth="1280.0">
          <center>
-            <TabPane minHeight="480.0" minWidth="680.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane minHeight="480.0" minWidth="680.0" prefHeight="707.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
                 <Tab text="Movie">
                   <content>
@@ -29,7 +29,8 @@
                               <Label layoutX="505.0" layoutY="314.0" text="Price" />
                               <Label layoutX="505.0" layoutY="363.0" text="Genre" />
                               <ComboBox fx:id="genreComboBox" layoutX="569.0" layoutY="359.0" prefWidth="150.0" visibleRowCount="6" />
-                           </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
                   </content>
                 </Tab>
                 <Tab text="User">

@@ -1,19 +1,16 @@
 package data;
 
-import controller.LoginScreenController;
 import model.Movie;
 import model.User;
 
 import java.sql.*;
 
 public class DbConnector {
-    String url = "jdbc:mysql://den1.mysql3.gear.host:3306/bustblockerdb?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&user=bustblockerdb&password=bustblocker!&serverTimeZone=UTF-8";
-    Connection connection = null;
-    Statement statement;
-    ResultSet resultSet;
-    PreparedStatement preparedStatement;
-    LoginScreenController loginScreenController;
-    //ResultSet resultSet;
+    private String url = "jdbc:mysql://den1.mysql3.gear.host:3306/bustblockerdb?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&user=bustblockerdb&password=bustblocker!&serverTimeZone=UTF-8";
+    private Connection connection = null;
+    private Statement statement;
+    private ResultSet resultSet;
+    private PreparedStatement preparedStatement;
 
     public Connection connect() {
         try {
@@ -42,6 +39,7 @@ public class DbConnector {
 
         return Integer.parseInt(temp);
     }
+
     public int tableSizeAccount(String accountTable){
         String temp = null;
         try{
@@ -105,7 +103,6 @@ public class DbConnector {
     public String getEmail(String username) {
         connect();
         String email = "";
-
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =? AND admin = 1");
             preparedStatement.setString(1, username);
@@ -120,18 +117,16 @@ public class DbConnector {
             ex.printStackTrace();
         }
         System.out.println("Email: " + email);
-        disconnect();
         return email;
     }
 
-    public String getPassword(String password) {
-        connect();
+   public String getPassword(String password) {
         String pw = "";
-
         try {
             preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 1");
             preparedStatement.setString(1, password);
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 pw = resultSet.getString(2);
                 resultSet.close();
@@ -140,9 +135,29 @@ public class DbConnector {
             ex.printStackTrace();
         }
         System.out.println("Password: " + pw);
-        disconnect();
         return pw;
     }
+
+    public boolean isAdmin(boolean admin){
+        boolean isAdmin = false;
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE admin = ?");
+            preparedStatement.setBoolean(1, admin);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                isAdmin = resultSet.getBoolean(9);
+                resultSet.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("Is admin: " + isAdmin);
+        disconnect();
+
+        return isAdmin;
+    }
+
     public void addUserToDb(User user){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `account` (email, password,idUser, balance, firstName, lastName," +
@@ -165,7 +180,8 @@ public class DbConnector {
             e.printStackTrace();
         }
     }
-    public String userEmail(String username) {
+
+    /*public String userEmail(String username) {
         connect();
         String email = "";
         try {
@@ -180,11 +196,10 @@ public class DbConnector {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        disconnect();
         return email;
     }
+
         public String userPassword(String pw){
-            connect();
             String password = "";
             try{
                 preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 0");
@@ -200,6 +215,6 @@ public class DbConnector {
             }
             disconnect();
             return password;
-        }
+        }*/
 
     }

@@ -6,23 +6,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import model.Logic;
 import model.Movie;
-
 import java.net.URL;
-import java.util.InputMismatchException;
 import java.util.ResourceBundle;
-
 
 public class AdminMenuController implements Initializable {
 
-@FXML
+    @FXML
     ComboBox<Movie.Genre> genreComboBox = new ComboBox<>();
 
-@FXML
+    @FXML
     TextField titleTxt, directorTxt, priceTxt;
 
-    DbConnector dbConnector = new DbConnector();
+    private DbConnector dbConnector = new DbConnector();
 
 
     public void addMoviePressed(){

@@ -1,5 +1,5 @@
 .root{
-    -fx-background-color: teal;
+    -fx-background-color: linear-gradient(cadetblue, indianred);
 }
 
 .tab{

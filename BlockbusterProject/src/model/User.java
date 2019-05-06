@@ -7,8 +7,8 @@ public class User extends Account {
     private String address;
     private String phone;
 
-    public User(String email, String password, boolean admin, String firstName, String lastName, double balance, String address, String phone) {
-        super(email, password, admin);
+    public User(String email, String password, String firstName, String lastName, double balance, String address, String phone) {
+        super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
