@@ -57,13 +57,34 @@ public class LoginScreenController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        }else if (username.getText().equals(dbConnector.userEmail(username.getText())) && password.getText().equals(dbConnector.userPassword(password.getText()))) {
+            try {
+                Parent mainMenuUser = FXMLLoader.load(getClass().getResource("/view/userMenu.fxml"));
+                Stage userMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene userMainMenuScene = new Scene(mainMenuUser);
+
+                Screen screen = Screen.getPrimary();
+                Rectangle2D bounds = screen.getVisualBounds();
+                userMainMenu.setWidth(bounds.getWidth());
+                userMainMenu.setHeight(bounds.getHeight());
+
+                userMainMenu.setMaximized(true);
+                userMainMenu.setScene(userMainMenuScene);
+                userMainMenu.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //isConnected.setText("Login failed. Try again!");
-            Alert alert = new Alert(Alert.AlertType.NONE, "Invalid Email or Password entered", ButtonType.OK);
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.NONE, "Invalid Email or password", ButtonType.OK);
             alert.setTitle("Login failed");
             alert.showAndWait();
+
         }
     }
+
+
 
         public void btnPressedCreateAccount (ActionEvent event) throws IOException {
             Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/createAccountScreen.fxml"));
