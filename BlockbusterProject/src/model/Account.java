@@ -16,8 +16,4 @@ public abstract class Account {
     public String getPassword() {
         return password;
     }
-
-    public boolean isAdmin() {
-        return admin;
-    }
 }

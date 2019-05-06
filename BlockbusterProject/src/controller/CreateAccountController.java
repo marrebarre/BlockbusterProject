@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Account;
 import model.User;
 
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class CreateAccountController {
     @FXML
     Label successLabel;
 
-    DbConnector dbConnector = new DbConnector();
+    private DbConnector dbConnector = new DbConnector();
 
 
     public void backtoLogin(ActionEvent event) throws IOException {
@@ -48,12 +47,11 @@ public class CreateAccountController {
     public void registerPressed() {
 
         try {
-            User user = new User(emailtxtField.getText(), passwordtxtField.getText(),false, firstNametxtField.getText(),
-                    lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText());
+            User user = new User(emailtxtField.getText(), passwordtxtField.getText(), firstNametxtField.getText(),
+            lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText());
             dbConnector.connect();
             dbConnector.addUserToDb(user);
             dbConnector.disconnect();
-
 
         } catch (IllegalFormatException e) {
             System.out.println("Error");
