@@ -107,7 +107,7 @@ public class DbConnector {
         String email = "";
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =? AND admin = 1");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
 
@@ -129,7 +129,7 @@ public class DbConnector {
         String pw = "";
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 1");
             preparedStatement.setString(1, password);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -146,7 +146,7 @@ public class DbConnector {
     public void addUserToDb(User user){
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `account` (email, password,idUser, balance, firstName, lastName," +
-                    "address, phoneNr) VALUES (?,?,?,?,?,?,?,?)");
+                    "address, phoneNr, admin) VALUES (?,?,?,?,?,?,?,?,?)");
 
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getPassword());
@@ -156,13 +156,50 @@ public class DbConnector {
             preparedStatement.setString(6, user.getLastName());
             preparedStatement.setString(7,user.getAddress());
             preparedStatement.setString(8,user.getPhone());
+            preparedStatement.setBoolean(9,false);
 
             preparedStatement.executeUpdate();
-            //preparedStatement.executeUpdate();
 
         }catch (SQLException e){
             System.out.println("Something went wrong!");
             e.printStackTrace();
         }
     }
-}
+    public String userEmail(String username) {
+        connect();
+        String email = "";
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ? AND admin = 0");
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                email = resultSet.getString(1);
+                resultSet.close();
+            }
+            //preparedStatement.setMaxRows(10);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        disconnect();
+        return email;
+    }
+        public String userPassword(String pw){
+            connect();
+            String password = "";
+            try{
+                preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 0");
+                preparedStatement.setString(1,pw);
+                resultSet = preparedStatement.executeQuery();
+                if(resultSet.next()){
+                    password = resultSet.getString(2);
+                    resultSet.close();
+                }
+
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+            disconnect();
+            return password;
+        }
+
+    }

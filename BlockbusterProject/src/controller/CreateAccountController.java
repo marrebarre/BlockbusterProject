@@ -49,7 +49,7 @@ public class CreateAccountController {
 
         try {
             User user = new User(emailtxtField.getText(), passwordtxtField.getText(),false, firstNametxtField.getText(),
-                    lastNametxtField.getText(), 2, addresstxtField.getText(), phonetxtField.getText());
+                    lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText());
             dbConnector.connect();
             dbConnector.addUserToDb(user);
             dbConnector.disconnect();
