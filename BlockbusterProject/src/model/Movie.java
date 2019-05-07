@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class Movie {
 
     public enum Genre {
@@ -15,12 +17,16 @@ public class Movie {
     private String director;
     private double price;
     private Genre genre;
+    private String releaseYear;
+    private int quantity;
 
-    public Movie(String title, String director, double price, Genre genre) {
+    public Movie(String title, String director, double price, Genre genre, String releaseYear, int quantity) {
         this.title = title;
         this.director = director;
         this.price = price;
         this.genre = genre;
+        this.releaseYear = releaseYear;
+        this.quantity = quantity;
     }
 
     public String getTitle() {
@@ -68,5 +74,21 @@ public class Movie {
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public String getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(String releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
