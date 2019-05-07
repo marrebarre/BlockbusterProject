@@ -1,7 +1,10 @@
 package model;
 
 public class Admin extends Account{
-    public Admin(String email, String password, boolean admin) {
-        super(email, password, admin);
+    private boolean isAdmin;
+
+    public Admin(String email, String password, boolean isAdmin) {
+        super(email, password);
+        this.isAdmin = isAdmin;
     }
 }

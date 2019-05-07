@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateAccountController">
    <children>
-      <Button fx:id="registerBtn" layoutX="118.0" layoutY="393.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="131.0" text="Register">
+      <Button fx:id="registerBtn" layoutX="118.0" layoutY="393.0" mnemonicParsing="false" onAction="#registerPressed" prefHeight="49.0" prefWidth="131.0" text="Register">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -29,17 +29,12 @@
             <Font name="Lucida Bright Demibold" size="12.0" />
          </font>
       </TextField>
-      <TextField layoutX="124.0" layoutY="204.0" prefHeight="25.0" prefWidth="297.0" promptText="Password">
+      <TextField fx:id="passwordtxtField" layoutX="124.0" layoutY="204.0" prefHeight="25.0" prefWidth="297.0" promptText="Password">
          <font>
             <Font name="Lucida Bright Demibold" size="12.0" />
          </font>
       </TextField>
-      <TextField layoutX="124.0" layoutY="242.0" prefHeight="25.0" prefWidth="297.0" promptText="Address">
-         <font>
-            <Font name="Lucida Bright Demibold" size="12.0" />
-         </font>
-      </TextField>
-      <TextField layoutX="124.0" layoutY="282.0" prefHeight="25.0" prefWidth="297.0" promptText="Phone Number">
+      <TextField fx:id="phonetxtField" layoutX="124.0" layoutY="276.0" prefHeight="25.0" prefWidth="297.0" promptText="Phone Number">
          <font>
             <Font name="Lucida Bright Demibold" size="12.0" />
          </font>
@@ -49,5 +44,10 @@
             <Font name="SansSerif Bold" size="15.0" />
          </font>
       </Label>
+      <TextField fx:id="addresstxtField" layoutX="124.0" layoutY="241.0" prefHeight="25.0" prefWidth="297.0" promptText="Address">
+         <font>
+            <Font name="Lucida Bright Demibold" size="12.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>
