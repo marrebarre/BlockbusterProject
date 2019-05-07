@@ -47,6 +47,7 @@ public class LoginScreenController {
             Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene loginScreen = new Scene(mainMenuAdmin);
 
+            //Fullscreen
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
             adminMainMenu.setWidth(bounds.getWidth());
