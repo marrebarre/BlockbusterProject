@@ -1,8 +1,8 @@
-.root{
+.root {
     -fx-background-color: linear-gradient(cadetblue, indianred);
 }
 
-.tab{
+.tab {
     -fx-pref-width: 175;
     -fx-pref-height: 40;
     -fx-opacity: 90;
@@ -12,22 +12,21 @@
     -fx-background-color: red;
     -fx-border: no;
     -fx-color: white;
-    -fx-padding: 8px 16px;
+    -fx-padding: 16px 22px;
     -fx-text-align: center;
     -fx-text-decoration: yes;
     -fx-display: inline-block;
     -fx-font-size: 16px;
     -fx-margin: 3px 2px;
     -fx-cursor: pointer;
-    -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 6, 0);
+    -fx-effect: dropshadow(one-pass-box, black, 14, 0.0, 6, 0);
     -fx-background-radius: 8;
 }
 
 .button:hover {
     -fx-background-color: white;
-    -fx-border-color: red;
 }
 
 .text-field {
--fx-background-color: linear-gradient(#ABABAC ,#E2E2E2);
+    -fx-background-color: linear-gradient(#ABABAC, #E2E2E2);
 }

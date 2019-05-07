@@ -40,6 +40,8 @@ public class LoginScreenController {
             isConnected.setText("Email and/or password not entered.");
             username.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
             password.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
+            username.clear();
+            password.clear();
 
         } else if (username.getText().equals(dbConnector.getEmail(username.getText())) && password.getText().equals(dbConnector.getPassword(password.getText()))) {
             username.setStyle("-fx-background-color: green; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");

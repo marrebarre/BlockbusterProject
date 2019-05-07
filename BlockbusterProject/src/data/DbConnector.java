@@ -104,7 +104,7 @@ public class DbConnector {
         connect();
         String email = "";
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =? AND admin = 1");
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =?");
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
 
@@ -123,7 +123,7 @@ public class DbConnector {
    public String getPassword(String password) {
         String pw = "";
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 1");
+            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ?");
             preparedStatement.setString(1, password);
             resultSet = preparedStatement.executeQuery();
 
@@ -141,20 +141,25 @@ public class DbConnector {
     public boolean isAdmin(boolean admin){
         boolean isAdmin = false;
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE admin = ?");
+            String query = "SELECT * FROM account WHERE admin = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setBoolean(1, admin);
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 isAdmin = resultSet.getBoolean(9);
                 resultSet.close();
+                return isAdmin=true;
+            } else {
+                System.out.println("isAdmin=false");
+                resultSet.close();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            System.out.println("Is admin: " + isAdmin);
+            disconnect();
         }
-        System.out.println("Is admin: " + isAdmin);
-        disconnect();
-
         return isAdmin;
     }
 

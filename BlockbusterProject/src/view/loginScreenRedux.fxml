@@ -42,9 +42,9 @@
                   <Font name="Harlow Solid Italic" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="signIn" layoutX="358.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="56.0" prefWidth="145.0" text="Login" />
+            <Button fx:id="signIn" layoutX="358.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
             <Label fx:id="forgotPW" layoutX="51.0" layoutY="111.0" text="Forgotten your password?" />
-            <Button fx:id="btnCreateAccount" layoutX="361.0" layoutY="120.0" mnemonicParsing="false" onAction="#btnPressedCreateAccount" prefHeight="41.0" prefWidth="139.0" text="Create account" />
+            <Button fx:id="btnCreateAccount" layoutX="361.0" layoutY="120.0" mnemonicParsing="false" onAction="#btnPressedCreateAccount" text="Create account" />
             <Label fx:id="isConnected" layoutX="48.0" layoutY="132.0" prefHeight="17.0" prefWidth="304.0" />
          </children></AnchorPane>
    </center>
