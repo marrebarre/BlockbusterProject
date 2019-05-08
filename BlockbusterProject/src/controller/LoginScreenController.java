@@ -34,6 +34,21 @@ public class LoginScreenController {
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
 
+    public void adminLogin(ActionEvent event){
+        try {
+            Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/adminMenu.fxml"));
+            Stage adminMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene loginScreen = new Scene(mainMenuAdmin);
+            logic.setToFullscreen(adminMainMenu);
+            adminMainMenu.setMaximized(true);
+            adminMainMenu.setScene(loginScreen);
+            adminMainMenu.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleLogin(ActionEvent event) {
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             //System.out.println("Inget användarnamn eller lösen angivet.");

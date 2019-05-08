@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
@@ -23,19 +24,44 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="585.0" layoutY="495.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add Movie" />
-                              <TextField fx:id="titleTxt" layoutX="569.0" layoutY="215.0" />
-                              <TextField fx:id="directorTxt" layoutX="569.0" layoutY="261.0" />
-                              <TextField fx:id="priceTxt" layoutX="569.0" layoutY="310.0" />
-                              <Label layoutX="499.0" layoutY="219.0" text="Title" />
-                              <Label layoutX="499.0" layoutY="265.0" text="Director" />
-                              <Label layoutX="499.0" layoutY="314.0" text="Price" />
-                              <Label layoutX="498.0" layoutY="363.0" text="Genre" />
-                              <ComboBox fx:id="genreComboBox" layoutX="569.0" layoutY="359.0" prefWidth="150.0" visibleRowCount="6" />
-                              <TextField fx:id="releaseYearTxt" layoutX="570.0" layoutY="402.0" />
-                              <TextField fx:id="quantityTxt" layoutX="570.0" layoutY="443.0" />
-                              <Label layoutX="498.0" layoutY="406.0" text="Release year" />
-                              <Label layoutX="498.0" layoutY="447.0" text="Quantity" />
+                              <HBox fx:id="hBox" alignment="BOTTOM_CENTER" layoutX="57.0" layoutY="28.0" prefHeight="616.0" prefWidth="1115.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="28.0">
+                                 <children>
+                                    <AnchorPane prefHeight="351.0" prefWidth="859.0">
+                                       <children>
+                                          <Button layoutX="179.0" layoutY="522.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add" />
+                                          <TextField fx:id="titleTxt" layoutX="108.0" layoutY="292.0" />
+                                          <TextField fx:id="directorTxt" layoutX="108.0" layoutY="327.0" />
+                                          <TextField fx:id="priceTxt" layoutX="109.0" layoutY="363.0" />
+                                          <Label layoutX="34.0" layoutY="296.0" text="Title" />
+                                          <Label layoutX="34.0" layoutY="331.0" text="Director" />
+                                          <Label layoutX="32.0" layoutY="367.0" text="Price" />
+                                          <Label layoutX="33.0" layoutY="402.0" text="Genre" />
+                                          <ComboBox fx:id="genreComboBox" layoutX="108.0" layoutY="398.0" prefWidth="150.0" visibleRowCount="6" />
+                                          <TextField fx:id="releaseYearTxt" layoutX="108.0" layoutY="435.0" />
+                                          <TextField fx:id="quantityTxt" layoutX="108.0" layoutY="469.0" />
+                                          <Label layoutX="33.0" layoutY="439.0" text="Release year" />
+                                          <Label layoutX="34.0" layoutY="473.0" text="Quantity" />
+                                          <TableView fx:id="movieTable" layoutX="302.0" layoutY="261.0" prefHeight="236.0" prefWidth="525.0">
+                                            <columns>
+                                              <TableColumn fx:id="colMovieId" prefWidth="34.0" text="ID" />
+                                              <TableColumn fx:id="colMovieTitle" prefWidth="132.0" text="Title" />
+                                                <TableColumn fx:id="colMovieDirector" prefWidth="124.0" text="Director" />
+                                                <TableColumn fx:id="colMoviePrice" prefWidth="49.0" text="Price" />
+                                                <TableColumn fx:id="colMovieGenre" prefWidth="75.0" text="Genre" />
+                                                <TableColumn fx:id="colMovieYear" prefWidth="51.0" text="Year" />
+                                                <TableColumn fx:id="colMovieQuantity" prefWidth="60.0" text="Quantity" />
+                                            </columns>
+                                          </TableView>
+                                          <Label layoutX="108.0" layoutY="252.0" text="Add movie">
+                                             <font>
+                                                <Font name="System Bold Italic" size="28.0" />
+                                             </font>
+                                          </Label>
+                                          <Button layoutX="689.0" layoutY="522.0" mnemonicParsing="false" onAction="#loadMovieTable" text="Update Table" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </HBox>
                            </children>
                         </AnchorPane>
                   </content>
