@@ -58,7 +58,7 @@ public class DbConnector {
     public void addMovieToDB(Movie movie) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre, releaseYear, quantity) VALUES (?,?,?,?,?,?,?)");
-            ps.setInt(1, tableSize("movie") + 1);
+            ps.setInt(1, movie.getIdMovie());
             ps.setString(2, movie.getTitle());
             ps.setString(3, movie.getDirector());
             ps.setDouble(4, movie.getPrice());

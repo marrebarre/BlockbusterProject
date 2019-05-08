@@ -19,8 +19,10 @@ public class Movie {
     private Genre genre;
     private String releaseYear;
     private int quantity;
+    private int idMovie;
 
-    public Movie(String title, String director, double price, Genre genre, String releaseYear, int quantity) {
+    public Movie(int idMovie, String title, String director, double price, Genre genre, String releaseYear, int quantity) {
+        this.idMovie = idMovie;
         this.title = title;
         this.director = director;
         this.price = price;
@@ -71,6 +73,20 @@ public class Movie {
 
         }
     }
+    public static Genre getStringAsGenre(String string) {
+
+        switch (string){
+
+            case "Action": return Genre.Action;
+            case "Drama": return Genre.Drama;
+            case "Sci-fi": return Genre.Scifi;
+            case "Family": return Genre.Family;
+            case "Horror": return Genre.Horror;
+            case "Adventure": return Genre.Adventure;
+            default: return null;
+
+        }
+    }
 
     public void setGenre(Genre genre) {
         this.genre = genre;
@@ -90,5 +106,13 @@ public class Movie {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getIdMovie() {
+        return idMovie;
+    }
+
+    public void setIdMovie(int idMovie) {
+        this.idMovie = idMovie;
     }
 }

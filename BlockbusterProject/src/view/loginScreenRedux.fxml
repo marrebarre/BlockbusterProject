@@ -36,7 +36,7 @@
       <AnchorPane prefHeight="165.0" prefWidth="394.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="username" layoutX="51.0" layoutY="54.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />
-            <TextField fx:id="password" layoutX="51.0" layoutY="83.0" prefHeight="25.0" prefWidth="297.0" promptText="Password" />
+            <TextField fx:id="password" layoutX="51.0" layoutY="83.0" onAction="#handleLogin" prefHeight="25.0" prefWidth="297.0" promptText="Password" />
             <Label layoutX="51.0" layoutY="14.0" text="Welcome to our store!" underline="true">
                <font>
                   <Font name="Harlow Solid Italic" size="18.0" />
@@ -58,6 +58,7 @@
       <AnchorPane prefHeight="210.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="showID" layoutX="99.0" layoutY="37.0" />
+            <Button layoutX="357.0" layoutY="162.0" mnemonicParsing="false" onAction="#adminLogin" text="admin login debug purpose" />
          </children></AnchorPane>
    </bottom>
 </BorderPane>
