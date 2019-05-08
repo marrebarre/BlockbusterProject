@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminMenuController">
+<StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="806.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminMenuController">
    <children>
       <BorderPane prefHeight="720.0" prefWidth="1280.0">
          <center>
@@ -22,13 +22,13 @@
               <tabs>
                 <Tab text="Movie">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1280.0">
                            <children>
                               <HBox fx:id="hBox" alignment="BOTTOM_CENTER" layoutX="57.0" layoutY="28.0" prefHeight="616.0" prefWidth="1115.0" AnchorPane.bottomAnchor="31.0" AnchorPane.leftAnchor="57.0" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="28.0">
                                  <children>
-                                    <AnchorPane prefHeight="351.0" prefWidth="859.0">
+                                    <AnchorPane prefHeight="702.0" prefWidth="951.0">
                                        <children>
-                                          <Button layoutX="179.0" layoutY="522.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add" />
+                                          <Button layoutX="148.0" layoutY="532.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add" />
                                           <TextField fx:id="titleTxt" layoutX="108.0" layoutY="292.0" />
                                           <TextField fx:id="directorTxt" layoutX="108.0" layoutY="327.0" />
                                           <TextField fx:id="priceTxt" layoutX="109.0" layoutY="363.0" />
@@ -41,7 +41,7 @@
                                           <TextField fx:id="quantityTxt" layoutX="108.0" layoutY="469.0" />
                                           <Label layoutX="33.0" layoutY="439.0" text="Release year" />
                                           <Label layoutX="34.0" layoutY="473.0" text="Quantity" />
-                                          <TableView fx:id="movieTable" layoutX="302.0" layoutY="261.0" prefHeight="236.0" prefWidth="525.0">
+                                          <TableView fx:id="movieTable" layoutX="332.0" layoutY="263.0" prefHeight="236.0" prefWidth="525.0">
                                             <columns>
                                               <TableColumn fx:id="colMovieId" prefWidth="34.0" text="ID" />
                                               <TableColumn fx:id="colMovieTitle" prefWidth="132.0" text="Title" />
@@ -57,7 +57,21 @@
                                                 <Font name="System Bold Italic" size="28.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="689.0" layoutY="522.0" mnemonicParsing="false" onAction="#loadMovieTable" text="Update Table" />
+                                          <Button layoutX="772.0" layoutY="525.0" mnemonicParsing="false" onAction="#loadMovieTable" text="Refresh" />
+                                          <TextField fx:id="editMovieTxt" layoutX="332.0" layoutY="513.0" prefHeight="25.0" prefWidth="33.0" />
+                                          <Button layoutX="373.0" layoutY="505.0" mnemonicParsing="false" onAction="#editMovie" prefWidth="67.0" text="Edit" />
+                                          <Label layoutX="279.0" layoutY="517.0" text="Movie ID:" />
+                                          <AnchorPane fx:id="editPane" layoutX="366.0" layoutY="225.0">
+                                             <children>
+                                                <TextField fx:id="editMovieTitle" layoutY="13.0" prefHeight="25.0" prefWidth="133.0" />
+                                                <TextField fx:id="editMovieDirector" layoutX="133.0" layoutY="13.0" prefHeight="25.0" prefWidth="124.0" />
+                                                <TextField fx:id="editMoviePrice" layoutX="257.0" layoutY="13.0" prefHeight="25.0" prefWidth="48.0" />
+                                                <ComboBox fx:id="editMovieGenreBox" layoutX="305.0" layoutY="13.0" prefHeight="25.0" prefWidth="75.0" />
+                                                <TextField fx:id="editMovieYear" layoutX="380.0" layoutY="13.0" prefHeight="25.0" prefWidth="52.0" />
+                                                <TextField fx:id="editMovieQuantity" layoutX="432.0" layoutY="13.0" prefHeight="25.0" prefWidth="59.0" />
+                                                <Button fx:id="doneBtn" layoutX="500.0" layoutY="5.0" mnemonicParsing="false" onAction="#doneEditing" text="Done" />
+                                             </children>
+                                          </AnchorPane>
                                        </children>
                                     </AnchorPane>
                                  </children>
