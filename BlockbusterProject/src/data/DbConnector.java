@@ -7,10 +7,10 @@ import java.sql.*;
 
 public class DbConnector {
     private String url = "jdbc:mysql://den1.mysql3.gear.host:3306/bustblockerdb?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&user=bustblockerdb&password=bustblocker!&serverTimeZone=UTF-8";
-    private Connection connection = null;
+    public Connection connection = null;
     private Statement statement;
-    private ResultSet resultSet;
-    private PreparedStatement preparedStatement;
+    public ResultSet resultSet;
+    public PreparedStatement preparedStatement;
 
     public Connection connect() {
         try {
@@ -167,13 +167,13 @@ public class DbConnector {
 
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3,tableSizeAccount("account")+ 1);
+            preparedStatement.setInt(3,user.getIdUser());
             preparedStatement.setDouble(4, user.getBalance());
             preparedStatement.setString(5, user.getFirstName());
             preparedStatement.setString(6, user.getLastName());
             preparedStatement.setString(7,user.getAddress());
-            preparedStatement.setString(8,user.getPhone());
-            preparedStatement.setBoolean(9,false);
+            preparedStatement.setString(8,user.getPhoneNr());
+            preparedStatement.setBoolean(9,user.isAdmin());
 
             preparedStatement.executeUpdate();
 
