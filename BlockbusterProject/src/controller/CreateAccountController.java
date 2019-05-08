@@ -47,8 +47,8 @@ public class CreateAccountController {
     public void registerPressed() {
 
         try {
-            User user = new User(emailtxtField.getText(), passwordtxtField.getText(), firstNametxtField.getText(),
-            lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText());
+            User user = new User(emailtxtField.getText(), passwordtxtField.getText(),dbConnector.tableSizeAccount("account")+1, firstNametxtField.getText(),
+            lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(),false);
             dbConnector.connect();
             dbConnector.addUserToDb(user);
             dbConnector.disconnect();
