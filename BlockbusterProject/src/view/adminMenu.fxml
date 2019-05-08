@@ -23,15 +23,19 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="581.0" layoutY="411.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add Movie" />
+                              <Button layoutX="585.0" layoutY="495.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add Movie" />
                               <TextField fx:id="titleTxt" layoutX="569.0" layoutY="215.0" />
                               <TextField fx:id="directorTxt" layoutX="569.0" layoutY="261.0" />
                               <TextField fx:id="priceTxt" layoutX="569.0" layoutY="310.0" />
-                              <Label layoutX="505.0" layoutY="219.0" text="Title" />
-                              <Label layoutX="505.0" layoutY="265.0" text="Director" />
-                              <Label layoutX="505.0" layoutY="314.0" text="Price" />
-                              <Label layoutX="505.0" layoutY="363.0" text="Genre" />
+                              <Label layoutX="499.0" layoutY="219.0" text="Title" />
+                              <Label layoutX="499.0" layoutY="265.0" text="Director" />
+                              <Label layoutX="499.0" layoutY="314.0" text="Price" />
+                              <Label layoutX="498.0" layoutY="363.0" text="Genre" />
                               <ComboBox fx:id="genreComboBox" layoutX="569.0" layoutY="359.0" prefWidth="150.0" visibleRowCount="6" />
+                              <TextField fx:id="releaseYearTxt" layoutX="570.0" layoutY="402.0" />
+                              <TextField fx:id="quantityTxt" layoutX="570.0" layoutY="443.0" />
+                              <Label layoutX="498.0" layoutY="406.0" text="Release year" />
+                              <Label layoutX="498.0" layoutY="447.0" text="Quantity" />
                            </children>
                         </AnchorPane>
                   </content>

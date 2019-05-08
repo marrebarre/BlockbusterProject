@@ -22,7 +22,7 @@ public class AdminMenuController implements Initializable {
     ComboBox<Movie.Genre> genreComboBox = new ComboBox<>();
 
     @FXML
-    TextField titleTxt, directorTxt, priceTxt;
+    TextField titleTxt, directorTxt, priceTxt, releaseYearTxt, quantityTxt;
 
     @FXML
     TableView<User> accountTable;
@@ -53,17 +53,20 @@ public class AdminMenuController implements Initializable {
     public void addMoviePressed() {
 
         try {
-            Movie movie = new Movie(titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue());
+            Movie movie = new Movie(titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(),Integer.parseInt(quantityTxt.getText()));
 
             dbConnector.connect();
             dbConnector.addMovieToDB(movie);
-            dbConnector.disconnect();
-        } catch (IllegalArgumentException e) {
-            System.out.println("Wrong datatype bruh");
+
+        }catch (IllegalArgumentException e){
+            System.out.println("Wrong datatype");
+          
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("DataTypeMismatch");
             alert.setContentText("Please double-check the format");
             alert.showAndWait();
+        } finally {
+            dbConnector.disconnect();
         }
     }
 
