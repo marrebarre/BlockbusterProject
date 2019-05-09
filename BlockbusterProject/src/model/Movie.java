@@ -73,6 +73,20 @@ public class Movie {
 
         }
     }
+    public static String getGenreAsString(Genre genre) {
+
+        switch (genre){
+
+            case Action: return "Action";
+            case Drama: return "Drama";
+            case Scifi: return "Sci-fi";
+            case Family: return "Family";
+            case Horror: return "Horror";
+            case Adventure: return "Adventure";
+            default: return null;
+
+        }
+    }
     public static Genre getStringAsGenre(String string) {
 
         switch (string){
