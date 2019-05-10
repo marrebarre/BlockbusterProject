@@ -78,6 +78,7 @@ public class LoginScreenController {
         Stage createAccountMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene createAccountScene = new Scene(createAccountParent);
         logic.setToFullscreen(createAccountMenu);
+        createAccountMenu.setMaximized(true);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(createAccountScene);
         window.show();

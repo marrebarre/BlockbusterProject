@@ -25,9 +25,8 @@
 
 .button:hover {
     -fx-background-color: white;
-    -fx-border-color: red;
 }
 
 .text-field {
--fx-background-color: linear-gradient(#ABABAC ,#E2E2E2);
+    -fx-background-color: linear-gradient(#ABABAC ,#E2E2E2);
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Logic;
 import model.User;
 
 import java.io.IOException;
@@ -34,13 +35,15 @@ public class CreateAccountController {
     Label successLabel;
 
     private DbConnector dbConnector = new DbConnector();
+    private Logic logic = new Logic();
 
     public void backtoLogin(ActionEvent event) throws IOException {
         Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
         Scene adminMainMenu = new Scene(mainMenuAdmin);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(adminMainMenu);
-        window.show();
+        Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        loginStage.setMaximized(false);
+        loginStage.setScene(adminMainMenu);
+        loginStage.show();
     }
 
     public void registerPressed() {
