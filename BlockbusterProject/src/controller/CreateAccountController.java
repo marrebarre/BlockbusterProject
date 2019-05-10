@@ -35,20 +35,19 @@ public class CreateAccountController {
 
     private DbConnector dbConnector = new DbConnector();
 
-
     public void backtoLogin(ActionEvent event) throws IOException {
-        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
-        Scene createAccountScene = new Scene(createAccountParent);
+        Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
+        Scene adminMainMenu = new Scene(mainMenuAdmin);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(createAccountScene);
+        window.setScene(adminMainMenu);
         window.show();
     }
 
     public void registerPressed() {
 
         try {
-            User user = new User(emailtxtField.getText(), passwordtxtField.getText(),dbConnector.tableSizeAccount("account")+1, firstNametxtField.getText(),
-            lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(),false);
+            User user = new User(emailtxtField.getText(), passwordtxtField.getText(),false, firstNametxtField.getText(),
+                    lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(),dbConnector.tableSizeAccount("account")+1);
             dbConnector.connect();
             dbConnector.addUserToDb(user);
             dbConnector.disconnect();

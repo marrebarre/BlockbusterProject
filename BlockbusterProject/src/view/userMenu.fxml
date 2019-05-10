@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
@@ -10,49 +11,50 @@
 <?import javafx.scene.layout.StackPane?>
 
 <StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserMenuController">
-   <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0">
-         <center>
-            <TabPane minHeight="480.0" minWidth="680.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-              <tabs>
-                <Tab text="BROWSE">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Pane layoutX="29.0" layoutY="52.0" prefHeight="197.0" prefWidth="168.0">
-                                 <children>
-                                    <ImageView fx:id="aStarIsBorn" fitHeight="150.0" fitWidth="150.0" layoutX="30.0" layoutY="24.0" onMouseEntered="#hoverOverPictureEntered" onMouseExited="#hoverOverPictureExit" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Images/aStarIsBorn.jpg" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Pane>
-                              <Pane layoutX="232.0" layoutY="57.0" prefHeight="187.0" prefWidth="176.0">
-                                 <children>
-                                    <ImageView fx:id="inception" fitHeight="156.0" fitWidth="100.0" layoutX="38.0" layoutY="19.0" onMouseEntered="#mouseOverPicture" onMouseExited="#mouseOverPictureExit" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Images/inception.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Pane>
-                           </children></AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="MY RENTALS">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-                  <Tab text="SETTINGS">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
-         </center>
-      </BorderPane>
-   </children>
+    <children>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <center>
+                <TabPane minHeight="480.0" minWidth="680.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="BROWSE">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Button fx:id="btnLogOut" layoutX="1179.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
+                                        <Pane layoutX="29.0" layoutY="52.0" prefHeight="197.0" prefWidth="168.0">
+                                            <children>
+                                                <ImageView fx:id="aStarIsBorn" fitHeight="150.0" fitWidth="150.0" layoutX="30.0" layoutY="24.0" onMouseEntered="#hoverOverPictureEntered" onMouseExited="#hoverOverPictureExit" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../Images/aStarIsBorn.jpg" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </Pane>
+                                        <Pane layoutX="232.0" layoutY="57.0" prefHeight="187.0" prefWidth="176.0">
+                                            <children>
+                                                <ImageView fx:id="inception" fitHeight="156.0" fitWidth="100.0" layoutX="38.0" layoutY="19.0" onMouseEntered="#mouseOverPicture" onMouseExited="#mouseOverPictureExit" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                        <Image url="@../Images/inception.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </children>
+                                        </Pane>
+                                    </children></AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="MY RENTALS">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                        <Tab text="SETTINGS">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </children>
 </StackPane>
