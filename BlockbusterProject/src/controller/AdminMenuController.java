@@ -4,16 +4,22 @@ import data.DbConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import model.Logic;
 import model.Movie;
 import model.User;
-
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ResourceBundle;
 
 public class AdminMenuController implements Initializable {
@@ -27,6 +33,8 @@ public class AdminMenuController implements Initializable {
     @FXML
     TableView<User> accountTable;
 
+    @FXML
+    Button btnLogOut;
 
     @FXML
     TableColumn<User, String> emailcol;
@@ -48,6 +56,7 @@ public class AdminMenuController implements Initializable {
     TableColumn<User, Boolean> isadmincol;
 
     private DbConnector dbConnector = new DbConnector();
+    private Logic logic;
 
 
     public void addMoviePressed() {
@@ -70,7 +79,7 @@ public class AdminMenuController implements Initializable {
         }
     }
 
-    ObservableList<User> observableList = FXCollections.observableArrayList();
+    private ObservableList<User> observableList = FXCollections.observableArrayList();
 
     public void viewListbtn() {
 
@@ -82,18 +91,17 @@ public class AdminMenuController implements Initializable {
             while (dbConnector.resultSet.next()) {
                 observableList.add(new User(dbConnector.resultSet.getString("email"),
                         dbConnector.resultSet.getString("password"),
-                        dbConnector.resultSet.getInt("idUser"),
+                        dbConnector.resultSet.getBoolean("admin"),
                         dbConnector.resultSet.getString("firstName"),
                         dbConnector.resultSet.getString("lastName"),
                         dbConnector.resultSet.getDouble("balance"),
                         dbConnector.resultSet.getString("address"),
                         dbConnector.resultSet.getString("phoneNr"),
-                        dbConnector.resultSet.getBoolean("admin")));
+                        dbConnector.resultSet.getInt("idUser")));
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
-
         emailcol.setCellValueFactory(new PropertyValueFactory<>("email"));
         passwordcol.setCellValueFactory(new PropertyValueFactory<>("password"));
         idusercol.setCellValueFactory(new PropertyValueFactory<>("idUser"));
@@ -103,10 +111,16 @@ public class AdminMenuController implements Initializable {
         addresscol.setCellValueFactory(new PropertyValueFactory<>("address"));
         phonecol.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
         isadmincol.setCellValueFactory(new PropertyValueFactory<>("admin"));
-
         accountTable.setItems(observableList);
+    }
 
-
+    public void btnPressedLogOut(MouseEvent event) throws IOException {
+        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
+        Scene createAccountScene = new Scene(createAccountParent);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setMaximized(false);
+        window.setScene(createAccountScene);
+        window.show();
     }
 
     @Override

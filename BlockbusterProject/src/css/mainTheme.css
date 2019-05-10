@@ -25,7 +25,6 @@
 
 .button:hover {
     -fx-background-color: white;
-    -fx-border-color: red;
 }
 
 .text-field {

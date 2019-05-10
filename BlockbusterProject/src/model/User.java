@@ -7,17 +7,16 @@ public class User extends Account {
     private String address;
     private String phoneNr;
     private int idUser;
-    private boolean admin;
 
-    public User(String email, String password,int idUser, String firstName, String lastName, double balance, String address, String phoneNr, boolean admin) {
-        super(email, password);
-        this.idUser = idUser;
+
+    public User(String email, String password, boolean admin, String firstName, String lastName, double balance, String address, String phoneNr, int idUser) {
+        super(email, password, admin);
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
         this.address = address;
         this.phoneNr = phoneNr;
-        this.admin = admin;
+        this.idUser = idUser;
     }
 
     public String getFirstName() {

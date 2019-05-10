@@ -36,6 +36,7 @@
                               <TextField fx:id="quantityTxt" layoutX="570.0" layoutY="443.0" />
                               <Label layoutX="498.0" layoutY="406.0" text="Release year" />
                               <Label layoutX="498.0" layoutY="447.0" text="Quantity" />
+                              <Button fx:id="btnLogOut" layoutX="1179.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
                            </children>
                         </AnchorPane>
                   </content>

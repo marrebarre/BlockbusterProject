@@ -1,19 +1,23 @@
 package data;
 
+import model.Admin;
 import model.Movie;
 import model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbConnector {
-    private String url = "jdbc:mysql://den1.mysql3.gear.host:3306/bustblockerdb?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&user=bustblockerdb&password=bustblocker!&serverTimeZone=UTF-8";
     public Connection connection = null;
     private Statement statement;
     public ResultSet resultSet;
-    public PreparedStatement preparedStatement;
+    public List<User> users = new ArrayList<>();
+    public List<Admin> admins = new ArrayList<>();
 
     public Connection connect() {
         try {
+            String url = "jdbc:mysql://den1.mysql3.gear.host:3306/bustblockerdb?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&user=bustblockerdb&password=bustblocker!&serverTimeZone=UTF-8";
             connection = DriverManager.getConnection(url);
         } catch (SQLException sql) {
             System.err.println("Connection failed" + sql);
@@ -21,10 +25,9 @@ public class DbConnector {
         return connection;
     }
 
-    public int tableSize(String tableName) {
+    private int tableSize(String tableName) {
         String temp = null;
         try {
-
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
             resultSet = ps.executeQuery();
 
@@ -40,15 +43,15 @@ public class DbConnector {
         return Integer.parseInt(temp);
     }
 
-    public int tableSizeAccount(String accountTable){
+    public int tableSizeAccount(String accountTable) {
         String temp = null;
-        try{
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(idUser) FROM account");
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 temp = resultSet.getString("COUNT(idUser)");
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Wrong insert");
             e.printStackTrace();
         }
@@ -64,15 +67,13 @@ public class DbConnector {
             ps.setDouble(4, movie.getPrice());
             ps.setString(5, movie.getGenreAsString());
             ps.setString(6, movie.getReleaseYear());
-            ps.setInt(7,movie.getQuantity());
-
+            ps.setInt(7, movie.getQuantity());
             ps.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println("Error");
         }
     }
-
 
     public void findMovieInDB(String title) {
         try {
@@ -96,127 +97,90 @@ public class DbConnector {
                 statement.close();
             if (resultSet != null)
                 resultSet.close();
-
         } catch (SQLException ex) {
             System.out.println("Failed to disconnect");
         }
     }
 
-    public String getEmail(String username) {
-        connect();
-        String email = "";
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email =? AND admin = 1");
+    public boolean verifyAccount(String username, String pw) {
+        boolean admin;
+        String query = "SELECT * FROM account WHERE email =? AND password = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
-
+            preparedStatement.setString(2, pw);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                email = resultSet.getString(1);
+                admin = resultSet.getBoolean(9);
+                if (admin) {
+                    adminList(resultSet);
+                } else {
+                    userList(resultSet);
+                }
                 resultSet.close();
             }
         } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-        System.out.println("Email: " + email);
-        return email;
+        return true;
     }
 
-   public String getPassword(String password) {
-        String pw = "";
+    private List<User> userList(ResultSet resultSet) {
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 1");
-            preparedStatement.setString(1, password);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                pw = resultSet.getString(2);
-                resultSet.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            User user = new User(
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getBoolean("admin"),
+                    resultSet.getString("firstName"),
+                    resultSet.getString("lastName"),
+                    resultSet.getDouble("balance"),
+                    resultSet.getString("address"),
+                    resultSet.getString("phoneNr"),
+                    resultSet.getInt("idUser"));
+            users.add(user);
+            //System.out.println("Namn: " + user.getFirstName() + " " + user.getLastName());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        System.out.println("Password: " + pw);
-        return pw;
+        return users;
     }
 
-    public boolean isAdmin(boolean admin){
-        boolean isAdmin = false;
+    private List<Admin> adminList(ResultSet resultSet) {
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE admin = ?");
-            preparedStatement.setBoolean(1, admin);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                isAdmin = resultSet.getBoolean(9);
-                resultSet.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            Admin admin = new Admin(
+                    resultSet.getString("email"),
+                    resultSet.getString("password"),
+                    resultSet.getBoolean("admin"),
+                    resultSet.getString("firstName"),
+                    resultSet.getString("lastName"),
+                    resultSet.getDouble("balance"),
+                    resultSet.getString("address"),
+                    resultSet.getString("phoneNr"),
+                    resultSet.getInt("idUser"));
+            admins.add(admin);
+            //System.out.println("Email: " + admin.getEmail() + "Lösen: " + admin.getPassword());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        System.out.println("Is admin: " + isAdmin);
-        disconnect();
-
-        return isAdmin;
+        return admins;
     }
 
-    public void addUserToDb(User user){
+    public void addUserToDb(User user) {
+        String query = "INSERT INTO `account` (email, password,idUser, balance, firstName, lastName, address, phoneNr, admin) VALUES (?,?,?,?,?,?,?,?,?)";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `account` (email, password,idUser, balance, firstName, lastName," +
-                    "address, phoneNr, admin) VALUES (?,?,?,?,?,?,?,?,?)");
-
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3,user.getIdUser());
+            preparedStatement.setInt(3, user.getIdUser());
             preparedStatement.setDouble(4, user.getBalance());
             preparedStatement.setString(5, user.getFirstName());
             preparedStatement.setString(6, user.getLastName());
-            preparedStatement.setString(7,user.getAddress());
-            preparedStatement.setString(8,user.getPhoneNr());
-            preparedStatement.setBoolean(9,user.isAdmin());
-
+            preparedStatement.setString(7, user.getAddress());
+            preparedStatement.setString(8, user.getPhoneNr());
+            preparedStatement.setBoolean(9, user.isAdmin());
             preparedStatement.executeUpdate();
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Something went wrong!");
             e.printStackTrace();
         }
     }
-
-    /*public String userEmail(String username) {
-        connect();
-        String email = "";
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ? AND admin = 0");
-            preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                email = resultSet.getString(1);
-                resultSet.close();
-            }
-            //preparedStatement.setMaxRows(10);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return email;
-    }
-
-        public String userPassword(String pw){
-            String password = "";
-            try{
-                preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE password = ? AND admin = 0");
-                preparedStatement.setString(1,pw);
-                resultSet = preparedStatement.executeQuery();
-                if(resultSet.next()){
-                    password = resultSet.getString(2);
-                    resultSet.close();
-                }
-
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-            disconnect();
-            return password;
-        }*/
-
-    }
+}

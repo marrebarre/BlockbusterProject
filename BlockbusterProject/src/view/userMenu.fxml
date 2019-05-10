@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.Image?>
@@ -19,6 +20,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
+                              <Button fx:id="btnLogOut" layoutX="1179.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
                               <Pane layoutX="29.0" layoutY="52.0" prefHeight="197.0" prefWidth="168.0">
                                  <children>
                                     <ImageView fx:id="aStarIsBorn" fitHeight="150.0" fitWidth="150.0" layoutX="30.0" layoutY="24.0" onMouseEntered="#hoverOverPictureEntered" onMouseExited="#hoverOverPictureExit" pickOnBounds="true" preserveRatio="true">
