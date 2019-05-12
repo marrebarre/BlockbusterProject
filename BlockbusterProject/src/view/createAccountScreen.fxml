@@ -9,45 +9,41 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateAccountController">
    <children>
       <Button fx:id="registerBtn" layoutX="118.0" layoutY="393.0" mnemonicParsing="false" onAction="#registerPressed" prefHeight="49.0" prefWidth="131.0" text="Register">
-         <font>
+         <!--<font>
             <Font name="System Bold Italic" size="18.0" />
-         </font>
+         </font>-->
       </Button>
       <Button fx:id="backToLoginbtn" layoutX="1047.0" layoutY="634.0" mnemonicParsing="false" onAction="#backtoLogin" prefHeight="49.0" prefWidth="174.0" text="Back to login &gt;&gt;" />
       <TextField fx:id="emailtxtField" layoutX="124.0" layoutY="166.0" prefHeight="25.0" prefWidth="297.0" promptText="E-mail Address">
-         <font>
-            <Font name="Lucida Bright Demibold" size="12.0" />
-         </font>
+         <!--<font>
+            <Font name="Lucida Bright Regular" size="12.0" />
+         </font>-->
       </TextField>
       <TextField fx:id="firstNametxtField" layoutX="125.0" layoutY="130.0" prefHeight="25.0" prefWidth="140.0" promptText="First Name">
          <font>
-            <Font name="Lucida Bright Demibold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </TextField>
       <TextField fx:id="lastNametxtField" layoutX="279.0" layoutY="130.0" prefHeight="25.0" prefWidth="140.0" promptText="Last Name">
-         <font>
+         <!--<font>
             <Font name="Lucida Bright Demibold" size="12.0" />
-         </font>
+         </font>-->
       </TextField>
-      <TextField fx:id="passwordtxtField" layoutX="124.0" layoutY="204.0" prefHeight="25.0" prefWidth="297.0" promptText="Password">
-         <font>
-            <Font name="Lucida Bright Demibold" size="12.0" />
-         </font>
-      </TextField>
+      <TextField fx:id="passwordtxtField" layoutX="124.0" layoutY="204.0" prefHeight="25.0" prefWidth="297.0" promptText="Password" />
       <TextField fx:id="phonetxtField" layoutX="124.0" layoutY="276.0" prefHeight="25.0" prefWidth="297.0" promptText="Phone Number">
-         <font>
+         <!--<font>
             <Font name="Lucida Bright Demibold" size="12.0" />
-         </font>
+         </font>-->
       </TextField>
       <Label fx:id="successLabel" layoutX="125.0" layoutY="467.0" prefHeight="21.0" prefWidth="96.0" textFill="#00ff0d">
-         <font>
+         <!--<font>
             <Font name="SansSerif Bold" size="15.0" />
-         </font>
+         </font>-->
       </Label>
-      <TextField fx:id="addresstxtField" layoutX="124.0" layoutY="241.0" prefHeight="25.0" prefWidth="297.0" promptText="Address">
-         <font>
+      <TextField fx:id="addresstxtField" layoutX="124.0" layoutY="241.0" prefHeight="25.0" prefWidth="297.0" promptText="Address" stylesheets="@../css/mainTheme.css">
+         <!--<font>
             <Font name="Lucida Bright Demibold" size="12.0" />
-         </font>
+         </font>-->
       </TextField>
    </children>
 </AnchorPane>

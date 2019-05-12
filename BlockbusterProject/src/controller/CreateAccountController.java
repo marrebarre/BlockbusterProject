@@ -30,7 +30,6 @@ public class CreateAccountController {
     @FXML
     TextField emailtxtField, firstNametxtField, lastNametxtField, passwordtxtField, addresstxtField, phonetxtField;
 
-
     @FXML
     Label successLabel;
 
@@ -47,7 +46,6 @@ public class CreateAccountController {
     }
 
     public void registerPressed() {
-
         try {
             User user = new User(emailtxtField.getText(), passwordtxtField.getText(),false, firstNametxtField.getText(),
                     lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(),dbConnector.tableSizeAccount("account")+1);

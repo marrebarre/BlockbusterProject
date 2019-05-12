@@ -25,24 +25,24 @@ public class UserMenuController {
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
 
-    public void hoverOverPictureEntered(){
+    /*public void hoverOverPictureEntered(){
         aStarIsBorn.setFitHeight(250);
         aStarIsBorn.setFitWidth(250);
 
-    }
-    public void hoverOverPictureExit(){
+    }*/
+    /*public void hoverOverPictureExit(){
         aStarIsBorn.setFitWidth(200);
         aStarIsBorn.setFitHeight(200);
 
-    }
-    public void mouseOverPicture(){
+    }*/
+    /*public void mouseOverPicture(){
         inception.setFitHeight(250);
         inception.setFitWidth(250);
-    }
-    public void mouseOverPictureExit(){
+    }*/
+    /*public void mouseOverPictureExit(){
         inception.setFitWidth(200);
         inception.setFitHeight(200);
-    }
+    }*/
 
     public void btnPressedLogOut(MouseEvent event) throws IOException {
         Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
