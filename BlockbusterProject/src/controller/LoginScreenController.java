@@ -31,7 +31,7 @@ public class LoginScreenController {
 
     @FXML
     Button signIn, btnCreateAccount;
-
+    private static String currentUser;
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
 
@@ -60,6 +60,7 @@ public class LoginScreenController {
                         e.printStackTrace();
                     }
                 } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.users.isEmpty()) {
+                   // setCurrentUser(username.getText()); After verification, the method will be set to current users email(unique)
                     try {
                         Parent mainMenuUser = FXMLLoader.load(getClass().getResource("/view/userMenu.fxml"));
                         Stage userMainMenu = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -117,4 +118,6 @@ public class LoginScreenController {
         System.exit(0);
         System.out.println("Program closed");
     }
+ //   public static String getCurrentUser(){return currentUser;}
+ //   public static void setCurrentUser(String currentMethodUser){currentUser= currentMethodUser;}
 }
