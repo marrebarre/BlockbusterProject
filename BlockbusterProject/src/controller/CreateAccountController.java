@@ -46,7 +46,7 @@ public class CreateAccountController {
         loginStage.show();
     }
 
-    public void registerPressed() {
+    public void registerPressed(ActionEvent event) throws IOException {
 
 
         if(!firstNametxtField.getText().isEmpty() || !lastNametxtField.getText().isEmpty() || !emailtxtField.getText().isEmpty()||
@@ -110,6 +110,7 @@ public class CreateAccountController {
 
 
 
+
             VBox layout = new VBox(10);
             layout.getChildren().addAll(label, closeButton);
             layout.setAlignment(Pos.CENTER);
@@ -117,7 +118,12 @@ public class CreateAccountController {
             Scene scene = new Scene(layout);
             window.setScene(scene);
             window.showAndWait();
-
+                Parent mainMenuAdmin = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
+                Scene adminMainMenu = new Scene(mainMenuAdmin);
+                Stage loginStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                loginStage.setMaximized(false);
+                loginStage.setScene(adminMainMenu);
+                loginStage.show();
 
         }
     }
