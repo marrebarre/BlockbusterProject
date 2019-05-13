@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="mysql-connector-java-5.1.28-bin1">
+<<<<<<< HEAD:BlockbusterProject/.idea/libraries/mysql_connector_java_5_1_28_bin1.xml
+    <CLASSES />
+=======
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../mysql-connector-java-5.1.28/mysql-connector-java-5.1.28-bin.jar!/" />
+    </CLASSES>
+>>>>>>> master:.idea/libraries/mysql_connector_java_5_1_28_bin1.xml
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

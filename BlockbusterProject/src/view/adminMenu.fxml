@@ -5,47 +5,76 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminMenuController">
-   <children>
-      <BorderPane prefHeight="720.0" prefWidth="1280.0">
-         <center>
-            <TabPane minHeight="480.0" minWidth="680.0" prefHeight="707.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-              <tabs>
-                <Tab text="Movie">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Button layoutX="581.0" layoutY="411.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add Movie" />
-                              <TextField fx:id="titleTxt" layoutX="569.0" layoutY="215.0" />
-                              <TextField fx:id="directorTxt" layoutX="569.0" layoutY="261.0" />
-                              <TextField fx:id="priceTxt" layoutX="569.0" layoutY="310.0" />
-                              <Label layoutX="505.0" layoutY="219.0" text="Title" />
-                              <Label layoutX="505.0" layoutY="265.0" text="Director" />
-                              <Label layoutX="505.0" layoutY="314.0" text="Price" />
-                              <Label layoutX="505.0" layoutY="363.0" text="Genre" />
-                              <ComboBox fx:id="genreComboBox" layoutX="569.0" layoutY="359.0" prefWidth="150.0" visibleRowCount="6" />
-                           </children>
-                        </AnchorPane>
-                  </content>
-                </Tab>
-                <Tab text="User">
-                  <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </Tab>
-                  <Tab text="SETTINGS">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </Tab>
-              </tabs>
-            </TabPane>
-         </center>
-      </BorderPane>
-   </children>
+    <children>
+        <BorderPane prefHeight="720.0" prefWidth="1280.0">
+            <center>
+                <TabPane minHeight="480.0" minWidth="680.0" prefHeight="707.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab text="Movie">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Button layoutX="585.0" layoutY="495.0" mnemonicParsing="false" onAction="#addMoviePressed" text="Add Movie" />
+                                        <TextField fx:id="titleTxt" layoutX="569.0" layoutY="215.0" />
+                                        <TextField fx:id="directorTxt" layoutX="569.0" layoutY="261.0" />
+                                        <TextField fx:id="priceTxt" layoutX="569.0" layoutY="310.0" />
+                                        <Label layoutX="499.0" layoutY="219.0" text="Title" />
+                                        <Label layoutX="499.0" layoutY="265.0" text="Director" />
+                                        <Label layoutX="499.0" layoutY="314.0" text="Price" />
+                                        <Label layoutX="498.0" layoutY="363.0" text="Genre" />
+                                        <ComboBox fx:id="genreComboBox" layoutX="569.0" layoutY="359.0" prefWidth="150.0" visibleRowCount="6" />
+                                        <TextField fx:id="releaseYearTxt" layoutX="570.0" layoutY="402.0" />
+                                        <TextField fx:id="quantityTxt" layoutX="570.0" layoutY="443.0" />
+                                        <Label layoutX="498.0" layoutY="406.0" text="Release year" />
+                                        <Label layoutX="498.0" layoutY="447.0" text="Quantity" />
+                                        <Button fx:id="btnLogOut" layoutX="1179.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="User">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Label layoutX="14.0" layoutY="59.0" prefHeight="51.0" prefWidth="313.0" text="Edit user information" textOverrun="CLIP" underline="true">
+                                            <font>
+                                                <Font name="Verdana" size="29.0" />
+                                            </font>
+                                        </Label>
+                                        <Button layoutX="32.0" layoutY="167.0" mnemonicParsing="false" onAction="#viewListbtn" prefHeight="41.0" prefWidth="201.0" text="View list of Accounts" textFill="#ffc9c9" />
+                                        <TableView fx:id="accountTable" layoutX="381.0" layoutY="45.0" prefHeight="368.0" prefWidth="691.0">
+                                            <columns>
+                                                <TableColumn fx:id="idusercol" prefWidth="75.0" text="idUser" />
+                                                <TableColumn fx:id="emailcol" prefWidth="75.0" text="E-mail" />
+                                                <TableColumn fx:id="passwordcol" prefWidth="75.0" text="Password" />
+                                                <TableColumn fx:id="balancecol" prefWidth="75.0" text="Balance" />
+                                                <TableColumn fx:id="firstnamecol" prefWidth="75.0" text="Firstname" />
+                                                <TableColumn fx:id="lastnamecol" prefWidth="75.0" text="Lastname" />
+                                                <TableColumn fx:id="addresscol" prefWidth="75.0" text="Address" />
+                                                <TableColumn fx:id="phonecol" prefWidth="75.0" text="PhoneNr" />
+                                                <TableColumn fx:id="isadmincol" prefWidth="75.0" text="IsAdmin" />
+                                            </columns>
+                                        </TableView>
+                                    </children></AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="SETTINGS">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+        </BorderPane>
+    </children>
 </StackPane>

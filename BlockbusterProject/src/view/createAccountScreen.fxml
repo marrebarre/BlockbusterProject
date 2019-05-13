@@ -49,5 +49,40 @@
             <Font name="Lucida Bright Demibold" size="12.0" />
          </font>
       </TextField>
+      <Label fx:id="firstNameError" layoutX="107.0" layoutY="130.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="emailError" layoutX="107.0" layoutY="166.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="passwordError" layoutX="107.0" layoutY="204.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="addressError" layoutX="107.0" layoutY="241.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="phoneError" layoutX="107.0" layoutY="276.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="lastNameError" layoutX="267.0" layoutY="130.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="unfilledError" layoutX="120.0" layoutY="323.0" prefHeight="37.0" prefWidth="258.0" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

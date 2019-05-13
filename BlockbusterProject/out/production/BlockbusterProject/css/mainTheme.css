@@ -3,11 +3,12 @@
 }
 
 .tab{
+    -fx-font-size: 12px;
     -fx-pref-width: 175;
     -fx-pref-height: 40;
-    -fx-opacity: 90;
 }
 
+/*
 .button {
     -fx-background-color: red;
     -fx-border: no;
@@ -22,12 +23,59 @@
     -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 6, 0);
     -fx-background-radius: 8;
 }
+*/
 
-.button:hover {
+/*.button:hover {
     -fx-background-color: white;
-    -fx-border-color: red;
+}*/
+
+.image-view:hover {
+    -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 10, 0);
+    -fx-scale-x: 1.75;
+    -fx-scale-y: 1.75;
+    -fx-scale-z: 1.75;
+}
+
+#forgotPW:hover{
+    -fx-text-fill: black, 12px;
+    -fx-underline: true;
+    -fx-cursor: HAND;
 }
 
 .text-field {
--fx-background-color: linear-gradient(#ABABAC ,#E2E2E2);
+    -fx-background-color: linear-gradient(#ABABAC ,#E2E2E2);
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+
+.text-field:hover {
+    -fx-background-color: linear-gradient(#d7e8ff, #e2dcdd);
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+.button{
+    -fx-background-color:
+            #000000,
+            linear-gradient(#7ebcea, #2f4b8f),
+            linear-gradient(#426ab7, #263e75),
+            linear-gradient(#395cab, #223768);
+    -fx-margin: 3px 2px;
+    -fx-border: no;
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 10 28 10 28;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+.button Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1);
+}
+
+.button:hover{
+    -fx-background-color:
+            #000000,
+            linear-gradient(#2f4b8f, #7ebcea),
+            linear-gradient(#263e75, #426ab7),
+            linear-gradient(#395cab, #223768);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-text-fill: white;
 }
