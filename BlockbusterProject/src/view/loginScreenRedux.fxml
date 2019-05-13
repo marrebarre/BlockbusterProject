@@ -36,7 +36,7 @@
         <AnchorPane prefHeight="165.0" prefWidth="394.0" BorderPane.alignment="CENTER">
             <children>
                 <TextField fx:id="username" layoutX="51.0" layoutY="54.0" prefHeight="25.0" prefWidth="296.0" promptText="Email" />
-                <TextField fx:id="password" layoutX="52.0" layoutY="83.0" prefHeight="25.0" prefWidth="295.0" promptText="Password" />
+                <TextField fx:id="password" layoutX="52.0" layoutY="83.0" onAction="#handleLogin" prefHeight="25.0" prefWidth="295.0" promptText="Password" />
                 <Label layoutX="51.0" layoutY="14.0" text="Welcome to our store!" underline="true">
                     <font>
                         <Font name="Harlow Solid Italic" size="18.0" />

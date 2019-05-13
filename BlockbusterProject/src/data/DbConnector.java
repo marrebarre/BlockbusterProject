@@ -1,5 +1,7 @@
 package data;
 
+import controller.AdminMenuController;
+import javafx.scene.control.Alert;
 import model.Admin;
 import model.Movie;
 import model.User;
@@ -25,7 +27,7 @@ public class DbConnector {
         return connection;
     }
 
-    private int tableSize(String tableName) {
+    public int tableSize(String tableName) {
         String temp = null;
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
@@ -58,20 +60,47 @@ public class DbConnector {
         return Integer.parseInt(temp);
     }
 
+    public Movie findMovieById(int id) {
+        connect();
+        Movie movie = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM movie WHERE idMovie = ?");
+            ps.setInt(1, id);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+                movie = new Movie(
+                        resultSet.getInt("idMovie"),
+                        resultSet.getString("title"),
+                        resultSet.getString("director"),
+                        resultSet.getDouble("price"),
+                        Movie.getStringAsGenre(resultSet.getString("genre")),
+                        resultSet.getString("releaseYear"),
+                        resultSet.getInt("quantity")
+                );
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            disconnect();
+        }
+        return movie;
+    }
+
     public void addMovieToDB(Movie movie) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre, releaseYear, quantity) VALUES (?,?,?,?,?,?,?)");
-            ps.setInt(1, tableSize("movie") + 1);
+            ps.setInt(1, movie.getIdMovie());
             ps.setString(2, movie.getTitle());
             ps.setString(3, movie.getDirector());
             ps.setDouble(4, movie.getPrice());
             ps.setString(5, movie.getGenreAsString());
             ps.setString(6, movie.getReleaseYear());
             ps.setInt(7, movie.getQuantity());
-            ps.executeUpdate();
 
+            ps.executeUpdate();
+            AdminMenuController.alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error when loading to database");
         }
     }
 
@@ -122,6 +151,34 @@ public class DbConnector {
             ex.printStackTrace();
         }
         return true;
+    }
+
+    //UPDATE TABLE
+    public <T> void updateTableColumnById(String table, String column,String idNameInTable, int id, T newData) {
+        connect();
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE "+table+" SET "+column+" = ? WHERE "+idNameInTable+" = "+id);
+            if (newData instanceof String) {
+                String temp = (String) newData;
+                ps.setString(1, temp);
+            } else if (newData instanceof Integer) {
+                int temp = (Integer) newData;
+                ps.setInt(1, temp);
+            } else if (newData instanceof Double) {
+                Double temp = (Double) newData;
+                ps.setDouble(1, temp);
+            } else if (newData instanceof Boolean) {
+                Boolean temp = (Boolean) newData;
+                ps.setBoolean(1, temp);
+            }
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Could not update " + column);
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
     }
 
     private List<User> userList(ResultSet resultSet) {
