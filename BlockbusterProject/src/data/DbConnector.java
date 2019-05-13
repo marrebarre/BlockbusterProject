@@ -180,6 +180,45 @@ public class DbConnector {
             e.printStackTrace();
         }
     }
+        //Krillepille
+    public void updateFirstName(int idUser, User user) throws SQLException {
+
+        connect();
+
+        String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
+
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString   (1, user.getFirstName()); //needs a setter in the user class?
+            preparedStmt.setInt(2, idUser);
+
+            preparedStmt.executeUpdate();
+            System.out.println("Firstname updated!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+             //krillepille
+    public String getFirstName(int idUser) {
+        connect();
+        String firstName = "";
+        try {
+            preparedStatement = connection.prepareStatement("SELECT firstName FROM account WHERE idUser =?");
+            preparedStatement.setInt(1, idUser);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                firstName = resultSet.getString(1);
+                resultSet.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        System.out.println("First name: " + firstName);
+        return firstName;
+    }
 
     /*public String userEmail(String username) {
         connect();
