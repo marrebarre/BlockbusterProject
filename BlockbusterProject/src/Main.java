@@ -1,3 +1,4 @@
+import data.DbConnector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +13,9 @@ public class Main extends Application {
         root.getStylesheets().add(getClass().getResource("css/mainTheme.css").toExternalForm());
         primaryStage.setTitle("Bustblocker");
         primaryStage.setScene(new Scene(root));
+
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {

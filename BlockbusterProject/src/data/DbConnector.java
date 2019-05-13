@@ -43,8 +43,8 @@ public class DbConnector {
         return Integer.parseInt(temp);
     }
 
-    public int tableSizeAccount(String accountTable) {
-        String temp = null;
+    public int tableSizeAccount() {
+        String temp = null ;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(idUser) FROM account");
             resultSet = preparedStatement.executeQuery();
@@ -165,12 +165,12 @@ public class DbConnector {
     }
 
     public void addUserToDb(User user) {
-        String query = "INSERT INTO `account` (email, password,idUser, balance, firstName, lastName, address, phoneNr, admin) VALUES (?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO `account` (idUser, email, password, balance, firstName, lastName, address, phoneNr, admin) VALUES (?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setInt(3, user.getIdUser());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setInt(1, user.getIdUser());
             preparedStatement.setDouble(4, user.getBalance());
             preparedStatement.setString(5, user.getFirstName());
             preparedStatement.setString(6, user.getLastName());

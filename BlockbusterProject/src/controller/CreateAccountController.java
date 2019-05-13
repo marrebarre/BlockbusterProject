@@ -31,7 +31,7 @@ public class CreateAccountController {
     TextField emailtxtField, firstNametxtField, lastNametxtField, passwordtxtField, addresstxtField, phonetxtField;
 
     @FXML
-    Label successLabel;
+    Label successLabel, firstNameError, lastNameError, emailError, passwordError, addressError, phoneError, unfilledError;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -46,33 +46,75 @@ public class CreateAccountController {
     }
 
     public void registerPressed() {
-        try {
-            User user = new User(emailtxtField.getText(), passwordtxtField.getText(),false, firstNametxtField.getText(),
-                    lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(),dbConnector.tableSizeAccount("account")+1);
+
+
+        if(!firstNametxtField.getText().isEmpty() || !lastNametxtField.getText().isEmpty() || !emailtxtField.getText().isEmpty()||
+                !passwordtxtField.getText().isEmpty() || !addresstxtField.getText().isEmpty() || !phonetxtField.getText().isEmpty()){
+
+            firstNameError.setVisible(false);
+            lastNameError.setVisible(false);
+            emailError.setVisible(false);
+            passwordError.setVisible(false);
+            addressError.setVisible(false);
+            phoneError.setVisible(false);
+            if (firstNametxtField.getText().isEmpty()) {
+                unfilledError.setText("All fields with * must be filled");
+                firstNameError.setVisible(true);
+            }
+            if (lastNametxtField.getText().isEmpty()) {
+                unfilledError.setText("All fields with * must be filled");
+                lastNameError.setVisible(true);
+            }
+            if (emailtxtField.getText().isEmpty()) {
+                unfilledError.setText("All fields with * must be filled");
+                emailError.setVisible(true);
+            }
+            if (passwordtxtField.getText().isEmpty()) {
+                unfilledError.setText("All fields with * must be filled");
+                passwordError.setVisible(true);
+            }
+            if (addresstxtField.getText().isEmpty()) {
+                unfilledError.setText("All fields with * must be filled");
+                addressError.setVisible(true);
+            }
+            if (phonetxtField.getText().isEmpty()) {
+                unfilledError.setText("All fields with * must be filled");
+                phoneError.setVisible(true);
+            }
+
+            }
+         else if (!firstNametxtField.getText().isEmpty() && !lastNametxtField.getText().isEmpty() && !emailtxtField.getText().isEmpty()&&
+        !passwordtxtField.getText().isEmpty() && !addresstxtField.getText().isEmpty() && !phonetxtField.getText().isEmpty()){
             dbConnector.connect();
-            dbConnector.addUserToDb(user);
-            dbConnector.disconnect();
+            try {
+                User user = new User(emailtxtField.getText(), passwordtxtField.getText(), false, firstNametxtField.getText(),
+                        lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(), dbConnector.tableSizeAccount() + 1);
+                dbConnector.addUserToDb(user);
 
-        } catch (IllegalFormatException e) {
-            System.out.println("Error");
+
+            } catch (IllegalFormatException e) {
+                System.out.println("Error");
+            } finally {
+                dbConnector.disconnect();
+            }
+            Stage window = new Stage();
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("Registration");
+            window.setMinWidth(250);
+            Label label = new Label();
+            label.setText("Registration completed successfully");
+            Button closeButton = new Button("Ok");
+            closeButton.setOnAction(e -> window.close());
+
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(label, closeButton);
+            layout.setAlignment(Pos.CENTER);
+
+            Scene scene = new Scene(layout);
+            window.setScene(scene);
+            window.showAndWait();
+
         }
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Registration");
-        window.setMinWidth(250);
-        Label label = new Label();
-        label.setText("Registration completed successfully");
-        Button closeButton = new Button("Ok");
-        closeButton.setOnAction(e -> window.close());
-
-        VBox layout = new VBox(10);
-        layout.getChildren().addAll(label,closeButton);
-        layout.setAlignment(Pos.CENTER);
-
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
-        window.showAndWait();
-
     }
 }
 
