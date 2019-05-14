@@ -46,4 +46,25 @@ public class User extends Account {
     public boolean isAdmin() {
         return admin;
     }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPhoneNr(String phoneNr) {
+        this.phoneNr = phoneNr;
+    }
 }

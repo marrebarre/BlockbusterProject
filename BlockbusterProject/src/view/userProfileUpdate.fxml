@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserProfileUpdateController">
+   <children>
+      <Label fx:id="phonenumberLabel" layoutX="71.0" layoutY="297.0" text="Phone number:" />
+      <Label fx:id="emailLabel" layoutX="105.0" layoutY="182.0" text="E-mail:" />
+      <Label fx:id="lastnameLabel" layoutX="94.0" layoutY="121.0" text="Last name:" />
+      <Label fx:id="addressLabel" layoutX="100.0" layoutY="238.0" text="Address:" />
+      <Label fx:id="firstnameLabel" layoutX="94.0" layoutY="59.0" text="First name:" />
+      <TextField fx:id="firstnameText" layoutX="174.0" layoutY="55.0" />
+      <TextField fx:id="lastnameText" layoutX="174.0" layoutY="117.0" />
+      <TextField fx:id="emailText" layoutX="174.0" layoutY="178.0" />
+      <TextField fx:id="addressText" layoutX="174.0" layoutY="234.0" />
+      <TextField fx:id="phonenumberText" layoutX="174.0" layoutY="293.0" />
+      <Button fx:id="updateBtn" layoutX="427.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleUpdateBtn" text="Update information" />
+      <Button fx:id="backBtn" layoutX="466.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleBackBtn" text="Back" />
+   </children>
+</AnchorPane>
