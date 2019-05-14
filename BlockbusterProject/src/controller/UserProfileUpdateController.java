@@ -14,14 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Logic;
 import model.User;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class UserProfileUpdateController implements Initializable {
-
 
     @FXML
     private Label phonenumberLabel;
@@ -69,8 +67,8 @@ public class UserProfileUpdateController implements Initializable {
   //  String username = LoginScreenController.getCurrentUser(); So later we can get the current users email and exequte sql queries.
     //                                                          It will display current users information. It can be used when displaying a users rental history
 
-    User user = new User("","",false,"","",0,"","",1);
-    Logic logic = new Logic();
+    private User user = new User("","",false,"","",0,"","",1);
+    private Logic logic = new Logic();
     @FXML
     void handleBackBtn(ActionEvent event) {
         try {
@@ -84,7 +82,6 @@ public class UserProfileUpdateController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
