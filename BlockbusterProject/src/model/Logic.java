@@ -34,4 +34,17 @@ public class Logic {
             e.printStackTrace();
         }
     }
+    public void openSceneInNewWindow(String fxmlPath,String title){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource(fxmlPath));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+
+        }
+    }
 }
