@@ -129,4 +129,8 @@ public class Movie {
     public void setIdMovie(int idMovie) {
         this.idMovie = idMovie;
     }
+
+    public String toString(){
+        return title;
+    }
 }

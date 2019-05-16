@@ -8,6 +8,7 @@ import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DbConnector {
@@ -16,6 +17,7 @@ public class DbConnector {
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
+    public List<Movie> movies = new ArrayList<>();
 
     public Connection connect() {
         try {
@@ -449,38 +451,53 @@ public class DbConnector {
         disconnect(); //do for all!
         return phoneNr;
     }
-/*
+
         //Krillepille (all images put into a list from database, to later be displayed)
 
-    public ObservableList<Movie> familyMovieImage() throws FileNotFoundException {
+    public List<Movie> searchMovieByGenre(String genre)  {
 
         connect();
-        ObservableList<Movie> movieList = FXCollections.observableArrayList();
-        String genre = "Family";
-        String query = "SELECT image FROM movie WHERE genre = '" + genre + "'";
+        movies.clear();
+        String query = "SELECT title FROM movie WHERE genre = '" + genre + "'";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                Movie movie = new Movie("","",0, Movie.Genre.Action,"",0);
-              //  movie.setImage(resultSet.getBlob(1));
-                    InputStream is = resultSet.getBinaryStream("pimg");
-                    OutputStream os= new FileOutputStream(new File("pic.jpg"));
-                    byte[] content= new byte[1024];
-                    int size=0;
-                    while((size = is.read(content))!=-1){
+            while (resultSet.next()) {
+                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0);
+                movie.setTitle(resultSet.getString(1));
+                movies.add(movie);
 
-                        os.write(content, 0,size);
-                    }
-                    os.close();
-                    is.close();
             }
         } catch (SQLException s) {
             s.printStackTrace();
         }
-        return movieList;
+        System.out.println(movies);
+        return movies;
     }
-    */
+    //krillepille
+    public List<Movie> getMovieTitle(String title) {
+        connect();
+        movies.clear();
+        String query = "SELECT title FROM movie WHERE title LIKE '"+ title+"%' ";
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            resultSet = preparedStmt.executeQuery();
+
+            while (resultSet.next()) {
+                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0);
+                movie.setTitle(resultSet.getString(1));
+                movies.add(movie);
+
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+         System.out.println(movies);
+        disconnect(); //do for all!
+        return movies;
+    }
+
 }
 
 
