@@ -30,7 +30,7 @@
 }*/
 
 .image-view:hover {
-    -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 10, 0);
+    -fx-effect: dropshadow(two-pass-box, #343434, 14, 0.0 , 10, 0);
     -fx-scale-x: 1.75;
     -fx-scale-y: 1.75;
     -fx-scale-z: 1.75;

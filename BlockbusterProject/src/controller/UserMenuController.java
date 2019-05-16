@@ -3,34 +3,20 @@ package controller;
 import data.DbConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.Logic;
 import model.Movie;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
-
-
-    public class UserMenuController {
-
         @FXML
         ImageView aStarIsBorn, inception;
 
@@ -76,7 +62,6 @@ public class UserMenuController implements Initializable {
             sortBox.getItems().add("Adventure");
             sortBox.getItems().add("Drama");
             sortBox.getItems().add("Family");
-
             sortBox.setOnAction(event -> {
                 String choice = sortBox.getSelectionModel().getSelectedItem();
                 if (choice == "Action") {
@@ -89,9 +74,7 @@ public class UserMenuController implements Initializable {
                 } else if (choice == "Family") {
                     dbConnector.searchMovieByGenre("Family");
                 }
-
             });
-
         }
     }
 }
