@@ -29,7 +29,6 @@ import java.util.ResourceBundle;
 public class UserMenuController implements Initializable {
 
 
-    public class UserMenuController {
 
         @FXML
         ImageView aStarIsBorn, inception;
@@ -94,4 +93,3 @@ public class UserMenuController implements Initializable {
 
         }
     }
-}

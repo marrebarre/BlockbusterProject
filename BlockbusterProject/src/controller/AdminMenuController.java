@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import model.Logic;
 import model.Movie;
@@ -76,6 +77,12 @@ public class AdminMenuController implements Initializable {
     @FXML
     TableColumn<Movie, Integer> colMovieQuantity;
     // ------------------------------------
+    @FXML
+    ComboBox<Boolean> isAdminCombo;
+    @FXML
+    TextField editEmail, editUseridTxtField, editPassword,editBalance,editFirstname,editLastname,editAddress,editPhoneNr;
+    @FXML
+    Pane editUserPane;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -228,10 +235,37 @@ public class AdminMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         genreComboBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
         editMovieGenreBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
+        isAdminCombo.getItems().addAll(true,false);
         editPane.setVisible(false);
+        editUserPane.setVisible(false);
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         hBox.setLayoutX(bounds.getWidth());
         hBox.setLayoutY(bounds.getHeight());
+    }
+    public void editUserIdPressed(){
+
+        if(!editUseridTxtField.getText().equals("")){
+            User user;
+            try{
+
+               user = dbConnector.findUser(Integer.parseInt(editUseridTxtField.getText()));
+               editEmail.setText(user.getEmail());
+               editPassword.setText(user.getPassword());
+               editBalance.setText(String.valueOf(user.getBalance()));
+               editFirstname.setText(user.getFirstName());
+               editLastname.setText(user.getLastName());
+               editAddress.setText(user.getAddress());
+               editPhoneNr.setText(user.getPhoneNr());
+               isAdminCombo.setValue(user.isAdmin());
+            }catch(Exception e){
+                System.out.println("something went wrong...");
+                e.printStackTrace();
+            }
+            editUserPane.setVisible(true);
+            editUseridTxtField.setEditable(false);
+        }else{
+            alert("You must choose an User ID", Alert.AlertType.WARNING);
+        }
     }
 }

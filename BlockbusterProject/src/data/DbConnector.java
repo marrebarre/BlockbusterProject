@@ -241,7 +241,36 @@ public class DbConnector {
             System.out.println("Something went wrong!");
             e.printStackTrace();
         }
-    }//Krillepille
+    }
+    public User findUser(int i){
+        connect();
+        User user = null;
+        String query = "SELECT * FROM account WHERE idUser = ?";
+
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1,i);
+           resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                user = new User(
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getBoolean("admin"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getDouble("balance"),
+                        resultSet.getString("address"),
+                        resultSet.getString("PhoneNr"),
+                        resultSet.getInt("idUser")
+                );
+            }
+        }catch (SQLException e){
+        }finally {
+            disconnect();
+        }
+        return user;
+    }
+    //Krillepille
     public void updateFirstName(int idUser, User user) throws SQLException {
 
         connect();
