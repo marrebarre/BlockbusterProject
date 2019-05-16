@@ -77,4 +77,3 @@ public class UserMenuController implements Initializable {
             });
         }
     }
-}
