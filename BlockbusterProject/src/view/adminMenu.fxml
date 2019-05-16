@@ -121,6 +121,7 @@
                                     <TextField fx:id="editFirstname" layoutX="224.0" prefHeight="25.0" prefWidth="74.0" />
                                  </children>
                               </Pane>
+                              <Button layoutX="26.0" layoutY="338.0" mnemonicParsing="false" onAction="#updateUserInfoPressed" text="Update user information" />
                                     </children></AnchorPane>
                             </content>
                         </Tab>

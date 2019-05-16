@@ -268,4 +268,15 @@ public class AdminMenuController implements Initializable {
             alert("You must choose an User ID", Alert.AlertType.WARNING);
         }
     }
+    public void updateUserInfoPressed(){
+        dbConnector.updateUserInfo("account","email","idUser", Integer.parseInt(editUseridTxtField.getText()),editEmail.getText());
+        dbConnector.updateUserInfo("account","password","idUser",Integer.parseInt(editUseridTxtField.getText()),editPassword.getText());
+        dbConnector.updateUserInfo("account","balance","idUser",Integer.parseInt(editUseridTxtField.getText()),Double.parseDouble(editBalance.getText()));
+        dbConnector.updateUserInfo("account","firstName","idUser",Integer.parseInt(editUseridTxtField.getText()),editFirstname.getText());
+        dbConnector.updateUserInfo("account","lastName","idUser",Integer.parseInt(editUseridTxtField.getText()),editLastname.getText());
+        dbConnector.updateUserInfo("account","address","idUser",Integer.parseInt(editUseridTxtField.getText()),editAddress.getText());
+        dbConnector.updateUserInfo("account","phoneNr","idUser",Integer.parseInt(editUseridTxtField.getText()),editPhoneNr.getText());
+        dbConnector.updateUserInfo("account","admin","idUser",Integer.parseInt(editUseridTxtField.getText()),isAdminCombo.getValue());
+
+    }
 }
