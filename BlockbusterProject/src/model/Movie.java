@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Date;
-
 public class Movie {
 
     public enum Genre {
@@ -20,8 +18,9 @@ public class Movie {
     private String releaseYear;
     private int quantity;
     private int idMovie;
+    private String imagePath;
 
-    public Movie(int idMovie, String title, String director, double price, Genre genre, String releaseYear, int quantity) {
+    public Movie(int idMovie, String title, String director, double price, Genre genre, String releaseYear, int quantity, String imagePath) {
         this.idMovie = idMovie;
         this.title = title;
         this.director = director;
@@ -29,6 +28,7 @@ public class Movie {
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.quantity = quantity;
+        this.imagePath = imagePath;
     }
 
     public String getTitle() {
@@ -60,9 +60,7 @@ public class Movie {
     }
 
     public String getGenreAsString() {
-
         switch (this.genre){
-
             case Action: return "Action";
             case Drama: return "Drama";
             case Scifi: return "Sci-fi";
@@ -74,9 +72,7 @@ public class Movie {
         }
     }
     public static String getGenreAsString(Genre genre) {
-
         switch (genre){
-
             case Action: return "Action";
             case Drama: return "Drama";
             case Scifi: return "Sci-fi";
@@ -88,9 +84,7 @@ public class Movie {
         }
     }
     public static Genre getStringAsGenre(String string) {
-
         switch (string){
-
             case "Action": return Genre.Action;
             case "Drama": return Genre.Drama;
             case "Sci-fi": return Genre.Scifi;
@@ -98,7 +92,6 @@ public class Movie {
             case "Horror": return Genre.Horror;
             case "Adventure": return Genre.Adventure;
             default: return null;
-
         }
     }
 
@@ -132,5 +125,13 @@ public class Movie {
 
     public String toString(){
         return title;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
