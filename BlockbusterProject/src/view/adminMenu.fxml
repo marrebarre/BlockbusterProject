@@ -71,7 +71,7 @@
                                           <Button fx:id="doneBtn" layoutX="500.0" layoutY="5.0" mnemonicParsing="false" onAction="#doneEditing" text="Done" />
                                        </children>
                                     </AnchorPane>
-                                              <Button fx:id="btnLogOut" layoutX="854.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
+                                              <Button fx:id="btnLogOut" layoutX="840.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
                                  </children>
                               </AnchorPane>
                            </children>

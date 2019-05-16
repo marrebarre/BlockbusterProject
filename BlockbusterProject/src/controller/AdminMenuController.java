@@ -3,25 +3,18 @@ package controller;
 import data.DbConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
 import model.Logic;
 import model.Movie;
 import model.User;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
@@ -30,16 +23,12 @@ public class AdminMenuController implements Initializable {
 
     @FXML
     ComboBox<Movie.Genre> genreComboBox = new ComboBox<>(), editMovieGenreBox = new ComboBox<>();
-
     @FXML
     TextField titleTxt, directorTxt, priceTxt, releaseYearTxt, quantityTxt;
-
     @FXML
     TableView<User> accountTable;
-
     @FXML
     Button btnLogOut;
-
     @FXML
     TableColumn<User, String> emailcol;
     @FXML
@@ -59,14 +48,13 @@ public class AdminMenuController implements Initializable {
     @FXML
     TableColumn<User, Boolean> isadmincol;
 
-    @FXML
     //Edit movie feature
-            TextField editMovieTxt, editMovieTitle, editMovieDirector, editMoviePrice, editMovieYear, editMovieQuantity;
+    @FXML
+    TextField editMovieTxt, editMovieTitle, editMovieDirector, editMoviePrice, editMovieYear, editMovieQuantity;
     @FXML
     Button doneBtn;
     @FXML
     AnchorPane editPane;
-
     @FXML
     HBox hBox;
 
@@ -90,20 +78,16 @@ public class AdminMenuController implements Initializable {
     // ------------------------------------
 
     private DbConnector dbConnector = new DbConnector();
-    private Logic logic;
+    private Logic logic = new Logic();
     private ObservableList<User> observableList = FXCollections.observableArrayList();
     private ObservableList<Movie> observableListMovie = FXCollections.observableArrayList();
 
-
     public void addMoviePressed() {
-        if (titleTxt.getText().equals("") || (directorTxt.getText().equals("")) || priceTxt.getText().equals("") || releaseYearTxt.getText().equals("") || quantityTxt.getText().equals("")){
+        if (titleTxt.getText().equals("") || (directorTxt.getText().equals("")) || priceTxt.getText().equals("") || releaseYearTxt.getText().equals("") || quantityTxt.getText().equals("")) {
             alert("Make sure to fill all fields before clicking add.", Alert.AlertType.WARNING);
-        }else{
-
-
+        } else {
             try {
-                Movie movie = new Movie(dbConnector.tableSize("movie")+1,titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(),Integer.parseInt(quantityTxt.getText()));
-
+                Movie movie = new Movie(dbConnector.tableSize("movie") + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()));
                 dbConnector.connect();
                 dbConnector.addMovieToDB(movie);
                 titleTxt.clear();
@@ -112,18 +96,17 @@ public class AdminMenuController implements Initializable {
                 releaseYearTxt.clear();
                 quantityTxt.clear();
                 genreComboBox.setValue(null);
-            }catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 System.out.println("Wrong data type");
                 alert("Wrong data type entered. Please make sure to use dot's instead of comma's. Careful with special signs.", Alert.AlertType.WARNING);
-
             } finally {
                 dbConnector.disconnect();
             }
         }
     }
 
-    public void editMovie(){
-        if (!editMovieTxt.getText().equals("")){
+    public void editMovie() {
+        if (!editMovieTxt.getText().equals("")) {
             Movie movie;
             try {
                 movie = dbConnector.findMovieById(Integer.parseInt(editMovieTxt.getText()));
@@ -133,19 +116,18 @@ public class AdminMenuController implements Initializable {
                 editMovieGenreBox.setValue(movie.getGenre());
                 editMovieYear.setText(movie.getReleaseYear());
                 editMovieQuantity.setText(String.valueOf(movie.getQuantity()));
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Something went wrong when loading to textfields.");
                 alert("Something went wrong..", Alert.AlertType.WARNING);
             }
-
             editPane.setVisible(true);
             editMovieTxt.setEditable(false);
-        }else{
+        } else {
             alert("Enter ID of the movie you would like to edit.", Alert.AlertType.INFORMATION);
         }
-
     }
-    public void doneEditing(){
+
+    public void doneEditing() {
         try {
             dbConnector.updateTableColumnById("movie", "title", "idMovie", Integer.parseInt(editMovieTxt.getText()), editMovieTitle.getText());
             dbConnector.updateTableColumnById("movie", "director", "idMovie", Integer.parseInt(editMovieTxt.getText()), editMovieDirector.getText());
@@ -153,23 +135,21 @@ public class AdminMenuController implements Initializable {
             dbConnector.updateTableColumnById("movie", "genre", "idMovie", Integer.parseInt(editMovieTxt.getText()), Movie.getGenreAsString(editMovieGenreBox.getValue()));
             dbConnector.updateTableColumnById("movie", "releaseYear", "idMovie", Integer.parseInt(editMovieTxt.getText()), editMovieYear.getText());
             dbConnector.updateTableColumnById("movie", "quantity", "idMovie", Integer.parseInt(editMovieTxt.getText()), Integer.parseInt(editMovieQuantity.getText()));
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Somwthing went wrong when trying to update database information.");
             alert("Something went wrong..", Alert.AlertType.WARNING);
         }
-
         editMovieTxt.setEditable(true);
         editPane.setVisible(false);
     }
 
-    public void loadMovieTable(){
+    public void loadMovieTable() {
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie");
             dbConnector.resultSet = ps.executeQuery();
             observableListMovie.clear();
-            while (dbConnector.resultSet.next()){
-
+            while (dbConnector.resultSet.next()) {
                 Movie movie = new Movie(
                         dbConnector.resultSet.getInt("idMovie"),
                         dbConnector.resultSet.getString("title"),
@@ -179,12 +159,11 @@ public class AdminMenuController implements Initializable {
                         dbConnector.resultSet.getString("releaseYear"),
                         dbConnector.resultSet.getInt("quantity")
                 );
-
                 observableListMovie.add(movie);
             }
-        }catch (Exception e){
-
-        }finally {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             dbConnector.disconnect();
         }
         colMovieId.setCellValueFactory(new PropertyValueFactory<>("idMovie"));
@@ -194,11 +173,10 @@ public class AdminMenuController implements Initializable {
         colMovieGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         colMovieYear.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
         colMovieQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
         movieTable.setItems(observableListMovie);
     }
 
-    public static void alert(String message, Alert.AlertType alertType){
+    public static void alert(String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setContentText(message);
         alert.setHeaderText("We got a message for you");
@@ -207,7 +185,6 @@ public class AdminMenuController implements Initializable {
     }
 
     public void viewListbtn() {
-
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM account");
@@ -242,13 +219,9 @@ public class AdminMenuController implements Initializable {
         accountTable.setItems(observableList);
     }
 
-    public void btnPressedLogOut(MouseEvent event) throws IOException {
-        Parent createAccountParent = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
-        Scene createAccountScene = new Scene(createAccountParent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setMaximized(false);
-        window.setScene(createAccountScene);
-        window.show();
+    public void btnPressedLogOut(ActionEvent event){
+        String logInFXML = "/view/loginScreenRedux.fxml";
+        logic.changeSceneHandler(event, logInFXML, false);
     }
 
     @Override

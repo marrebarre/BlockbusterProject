@@ -13,7 +13,7 @@
             <Font name="System Bold Italic" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="backToLoginbtn" layoutX="1047.0" layoutY="634.0" mnemonicParsing="false" onAction="#backtoLogin" prefHeight="49.0" prefWidth="174.0" text="Back to login &gt;&gt;" />
+      <Button fx:id="backToLoginbtn" layoutX="1047.0" layoutY="634.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="49.0" prefWidth="174.0" text="Back to login &gt;&gt;" />
       <TextField fx:id="emailtxtField" layoutX="124.0" layoutY="166.0" prefHeight="25.0" prefWidth="297.0" promptText="E-mail Address">
          <font>
             <Font name="Lucida Bright Demibold" size="12.0" />
