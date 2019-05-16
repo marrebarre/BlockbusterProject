@@ -243,7 +243,64 @@ public class DbConnector {
             System.out.println("Something went wrong!");
             e.printStackTrace();
         }
-    }//Krillepille
+    }
+    public User findUser(int i){
+        connect();
+        User user = null;
+        String query = "SELECT * FROM account WHERE idUser = ?";
+
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1,i);
+           resultSet = ps.executeQuery();
+            while(resultSet.next()){
+                user = new User(
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getBoolean("admin"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
+                        resultSet.getDouble("balance"),
+                        resultSet.getString("address"),
+                        resultSet.getString("PhoneNr"),
+                        resultSet.getInt("idUser")
+                );
+            }
+        }catch (SQLException e){
+        }finally {
+            disconnect();
+        }
+        return user;
+    }
+        public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser,  T data ){
+        connect();
+        try{
+        String query = "UPDATE " +table+ " SET " +column+ " = ? WHERE " +idNameTable+ " = " + iduser;
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            if(data instanceof String){
+                String temp = (String) data;
+                ps.setString(1,temp);
+            }else if(data instanceof Integer){
+                int temp = (Integer) data;
+                ps.setInt(1,temp);
+            }else if(data instanceof Double){
+                Double temp = (Double) data;
+                ps.setDouble(1,temp);
+            }else if(data instanceof Boolean){
+                Boolean temp = (Boolean) data;
+                ps.setBoolean(1,temp);
+            }
+            ps.executeUpdate();
+
+        }catch (SQLException e){
+            System.out.println("Something went wrong...");
+            e.printStackTrace();
+        }finally {
+            disconnect();
+        }
+        }
+    //Krillepille
     public void updateFirstName(int idUser, User user) throws SQLException {
 
         connect();

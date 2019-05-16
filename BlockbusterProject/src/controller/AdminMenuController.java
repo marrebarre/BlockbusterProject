@@ -12,11 +12,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
+import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import model.Logic;
 import model.Movie;
 import model.User;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -87,35 +87,17 @@ public class AdminMenuController implements Initializable {
     @FXML
     TableColumn<Movie, Integer> colMovieQuantity;
     // ------------------------------------
+    @FXML
+    ComboBox<Boolean> isAdminCombo;
+    @FXML
+    TextField editEmail, editUseridTxtField, editPassword,editBalance,editFirstname,editLastname,editAddress,editPhoneNr;
+    @FXML
+    Pane editUserPane;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
     private ObservableList<User> observableList = FXCollections.observableArrayList();
     private ObservableList<Movie> observableListMovie = FXCollections.observableArrayList();
-
-    /*public void addImageToMovie() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg"));
-        File selectedFile = fileChooser.showOpenDialog(null);
-        String imagePath;
-        if (selectedFile != null) {
-            Path movefrom = FileSystems.getDefault().getPath(selectedFile.getPath());
-            //Path target = FileSystems.getDefault().getPath("/src/Images/"+selectedFile.getName());
-            Path targetDir = FileSystems.getDefault().getPath("C:\\Users\\Max\\Documents\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\Images\\" + selectedFile.getName());
-            try {
-                Files.move(movefrom, targetDir, StandardCopyOption.REPLACE_EXISTING);
-                imagePath = targetDir.toString();
-                System.out.println(imagePath);
-                System.out.println("File copied successfully!");
-                verifyImageAdded.setText("Image successfully added!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("File chosen isn't valid");
-        }
-    }*/
-
 
     public void addMoviePressed() {
         if (titleTxt.getText().equals("") || (directorTxt.getText().equals("")) || priceTxt.getText().equals("") || releaseYearTxt.getText().equals("") || quantityTxt.getText().equals("")) {
@@ -284,10 +266,48 @@ public class AdminMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         genreComboBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
         editMovieGenreBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
+        isAdminCombo.getItems().addAll(true,false);
         editPane.setVisible(false);
+        editUserPane.setVisible(false);
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         hBox.setLayoutX(bounds.getWidth());
         hBox.setLayoutY(bounds.getHeight());
+    }
+    public void editUserIdPressed(){
+
+        if(!editUseridTxtField.getText().equals("")){
+            User user;
+            try{
+
+               user = dbConnector.findUser(Integer.parseInt(editUseridTxtField.getText()));
+               editEmail.setText(user.getEmail());
+               editPassword.setText(user.getPassword());
+               editBalance.setText(String.valueOf(user.getBalance()));
+               editFirstname.setText(user.getFirstName());
+               editLastname.setText(user.getLastName());
+               editAddress.setText(user.getAddress());
+               editPhoneNr.setText(user.getPhoneNr());
+               isAdminCombo.setValue(user.isAdmin());
+            }catch(Exception e){
+                System.out.println("something went wrong...");
+                e.printStackTrace();
+            }
+            editUserPane.setVisible(true);
+            editUseridTxtField.setEditable(false);
+        }else{
+            alert("You must choose an User ID", Alert.AlertType.WARNING);
+        }
+    }
+    public void updateUserInfoPressed(){
+        dbConnector.updateUserInfo("account","email","idUser", Integer.parseInt(editUseridTxtField.getText()),editEmail.getText());
+        dbConnector.updateUserInfo("account","password","idUser",Integer.parseInt(editUseridTxtField.getText()),editPassword.getText());
+        dbConnector.updateUserInfo("account","balance","idUser",Integer.parseInt(editUseridTxtField.getText()),Double.parseDouble(editBalance.getText()));
+        dbConnector.updateUserInfo("account","firstName","idUser",Integer.parseInt(editUseridTxtField.getText()),editFirstname.getText());
+        dbConnector.updateUserInfo("account","lastName","idUser",Integer.parseInt(editUseridTxtField.getText()),editLastname.getText());
+        dbConnector.updateUserInfo("account","address","idUser",Integer.parseInt(editUseridTxtField.getText()),editAddress.getText());
+        dbConnector.updateUserInfo("account","phoneNr","idUser",Integer.parseInt(editUseridTxtField.getText()),editPhoneNr.getText());
+        dbConnector.updateUserInfo("account","admin","idUser",Integer.parseInt(editUseridTxtField.getText()),isAdminCombo.getValue());
+
     }
 }

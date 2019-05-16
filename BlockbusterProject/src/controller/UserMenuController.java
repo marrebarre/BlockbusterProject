@@ -33,6 +33,8 @@ public class UserMenuController implements Initializable {
     @FXML
     Button btnLogOut;
 
+
+
     @FXML
     private ComboBox<String> sortBox;
 
@@ -118,6 +120,9 @@ public class UserMenuController implements Initializable {
 //?
     }
 
+
+        }
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sortBox.getItems().add("Action");
@@ -139,3 +144,4 @@ public class UserMenuController implements Initializable {
         });
     }
 }
+
