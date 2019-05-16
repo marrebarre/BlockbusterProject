@@ -79,3 +79,6 @@
     -fx-background-radius: 3,2,2,2;
     -fx-text-fill: white;
 }
+.scroll-pane{
+   -fx-background-color:transparent;
+}
