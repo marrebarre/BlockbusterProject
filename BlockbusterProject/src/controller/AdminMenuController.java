@@ -279,7 +279,6 @@ public class AdminMenuController implements Initializable {
         if(!editUseridTxtField.getText().equals("")){
             User user;
             try{
-
                user = dbConnector.findUser(Integer.parseInt(editUseridTxtField.getText()));
                editEmail.setText(user.getEmail());
                editPassword.setText(user.getPassword());

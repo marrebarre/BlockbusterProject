@@ -120,9 +120,6 @@ public class UserMenuController implements Initializable {
 //?
     }
 
-
-        }
-    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sortBox.getItems().add("Action");
