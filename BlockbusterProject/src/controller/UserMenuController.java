@@ -64,14 +64,13 @@ public class UserMenuController implements Initializable {
         List<Movie> movieTitle = dbConnector.getMovieTitle(searchField.getText());
         // title should be displayed with matching photo :)
     }
-
     public void loadBrowse() {
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie");
             dbConnector.resultSet = ps.executeQuery();
-
             while (dbConnector.resultSet.next()) {
+                String imagePath;
                 Movie movie = new Movie(
                         dbConnector.resultSet.getInt("idMovie"),
                         dbConnector.resultSet.getString("title"),
@@ -79,48 +78,37 @@ public class UserMenuController implements Initializable {
                         dbConnector.resultSet.getDouble("price"),
                         Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
                         dbConnector.resultSet.getString("releaseYear"),
-                        dbConnector.resultSet.getInt("quantity")
+                        dbConnector.resultSet.getInt("quantity"),
+                        imagePath = dbConnector.resultSet.getString("imagePath")
                 );
                 TilePane tempTilePane = new TilePane();
                 tempTilePane.setPrefColumns(1);
-                tempTilePane.setPrefRows(3);
+                tempTilePane.setPrefRows(8);
                 tempTilePane.setPadding(new Insets(30));
-
-                Label tempLabel = new Label();
-                tempLabel.setText(movie.getTitle());
-                tempLabel.setStyle("-fx-font-size: 24;");
-
                 ImageView tempImageView = new ImageView();
-                tempImageView.setFitHeight(160);
-                tempImageView.setFitWidth(110);
-                Image image = new Image("/Images/dvbackground.jpg");
+                tempImageView.setFitHeight(200);
+                tempImageView.setFitWidth(133);
+                Image image = new Image(imagePath);
                 tempImageView.setImage(image);
-                tempImageView.setOnMouseClicked(new EventHandler<MouseEvent>(){
-                    @Override public void handle(MouseEvent e) {
-                        RentMovieController.setMovieToRent(movie);
-                        logic.openSceneInNewWindow("/view/rentMovie.fxml","Rent Movie");
-                    }
-
+                tempImageView.setOnMouseClicked(e -> {
+                    RentMovieController.setMovieToRent(movie);
+                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
                 });
 
-                Button tempButton = new Button();
+                /*Button tempButton = new Button();
                 tempButton.setText("Rent");
-                tempButton.setOnAction(new EventHandler<ActionEvent>(){
-                    @Override public void handle(ActionEvent e) {
-                        RentMovieController.setMovieToRent(movie);
-                        logic.openSceneInNewWindow("/view/rentMovie.fxml","Rent Movie");
-                    }
-
-                });
-
-                tempTilePane.getChildren().addAll( tempLabel, tempImageView, tempButton);
+                tempButton.setOnAction(e -> {
+                    RentMovieController.setMovieToRent(movie);
+                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
+                });*/
+                tempTilePane.getChildren().addAll(tempImageView/*, tempButton*/);
                 tilePaneBrowse.getChildren().add(tempTilePane);
-                tilePaneBrowse.setPrefColumns(5);
-
+                tilePaneBrowse.setPrefColumns(8);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ohShit");
-        }finally {
+            e.printStackTrace();
+        } finally {
             dbConnector.disconnect();
         }
     }

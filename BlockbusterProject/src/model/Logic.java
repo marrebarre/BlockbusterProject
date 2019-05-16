@@ -24,7 +24,6 @@ public class Logic {
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(parent1);
             stage.setMaximized(maximizeScene);
-            //System.out.println("Fullscreen status tracker: " + maximizeScene);
             if (maximizeScene){
                 setToFullscreen(stage);
             }
@@ -44,7 +43,7 @@ public class Logic {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 }

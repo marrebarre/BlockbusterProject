@@ -5,10 +5,8 @@ import javafx.scene.control.Alert;
 import model.Admin;
 import model.Movie;
 import model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DbConnector {
@@ -30,20 +28,22 @@ public class DbConnector {
     }
 
     public int tableSize(String tableName) {
+        connect();
         String temp = null;
         try {
+            System.out.println("tableSize tracker1");
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
             resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
                 temp = resultSet.getString("COUNT(idMovie)");
             }
-
         } catch (SQLException e) {
             System.out.println("Table Empty or does not exist.");
             e.printStackTrace();
         }
-
+        System.out.println("tableSize tracker2");
+        disconnect();
         return Integer.parseInt(temp);
     }
 
@@ -77,7 +77,8 @@ public class DbConnector {
                         resultSet.getDouble("price"),
                         Movie.getStringAsGenre(resultSet.getString("genre")),
                         resultSet.getString("releaseYear"),
-                        resultSet.getInt("quantity")
+                        resultSet.getInt("quantity"),
+                        resultSet.getString("imagePath")
                 );
             }
         } catch (SQLException e) {
@@ -90,7 +91,7 @@ public class DbConnector {
 
     public void addMovieToDB(Movie movie) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre, releaseYear, quantity) VALUES (?,?,?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre, releaseYear, quantity, imagePath) VALUES (?,?,?,?,?,?,?,?)");
             ps.setInt(1, movie.getIdMovie());
             ps.setString(2, movie.getTitle());
             ps.setString(3, movie.getDirector());
@@ -98,6 +99,7 @@ public class DbConnector {
             ps.setString(5, movie.getGenreAsString());
             ps.setString(6, movie.getReleaseYear());
             ps.setInt(7, movie.getQuantity());
+            ps.setString(8, movie.getImagePath());
 
             ps.executeUpdate();
             AdminMenuController.alert("Successfully added movie!", Alert.AlertType.INFORMATION);
@@ -463,7 +465,7 @@ public class DbConnector {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0);
+                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0, "");
                 movie.setTitle(resultSet.getString(1));
                 movies.add(movie);
 
@@ -484,7 +486,7 @@ public class DbConnector {
             resultSet = preparedStmt.executeQuery();
 
             while (resultSet.next()) {
-                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0);
+                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0, "");
                 movie.setTitle(resultSet.getString(1));
                 movies.add(movie);
 
