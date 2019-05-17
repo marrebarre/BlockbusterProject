@@ -43,16 +43,8 @@ public class Movie {
         return director;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
     public double getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public Genre getGenre() {
@@ -95,32 +87,16 @@ public class Movie {
         }
     }
 
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
     public String getReleaseYear() {
         return releaseYear;
-    }
-
-    public void setReleaseYear(String releaseYear) {
-        this.releaseYear = releaseYear;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public int getIdMovie() {
         return idMovie;
-    }
-
-    public void setIdMovie(int idMovie) {
-        this.idMovie = idMovie;
     }
 
     public String toString(){
@@ -131,7 +107,4 @@ public class Movie {
         return imagePath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 }

@@ -11,8 +11,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
 import model.Logic;
+import model.User;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable {
@@ -78,6 +80,7 @@ public class LoginScreenController implements Initializable {
         System.exit(0);
         System.out.println("Program closed");
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
