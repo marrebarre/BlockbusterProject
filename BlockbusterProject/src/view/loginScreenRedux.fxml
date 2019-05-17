@@ -52,9 +52,9 @@
     <left>
         <AnchorPane prefHeight="40.0" prefWidth="112.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="aStarIsBorn" fitHeight="96.0" fitWidth="128.0" layoutX="35.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="aStarIsBorn" fitHeight="96.0" fitWidth="101.0" layoutX="62.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/aStarIsBorn.jpg" />
+                  <Image url="@../Images/StarBorn.jpg" />
                </image>
             </ImageView>
          </children></AnchorPane>
