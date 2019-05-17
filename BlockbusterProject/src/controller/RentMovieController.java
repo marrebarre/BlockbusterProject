@@ -1,9 +1,17 @@
 package controller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Path;
+import javafx.stage.Stage;
 import model.Movie;
 import model.User;
 
@@ -16,6 +24,8 @@ public class RentMovieController implements Initializable {
 
     @FXML
     Label infoLbl;
+    @FXML
+    ImageView rentImageView;
 
     public static User balance;
 
@@ -33,6 +43,11 @@ public class RentMovieController implements Initializable {
         RentMovieController.movieToRent = movieToRent;
     }
 
+    public void close(ActionEvent event){
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Boolean inStock;
@@ -46,9 +61,12 @@ public class RentMovieController implements Initializable {
                         "\nDirector: " + movieToRent.getDirector() +
                         "\nGenre: " + movieToRent.getGenreAsString() +
                         "\nRelease Year: " + String.valueOf(movieToRent.getReleaseYear()) +
-                        "\nIn Stock: " + inStock +
-                        "\nPrice: " + String.valueOf(movieToRent.getPrice())
+                        "\n\nIn Stock: " + inStock +
+                        "\n\nPrice: " + String.valueOf(movieToRent.getPrice())+"$"
         );
+
+        Image image = new Image(movieToRent.getImagePath());
+        rentImageView.setImage(image);
     }
    /* public void rentPressed(){
 

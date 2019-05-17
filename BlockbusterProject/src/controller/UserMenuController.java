@@ -33,9 +33,6 @@ public class UserMenuController implements Initializable {
     private TextField searchField;
 
     @FXML
-    private Button searchBtn;
-
-    @FXML
     TilePane tilePaneBrowse;
 
     @FXML

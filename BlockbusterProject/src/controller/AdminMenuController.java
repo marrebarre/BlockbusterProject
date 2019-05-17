@@ -121,7 +121,7 @@ public class AdminMenuController implements Initializable {
                 } else {
                     System.out.println("File chosen isn't valid");
                 }
-                Movie movie = new Movie(dbConnector.tableSize("movie") + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()), "Images/"+imagePath);
+                Movie movie = new Movie(dbConnector.tableSizeMovie() + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()), "Images/"+imagePath);
                 System.out.println("TrackADMIN");
                 dbConnector.connect();
                 dbConnector.addMovieToDB(movie);

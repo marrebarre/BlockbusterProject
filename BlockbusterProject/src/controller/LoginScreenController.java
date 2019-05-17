@@ -75,6 +75,7 @@ public class LoginScreenController implements Initializable {
         System.out.println("Program closed");
     }
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         /*Image image = new Image("Images/BlockbusterLogo.png");

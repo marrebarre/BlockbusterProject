@@ -30,11 +30,11 @@ public class DbConnector {
         return connection;
     }
 
-    public int tableSize(String tableName) {
+    public int tableSizeMovie() {
         connect();
         String temp = null;
         try {
-            System.out.println("tableSize tracker1");
+            System.out.println("tableSizeMovie tracker1");
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
             resultSet = ps.executeQuery();
 
@@ -45,7 +45,7 @@ public class DbConnector {
             System.out.println("Table Empty or does not exist.");
             e.printStackTrace();
         }
-        System.out.println("tableSize tracker2");
+        System.out.println("tableSizeMovie tracker2");
         disconnect();
         return Integer.parseInt(temp);
     }
