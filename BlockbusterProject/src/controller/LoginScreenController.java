@@ -1,13 +1,21 @@
 package controller;
 
 import data.DbConnector;
+import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
 import model.Logic;
 
-public class LoginScreenController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginScreenController implements Initializable {
     @FXML
     TextField username = new TextField(), password = new TextField();
 
@@ -16,6 +24,8 @@ public class LoginScreenController {
 
     @FXML
     Button signIn, btnCreateAccount;
+    @FXML
+    ImageView aStarIsBorn;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -67,5 +77,27 @@ public class LoginScreenController {
     public void exitProgram() {
         System.exit(0);
         System.out.println("Program closed");
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Path path = new Path();
+        path.getElements().add(new MoveTo(0,0));
+        path.getElements().add(new LineTo(500,280));
+        path.getElements().add(new LineTo(630,50));
+        path.getElements().add(new LineTo(550,-10));
+        path.getElements().add((new LineTo(50,280)));
+        path.getElements().add(new LineTo(0,0));
+
+
+        PathTransition transition = new PathTransition();
+
+        transition.setNode(aStarIsBorn);
+        transition.setDuration(Duration.seconds(10));
+        transition.setPath(path);
+        transition.setAutoReverse(true);
+       // transition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        transition.setCycleCount(PathTransition.INDEFINITE);
+        transition.play();
     }
 }
