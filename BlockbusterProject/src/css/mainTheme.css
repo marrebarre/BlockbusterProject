@@ -8,27 +8,6 @@
     -fx-pref-height: 40;
 }
 
-/*
-.button {
-    -fx-background-color: red;
-    -fx-border: no;
-    -fx-color: white;
-    -fx-padding: 8px 16px;
-    -fx-text-align: center;
-    -fx-text-decoration: yes;
-    -fx-display: inline-block;
-    -fx-font-size: 16px;
-    -fx-margin: 3px 2px;
-    -fx-cursor: pointer;
-    -fx-effect: dropshadow(one-pass-box, black, 14, 0.0 , 6, 0);
-    -fx-background-radius: 8;
-}
-*/
-
-/*.button:hover {
-    -fx-background-color: white;
-}*/
-
 .image-view:hover {
     -fx-effect: dropshadow(two-pass-box, #343434, 14, 0.0 , 10, 0);
     -fx-scale-x: 1.75;
@@ -80,5 +59,9 @@
     -fx-text-fill: white;
 }
 .scroll-pane{
-   -fx-background-color:transparent;
+   -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
 }
