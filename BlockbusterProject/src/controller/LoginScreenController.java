@@ -1,31 +1,27 @@
 package controller;
 
 import data.DbConnector;
-import javafx.animation.PathTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.*;
-import javafx.util.Duration;
 import model.Logic;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginScreenController implements Initializable {
     @FXML
     TextField username = new TextField(), password = new TextField();
-
     @FXML
     Label forgotPW = new Label(), isConnected = new Label();
-
     @FXML
     Button signIn, btnCreateAccount;
     @FXML
     ImageView aStarIsBorn;
+    @FXML
+    ImageView imageSwap, logo;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -37,12 +33,12 @@ public class LoginScreenController implements Initializable {
             username.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
             password.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
         } else {
-            System.out.println("Enter email/username: " + username.getText() + "\nEnter password: " + password.getText() + "\n<><><><><><><><><>");
+            //System.out.println("Enter email/username: " + username.getText() + "\nEnter password: " + password.getText() + "\n<><><><><><><><><>");
             if (dbConnector.verifyAccount(username.getText(), password.getText())) {
-                if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.admins.isEmpty()){
+                if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.admins.isEmpty()) {
                     String adminMenuFXML = "/view/adminMenu.fxml";
                     logic.changeSceneHandler(event, adminMenuFXML, true);
-                } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.users.isEmpty()) {
+                } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !UserMenuController.loggedInUser.isAdmin()/*!dbConnector.users.isEmpty()*/)  {
                     String userMenuFXML = "/view/userMenu.fxml";
                     logic.changeSceneHandler(event, userMenuFXML, true);
                 } else {
@@ -57,7 +53,7 @@ public class LoginScreenController implements Initializable {
         }
     }
 
-    public void btnPressedCreateAccount(ActionEvent event){
+    public void btnPressedCreateAccount(ActionEvent event) {
         String createAccountFXML = "/view/createAccountScreen.fxml";
         logic.changeSceneHandler(event, createAccountFXML, true);
         /*createAccountParent.translateYProperty().set(createAccountScene.getHeight());
@@ -69,7 +65,7 @@ public class LoginScreenController implements Initializable {
         timeline.play();*/
     }
 
-    public void btnPressedForgotPW (MouseEvent event){
+    public void btnPressedForgotPW(MouseEvent event) {
         String forgotPasswordFXML = "/view/forgotPW.fxml";
         logic.changeSceneHandler(event, forgotPasswordFXML, false);
     }
@@ -81,7 +77,9 @@ public class LoginScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Path path = new Path();
+        /*Image image = new Image("Images/BlockbusterLogo.png");
+        logo.setImage(image);*/
+        /*Path path = new Path();
         path.getElements().add(new MoveTo(0,0));
         path.getElements().add(new LineTo(500,280));
         path.getElements().add(new LineTo(630,50));
@@ -89,15 +87,13 @@ public class LoginScreenController implements Initializable {
         path.getElements().add((new LineTo(50,280)));
         path.getElements().add(new LineTo(0,0));
 
-
         PathTransition transition = new PathTransition();
 
         transition.setNode(aStarIsBorn);
         transition.setDuration(Duration.seconds(10));
         transition.setPath(path);
         transition.setAutoReverse(true);
-       // transition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         transition.setCycleCount(PathTransition.INDEFINITE);
-        transition.play();
+        transition.play();*/
     }
 }

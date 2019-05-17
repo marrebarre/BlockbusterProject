@@ -2,12 +2,9 @@ package controller;
 
 import data.DbConnector;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -18,8 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import model.Logic;
 import model.Movie;
-
-import javax.swing.*;
+import model.User;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -28,12 +24,7 @@ import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
     @FXML
-    ImageView aStarIsBorn, inception;
-
-    @FXML
     Button btnLogOut;
-
-
 
     @FXML
     private ComboBox<String> sortBox;
@@ -47,9 +38,12 @@ public class UserMenuController implements Initializable {
     @FXML
     TilePane tilePaneBrowse;
 
+    @FXML
+    Label welcomeMessage;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
+    public static User loggedInUser;
 
     public void btnPressedLogOut(MouseEvent event) {
         String logOutFXML = "/view/loginScreenRedux.fxml";
@@ -97,12 +91,6 @@ public class UserMenuController implements Initializable {
                     logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
                 });
 
-                /*Button tempButton = new Button();
-                tempButton.setText("Rent");
-                tempButton.setOnAction(e -> {
-                    RentMovieController.setMovieToRent(movie);
-                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
-                });*/
                 tempTilePane.getChildren().addAll(tempImageView/*, tempButton*/);
                 tilePaneBrowse.getChildren().add(tempTilePane);
                 tilePaneBrowse.setPrefColumns(8);
@@ -122,6 +110,8 @@ public class UserMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadBrowse();
+        welcomeMessage.setText(loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
@@ -141,4 +131,3 @@ public class UserMenuController implements Initializable {
         });
     }
 }
-

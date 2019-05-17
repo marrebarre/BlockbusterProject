@@ -1,10 +1,13 @@
 package data;
 
 import controller.AdminMenuController;
+import controller.UserMenuController;
 import javafx.scene.control.Alert;
+import model.Account;
 import model.Admin;
 import model.Movie;
 import model.User;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +51,7 @@ public class DbConnector {
     }
 
     public int tableSizeAccount() {
-        String temp = null ;
+        String temp = null;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(idUser) FROM account");
             resultSet = preparedStatement.executeQuery();
@@ -82,7 +85,7 @@ public class DbConnector {
                 );
             }
         } catch (SQLException e) {
-
+            e.printStackTrace();
         } finally {
             disconnect();
         }
@@ -137,6 +140,7 @@ public class DbConnector {
 
     public boolean verifyAccount(String username, String pw) {
         boolean admin;
+        User tempUser;
         String query = "SELECT * FROM account WHERE email =? AND password = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, username);
@@ -145,9 +149,10 @@ public class DbConnector {
             if (resultSet.next()) {
                 admin = resultSet.getBoolean(9);
                 if (admin) {
-                    adminList(resultSet);
+                    adminHandler(resultSet);
                 } else {
-                    userList(resultSet);
+                    tempUser = userHandler(resultSet);
+                    UserMenuController.loggedInUser = tempUser;
                 }
                 resultSet.close();
             }
@@ -158,10 +163,10 @@ public class DbConnector {
     }
 
     //UPDATE TABLE
-    public <T> void updateTableColumnById(String table, String column,String idNameInTable, int id, T newData) {
+    public <T> void updateTableColumnById(String table, String column, String idNameInTable, int id, T newData) {
         connect();
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE "+table+" SET "+column+" = ? WHERE "+idNameInTable+" = "+id);
+            PreparedStatement ps = connection.prepareStatement("UPDATE " + table + " SET " + column + " = ? WHERE " + idNameInTable + " = " + id);
             if (newData instanceof String) {
                 String temp = (String) newData;
                 ps.setString(1, temp);
@@ -175,7 +180,6 @@ public class DbConnector {
                 Boolean temp = (Boolean) newData;
                 ps.setBoolean(1, temp);
             }
-
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Could not update " + column);
@@ -185,27 +189,23 @@ public class DbConnector {
         }
     }
 
-    private List<User> userList(ResultSet resultSet) {
-        try {
-            User user = new User(
-                    resultSet.getString("email"),
-                    resultSet.getString("password"),
-                    resultSet.getBoolean("admin"),
-                    resultSet.getString("firstName"),
-                    resultSet.getString("lastName"),
-                    resultSet.getDouble("balance"),
-                    resultSet.getString("address"),
-                    resultSet.getString("phoneNr"),
-                    resultSet.getInt("idUser"));
-            users.add(user);
-            //System.out.println("Namn: " + user.getFirstName() + " " + user.getLastName());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
+    private User userHandler(ResultSet resultSet) throws SQLException {
+        User user = new User(
+                resultSet.getString("email"),
+                resultSet.getString("password"),
+                resultSet.getBoolean("admin"),
+                resultSet.getString("firstName"),
+                resultSet.getString("lastName"),
+                resultSet.getDouble("balance"),
+                resultSet.getString("address"),
+                resultSet.getString("phoneNr"),
+                resultSet.getInt("idUser"));
+        //users.add(user);
+        System.out.println("Namn: " + user.getFirstName() + " " + user.getLastName());
+        return user;
     }
 
-    private List<Admin> adminList(ResultSet resultSet) {
+    private List<Admin> adminHandler(ResultSet resultSet) {
         try {
             Admin admin = new Admin(
                     resultSet.getString("email"),
@@ -218,7 +218,7 @@ public class DbConnector {
                     resultSet.getString("phoneNr"),
                     resultSet.getInt("idUser"));
             admins.add(admin);
-            //System.out.println("Email: " + admin.getEmail() + "Lösen: " + admin.getPassword());
+            System.out.println("Email: " + admin.getEmail() + "Lösen: " + admin.getPassword());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -244,16 +244,17 @@ public class DbConnector {
             e.printStackTrace();
         }
     }
-    public User findUser(int i){
+
+    public User findUser(int i) {
         connect();
         User user = null;
         String query = "SELECT * FROM account WHERE idUser = ?";
 
-        try{
+        try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1,i);
-           resultSet = ps.executeQuery();
-            while(resultSet.next()){
+            ps.setInt(1, i);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
                 user = new User(
                         resultSet.getString("email"),
                         resultSet.getString("password"),
@@ -266,40 +267,42 @@ public class DbConnector {
                         resultSet.getInt("idUser")
                 );
             }
-        }catch (SQLException e){
-        }finally {
+        } catch (SQLException e) {
+        } finally {
             disconnect();
         }
         return user;
     }
-        public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser,  T data ){
+
+    public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser, T data) {
         connect();
-        try{
-        String query = "UPDATE " +table+ " SET " +column+ " = ? WHERE " +idNameTable+ " = " + iduser;
+        try {
+            String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + iduser;
 
             PreparedStatement ps = connection.prepareStatement(query);
-            if(data instanceof String){
+            if (data instanceof String) {
                 String temp = (String) data;
-                ps.setString(1,temp);
-            }else if(data instanceof Integer){
+                ps.setString(1, temp);
+            } else if (data instanceof Integer) {
                 int temp = (Integer) data;
-                ps.setInt(1,temp);
-            }else if(data instanceof Double){
+                ps.setInt(1, temp);
+            } else if (data instanceof Double) {
                 Double temp = (Double) data;
-                ps.setDouble(1,temp);
-            }else if(data instanceof Boolean){
+                ps.setDouble(1, temp);
+            } else if (data instanceof Boolean) {
                 Boolean temp = (Boolean) data;
-                ps.setBoolean(1,temp);
+                ps.setBoolean(1, temp);
             }
             ps.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("Something went wrong...");
             e.printStackTrace();
-        }finally {
+        } finally {
             disconnect();
         }
-        }
+    }
+
     //Krillepille
     public void updateFirstName(int idUser, User user) throws SQLException {
 
@@ -511,9 +514,9 @@ public class DbConnector {
         return phoneNr;
     }
 
-        //Krillepille (all images put into a list from database, to later be displayed)
+    //Krillepille (all images put into a list from database, to later be displayed)
 
-    public List<Movie> searchMovieByGenre(String genre)  {
+    public List<Movie> searchMovieByGenre(String genre) {
 
         connect();
         movies.clear();
@@ -522,7 +525,7 @@ public class DbConnector {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0, "");
+                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
                 movie.setTitle(resultSet.getString(1));
                 movies.add(movie);
 
@@ -533,17 +536,18 @@ public class DbConnector {
         System.out.println(movies);
         return movies;
     }
+
     //krillepille
     public List<Movie> getMovieTitle(String title) {
         connect();
         movies.clear();
-        String query = "SELECT title FROM movie WHERE title LIKE '"+ title+"%' ";
+        String query = "SELECT title FROM movie WHERE title LIKE '" + title + "%' ";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             resultSet = preparedStmt.executeQuery();
 
             while (resultSet.next()) {
-                Movie movie = new Movie(0,"","",0, Movie.Genre.Action,"",0, "");
+                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
                 movie.setTitle(resultSet.getString(1));
                 movies.add(movie);
 
@@ -552,13 +556,12 @@ public class DbConnector {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-         System.out.println(movies);
+        System.out.println(movies);
         disconnect(); //do for all!
         return movies;
     }
 
 }
-
 
     /*public String userEmail(String username) {
         connect();
@@ -577,5 +580,4 @@ public class DbConnector {
             System.out.println("Something went wrong!");
             e.printStackTrace();
         }
-    }
-    */
+    }*/
