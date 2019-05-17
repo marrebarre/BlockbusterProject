@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import model.Logic;
 import model.Movie;
-
+import model.User;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
-
     @FXML
     Button btnLogOut;
 
@@ -35,9 +35,12 @@ public class UserMenuController implements Initializable {
     @FXML
     TilePane tilePaneBrowse;
 
-    //Objects
+    @FXML
+    Label welcomeMessage;
+
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
+    public static User loggedInUser;
 
     public void btnPressedLogOut(MouseEvent event) {
         String logOutFXML = "/view/loginScreenRedux.fxml";
@@ -104,6 +107,8 @@ public class UserMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadBrowse();
+        welcomeMessage.setText(loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
@@ -123,4 +128,3 @@ public class UserMenuController implements Initializable {
         });
     }
 }
-

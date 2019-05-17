@@ -33,6 +33,7 @@ public class Logic {
             e.printStackTrace();
         }
     }
+
     public void openSceneInNewWindow(String fxmlPath,String title){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();

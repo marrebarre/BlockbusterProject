@@ -29,7 +29,6 @@ public class RentMovieController implements Initializable {
 
     public static User balance;
 
-
     public static User getBalance() {
         return balance;
     }

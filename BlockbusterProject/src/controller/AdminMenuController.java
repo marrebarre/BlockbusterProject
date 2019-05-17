@@ -110,7 +110,6 @@ public class AdminMenuController implements Initializable {
                 String imagePath  = "";
                 if (selectedFile != null) {
                     Path movefrom = FileSystems.getDefault().getPath(selectedFile.getPath());
-                    //Path target = FileSystems.getDefault().getPath("/src/Images/"+selectedFile.getName());
                     Path targetDir = FileSystems.getDefault().getPath("C:\\Users\\Max\\Documents\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\Images\\" + selectedFile.getName());
                     try {
                         Files.move(movefrom, targetDir, StandardCopyOption.REPLACE_EXISTING);
