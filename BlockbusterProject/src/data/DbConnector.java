@@ -200,7 +200,6 @@ public class DbConnector {
                 resultSet.getString("address"),
                 resultSet.getString("phoneNr"),
                 resultSet.getInt("idUser"));
-        //users.add(user);
         System.out.println("Namn: " + user.getFirstName() + " " + user.getLastName());
         return user;
     }

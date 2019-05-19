@@ -7,8 +7,7 @@
     -fx-pref-width: 175;
     -fx-pref-height: 40;
 }
-
-.image-view:hover {
+.image-view-user-menu:hover {
     -fx-effect: dropshadow(two-pass-box, #343434, 14, 0.0 , 10, 0);
     -fx-scale-x: 1.6;
     -fx-scale-y: 1.6;
@@ -21,6 +20,10 @@
     -fx-cursor: HAND;
 }
 
+.lblWelcomeMessage{
+    -fx-font-size: 22;
+}
+
 .text-field {
     -fx-background-color: linear-gradient(#ABABAC ,#E2E2E2);
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
@@ -30,6 +33,7 @@
     -fx-background-color: linear-gradient(#d7e8ff, #e2dcdd);
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }
+
 .button{
     -fx-background-color:
             #000000,
@@ -44,6 +48,7 @@
     -fx-text-fill: white;
     -fx-font-size: 12px;
 }
+
 .button Text {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.8) , 0, 0.0 , 0 , 1);
 }
@@ -58,10 +63,13 @@
     -fx-background-radius: 3,2,2,2;
     -fx-text-fill: white;
 }
+
 .scroll-pane{
-   -fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
 
 .scroll-pane .viewport {
     -fx-background-color: transparent;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
 }
