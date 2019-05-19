@@ -5,14 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Screen;
 import model.Logic;
 import model.Movie;
 import model.User;
@@ -36,7 +35,10 @@ public class UserMenuController implements Initializable {
     TilePane tilePaneBrowse;
 
     @FXML
-    Label welcomeMessage;
+    ScrollPane scrollPane;
+
+    @FXML
+    Label lblWelcomeMessage;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -57,6 +59,8 @@ public class UserMenuController implements Initializable {
         List<Movie> movieTitle = dbConnector.getMovieTitle(searchField.getText());
         // title should be displayed with matching photo :)
     }
+
+    @FXML
     public void loadBrowse() {
         dbConnector.connect();
         try {
@@ -76,9 +80,10 @@ public class UserMenuController implements Initializable {
                 );
                 TilePane tempTilePane = new TilePane();
                 tempTilePane.setPrefColumns(1);
-                tempTilePane.setPrefRows(8);
+                tempTilePane.setPrefRows(5);
                 tempTilePane.setPadding(new Insets(30));
                 ImageView tempImageView = new ImageView();
+                tempImageView.getStyleClass().add("image-view-user-menu");
                 tempImageView.setFitHeight(200);
                 tempImageView.setFitWidth(133);
                 Image image = new Image(imagePath);
@@ -87,10 +92,9 @@ public class UserMenuController implements Initializable {
                     RentMovieController.setMovieToRent(movie);
                     logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
                 });
-
-                tempTilePane.getChildren().addAll(tempImageView/*, tempButton*/);
+                tempTilePane.getChildren().addAll(tempImageView);
                 tilePaneBrowse.getChildren().add(tempTilePane);
-                tilePaneBrowse.setPrefColumns(8);
+                tilePaneBrowse.setPrefColumns(10);
             }
         } catch (Exception e) {
             System.out.println("ohShit");
@@ -107,8 +111,13 @@ public class UserMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+        scrollPane.setLayoutX(primaryScreenBounds.getMinX());
+        scrollPane.setLayoutY(primaryScreenBounds.getMinY() + 50);
+        scrollPane.setPrefWidth(primaryScreenBounds.getWidth());
+        scrollPane.setPrefHeight(primaryScreenBounds.getHeight() - 115);
         loadBrowse();
-        welcomeMessage.setText(loggedInUser.getFirstName() + " " + loggedInUser.getLastName());
+        lblWelcomeMessage.setText("Welcome to our store, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
