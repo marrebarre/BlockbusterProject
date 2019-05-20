@@ -155,11 +155,11 @@ public class UserMenuController implements Initializable {
         TreeItem q4 = new TreeItem("PAYMENTS?");
         TreeItem q5 = new TreeItem("HOW DO I GET THE MOVIE/S?");
         TreeItem q6 = new TreeItem("RETURN POLICIES?");
-
+        TreeItem q7 = new TreeItem("FORGOT MY PASSWORD?");
 
 
         faq.setRoot(rootItem);
-        rootItem.getChildren().addAll(q1,q2,q3,q4,q5,q6);
+        rootItem.getChildren().addAll(q1,q2,q3,q4,q5,q6,q7);
 
         TreeItem a1 = new TreeItem("This is a movie rental program that allows the user to login, browse and rent movies from a store. " +
                 "\nThe application is easy to use and displays which movies are currently in stock. When logged in, " +
@@ -178,6 +178,8 @@ public class UserMenuController implements Initializable {
         TreeItem a6 = new TreeItem("The movies are being lent out during a specific period of time. If a user overdraws " +
                 "\ntheir lending-period, additional fees will be drawn from this user.");
         q6.getChildren().addAll(a6);
+        TreeItem a7 = new TreeItem("There is a link underneath the login-prompt. There you will be directed further");
+        q6.getChildren().addAll(a7);
 
 
 
