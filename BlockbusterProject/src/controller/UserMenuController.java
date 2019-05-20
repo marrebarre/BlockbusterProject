@@ -36,6 +36,10 @@ public class UserMenuController implements Initializable {
     @FXML
     Label lblWelcomeMessage;
 
+   @FXML
+   private TreeView faq;
+
+
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
     public static User loggedInUser;
@@ -144,5 +148,26 @@ public class UserMenuController implements Initializable {
     private void searchByTitle(String title) {
         String query = "SELECT * FROM movie WHERE title LIKE '" + title + "%' ";
         logic.loadBrowsePageData(query, tilePaneBrowse);
+    }
+    private void Treview(){
+        TreeItem rootItem = new TreeItem("FAQ");
+        TreeItem q1 = new TreeItem("FAQ");
+        TreeItem q2 = new TreeItem("FAQ");
+        TreeItem q3 = new TreeItem("FAQ");
+        TreeItem q4 = new TreeItem("FAQ");
+
+        faq.setRoot(rootItem);
+        rootItem.getChildren().addAll(q1,q2,q3,q4);
+
+        TreeItem a1 = new TreeItem("A1");
+        q1.getChildren().addAll(a1);
+        TreeItem a2 = new TreeItem("A2");
+        q2.getChildren().addAll(a2);
+        TreeItem a3 = new TreeItem("A3");
+        q3.getChildren().addAll(a3);
+        TreeItem a4 = new TreeItem("A4");
+        q4.getChildren().addAll(a4);
+
+
     }
 }
