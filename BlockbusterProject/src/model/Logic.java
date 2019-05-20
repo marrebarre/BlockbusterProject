@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.control.Alert;
 import scene.rentMovie.RentMovieController;
 import database.DbConnector;
 import javafx.event.Event;
@@ -19,6 +20,15 @@ import java.sql.PreparedStatement;
 
 public class Logic {
     private DbConnector dbConnector = new DbConnector();
+
+    public static void alert(String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.setHeaderText("We got a message for you");
+        alert.setTitle("ErrorBuster 9000");
+        alert.showAndWait();
+    }
+
     private void setToFullscreen(Stage stage) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();

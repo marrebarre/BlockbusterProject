@@ -21,12 +21,6 @@ public class RentMovieController implements Initializable {
     @FXML
     ImageView rentImageView;
 
-    public static User balance;
-
-    public static User getBalance() {
-        return balance;
-    }
-
     public static Movie movieToRent;
 
     public static Movie getMovieToRent() {
@@ -62,15 +56,5 @@ public class RentMovieController implements Initializable {
         Image image = new Image(movieToRent.getImagePath());
         rentImageView.setImage(image);
     }
-   /* public void rentPressed(){
 
-        if (movieToRent.getQuantity() > 0 && balance.getBalance() >= movieToRent.getPrice() ){
-            alert("You purchase was succesful!", Alert.AlertType.CONFIRMATION);
-
-          balance.getBalance() = balance.getBalance() - movieToRent.getPrice();
-
-        }else{
-            alert("You don't have enough credits to preform this purchase", Alert.AlertType.INFORMATION);
-        }
-    }*/
 }

@@ -89,21 +89,21 @@
                                                 <Font name="Verdana" size="29.0" />
                                             </font>
                                         </Label>
-                                        <Button layoutX="32.0" layoutY="167.0" mnemonicParsing="false" onAction="#viewListbtn" prefHeight="41.0" prefWidth="201.0" text="View list of Accounts" textFill="#ffc9c9" />
+                                        <Button layoutX="32.0" layoutY="167.0" mnemonicParsing="false" onAction="#viewListBtn" prefHeight="41.0" prefWidth="201.0" text="View list of Accounts" textFill="#ffc9c9" />
                                         <TableView fx:id="accountTable" layoutX="249.0" layoutY="228.0" prefHeight="368.0" prefWidth="691.0">
                                             <columns>
-                                                <TableColumn fx:id="idusercol" prefWidth="75.0" text="idUser" />
-                                                <TableColumn fx:id="emailcol" prefWidth="75.0" text="E-mail" />
-                                                <TableColumn fx:id="passwordcol" prefWidth="75.0" text="Password" />
-                                                <TableColumn fx:id="balancecol" prefWidth="75.0" text="Balance" />
-                                                <TableColumn fx:id="firstnamecol" prefWidth="75.0" text="Firstname" />
-                                                <TableColumn fx:id="lastnamecol" prefWidth="75.0" text="Lastname" />
-                                                <TableColumn fx:id="addresscol" prefWidth="75.0" text="Address" />
-                                                <TableColumn fx:id="phonecol" prefWidth="75.0" text="PhoneNr" />
-                                                <TableColumn fx:id="isadmincol" prefWidth="75.0" text="IsAdmin" />
+                                                <TableColumn fx:id="colUserId" prefWidth="75.0" text="idUser" />
+                                                <TableColumn fx:id="colUserEmail" prefWidth="75.0" text="E-mail" />
+                                                <TableColumn fx:id="colUserPassword" prefWidth="75.0" text="Password" />
+                                                <TableColumn fx:id="colUserBalance" prefWidth="75.0" text="Balance" />
+                                                <TableColumn fx:id="colUserFirstName" prefWidth="75.0" text="Firstname" />
+                                                <TableColumn fx:id="colUserLastName" prefWidth="75.0" text="Lastname" />
+                                                <TableColumn fx:id="colUserAddress" prefWidth="75.0" text="Address" />
+                                                <TableColumn fx:id="colUserPhone" prefWidth="75.0" text="PhoneNr" />
+                                                <TableColumn fx:id="colUserIsAdmin" prefWidth="75.0" text="IsAdmin" />
                                             </columns>
                                         </TableView>
-                              <TextField fx:id="editUseridTxtField" layoutX="312.0" layoutY="616.0" prefHeight="35.0" prefWidth="43.0" />
+                              <TextField fx:id="editUserIdTxtField" layoutX="312.0" layoutY="616.0" prefHeight="35.0" prefWidth="43.0" />
                               <Label layoutX="249.0" layoutY="617.0" prefHeight="33.0" prefWidth="56.0" text="User ID :">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
@@ -115,11 +115,11 @@
                                     <TextField fx:id="editEmail" layoutX="1.0" prefHeight="25.0" prefWidth="74.0" />
                                     <TextField fx:id="editPassword" layoutX="75.0" prefHeight="25.0" prefWidth="74.0" />
                                     <TextField fx:id="editBalance" layoutX="149.0" prefHeight="25.0" prefWidth="75.0" />
-                                    <TextField fx:id="editLastname" layoutX="298.0" prefHeight="25.0" prefWidth="76.0" />
+                                    <TextField fx:id="editLastName" layoutX="298.0" prefHeight="25.0" prefWidth="76.0" />
                                     <TextField fx:id="editAddress" layoutX="374.0" prefHeight="25.0" prefWidth="74.0" />
                                     <TextField fx:id="editPhoneNr" layoutX="448.0" prefHeight="25.0" prefWidth="76.0" />
                                     <ComboBox fx:id="isAdminCombo" layoutX="524.0" prefHeight="25.0" prefWidth="92.0" />
-                                    <TextField fx:id="editFirstname" layoutX="224.0" prefHeight="25.0" prefWidth="74.0" />
+                                    <TextField fx:id="editFirstName" layoutX="224.0" prefHeight="25.0" prefWidth="74.0" />
                                  </children>
                               </Pane>
                               <Button layoutX="26.0" layoutY="338.0" mnemonicParsing="false" onAction="#updateUserInfoPressed" text="Update user information" />
