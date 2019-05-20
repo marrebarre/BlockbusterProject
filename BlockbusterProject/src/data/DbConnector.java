@@ -267,6 +267,7 @@ public class DbConnector {
                 );
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             disconnect();
         }
