@@ -1,6 +1,6 @@
 package database;
 
-import scene.adminMenu.AdminMenuController;
+import model.Logic;
 import scene.userMenu.UserMenuController;
 import javafx.scene.control.Alert;
 import model.Admin;
@@ -104,23 +104,9 @@ public class DbConnector {
             ps.setString(8, movie.getImagePath());
 
             ps.executeUpdate();
-            AdminMenuController.alert("Successfully added movie!", Alert.AlertType.INFORMATION);
+            Logic.alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
-        }
-    }
-
-    public void findMovieInDB(String title) {
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT movie.title FROM movie");
-
-            while (resultSet.next()) {
-                System.out.println("Title of movie: " + resultSet.getString(1));
-            }
-        } catch (SQLException e) {
-            System.out.println("Statement couldn't be executed.");
-            e.printStackTrace();
         }
     }
 
@@ -161,7 +147,6 @@ public class DbConnector {
         return true;
     }
 
-    //UPDATE TABLE
     public <T> void updateTableColumnById(String table, String column, String idNameInTable, int id, T newData) {
         connect();
         try {
@@ -273,10 +258,10 @@ public class DbConnector {
         return user;
     }
 
-    public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser, T data) {
+    public <T> void updateUserInfo(String table, String column, String idNameTable, int idUser, T data) {
         connect();
         try {
-            String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + iduser;
+            String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + idUser;
 
             PreparedStatement ps = connection.prepareStatement(query);
             if (data instanceof String) {
@@ -302,7 +287,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateFirstName(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
@@ -319,7 +303,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateLastName(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
@@ -334,7 +317,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateEmail(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
@@ -349,7 +331,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateAddress(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
@@ -364,7 +345,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updatePhoneNumber(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
@@ -378,178 +358,4 @@ public class DbConnector {
             System.out.println(e.getMessage());
         }
     }
-
-/*    //krillepille
-    public String getFirstName(int idUser) {
-        connect();
-        String firstName = "";
-        String query = "SELECT firstName FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                firstName = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        System.out.println("First name: " + firstName);
-        return firstName;
-    }
-
-    //krillepille
-    public String getLastname(int idUser) {
-        String lastName = "";
-        String query = "SELECT lastName FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                lastName = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        //  System.out.println("Last name: " + lastName);
-        return lastName;
-    }
-
-    //krillepille
-    public String getEmail(int idUser) {
-        String email = "";
-        String query = "SELECT email FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                email = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        // System.out.println("Email : " + email);
-        return email;
-    }
-
-    //krillepille
-    public String getAddress(int idUser) {
-        String address = "";
-        String query = "SELECT address FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                address = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        // System.out.println("Address: " + address);
-        return address;
-    }
-
-    //krillepille
-    public String getPhoneNumber(int idUser) {
-        String phoneNr = "";
-        String query = "SELECT phoneNr FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                phoneNr = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        // System.out.println("Phone number: " + phoneNr);
-        return phoneNr;
-    }*/
-
-    //Krillepille (all images put into a list from database, to later be displayed)
-
-    public List<Movie> searchMovieByGenre(String genre) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE genre = '" + genre + "'";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-        System.out.println(movies);
-        return movies;
-    }
-
-    //krillepille
-    public List<Movie> getMovieTitle(String title) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE title LIKE '" + title + "%' ";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            resultSet = preparedStmt.executeQuery();
-
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        System.out.println(movies);
-        disconnect(); //do for all!
-        return movies;
-    }
-
 }
-
-    /*public String userEmail(String username) {
-        connect();
-        String email = "";
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ? AND admin = 0");
-            preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                email = resultSet.getString(1);
-                resultSet.close();
-            }
-            //preparedStatement.setMaxRows(10);
-
-        } catch (SQLException e) {
-            System.out.println("Something went wrong!");
-            e.printStackTrace();
-        }
-    }*/

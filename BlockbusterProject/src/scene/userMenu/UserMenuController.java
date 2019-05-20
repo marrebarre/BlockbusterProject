@@ -50,25 +50,22 @@ public class UserMenuController implements Initializable {
         }
     }
 
-    @FXML
-    void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */{
+    public void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */{
         tilePaneBrowse.getChildren().clear();
         searchByTitle(searchField.getText());
     }
 
-    public void loadBrowse() {
+    private void loadBrowse() {
         tilePaneBrowse.getChildren().clear();
         String SQLQuery = "SELECT * FROM movie";
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
-    @FXML
-    void handleSortBox(/*ActionEvent event*/) {
+    public void handleSortBox(/*ActionEvent event*/) {
 //?
     }
 
-    @FXML
-    void settingsHandleUpdateBtn() throws SQLException {
+    public void settingsHandleUpdateBtn() throws SQLException {
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
