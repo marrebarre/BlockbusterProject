@@ -1,6 +1,6 @@
-package controller;
+package scene.adminMenu;
 
-import data.DbConnector;
+import database.DbConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -105,12 +105,12 @@ public class AdminMenuController implements Initializable {
         } else {
             try {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg"));
+                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image", "*.png", "*.jpg"));
                 File selectedFile = fileChooser.showOpenDialog(null);
                 String imagePath  = "";
                 if (selectedFile != null) {
                     Path movefrom = FileSystems.getDefault().getPath(selectedFile.getPath());
-                    Path targetDir = FileSystems.getDefault().getPath("C:\\Users\\Max\\Documents\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\Images\\" + selectedFile.getName());
+                    Path targetDir = FileSystems.getDefault().getPath("C:\\Users\\Max\\Documents\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\image\\" + selectedFile.getName());
                     try {
                         Files.move(movefrom, targetDir, StandardCopyOption.REPLACE_EXISTING);
                         imagePath = targetDir.getFileName().toString();
@@ -121,7 +121,7 @@ public class AdminMenuController implements Initializable {
                 } else {
                     System.out.println("File chosen isn't valid");
                 }
-                Movie movie = new Movie(dbConnector.tableSizeMovie() + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()), "Images/"+imagePath);
+                Movie movie = new Movie(dbConnector.tableSizeMovie() + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()), "image/" +imagePath);
                 System.out.println("TrackADMIN");
                 dbConnector.connect();
                 dbConnector.addMovieToDB(movie);
@@ -133,8 +133,8 @@ public class AdminMenuController implements Initializable {
                 genreComboBox.setValue(null);
                 verifyImageAdded.setText("Image successfully added!");
             } catch (IllegalArgumentException e) {
-                System.out.println("Wrong data type");
-                alert("Wrong data type entered. Please make sure to use dot's instead of comma's. Careful with special signs.", Alert.AlertType.WARNING);
+                System.out.println("Wrong database type");
+                alert("Wrong database type entered. Please make sure to use dot's instead of comma's. Careful with special signs.", Alert.AlertType.WARNING);
             } finally {
                 dbConnector.disconnect();
             }
@@ -257,7 +257,7 @@ public class AdminMenuController implements Initializable {
     }
 
     public void btnPressedLogOut(ActionEvent event) {
-        String logInFXML = "/view/loginScreenRedux.fxml";
+        String logInFXML = "/scene/loginScreen/loginScreenRedux.fxml";
         logic.changeSceneHandler(event, logInFXML, false);
     }
 

@@ -1,7 +1,7 @@
 package model;
 
-import controller.RentMovieController;
-import data.DbConnector;
+import scene.rentMovie.RentMovieController;
+import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -85,7 +85,7 @@ public class Logic {
                 tempImageView.setImage(image);
                 tempImageView.setOnMouseClicked(e -> {
                     RentMovieController.setMovieToRent(movie);
-                    openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
+                    openSceneInNewWindow("/scene/rentMovie/rentMovie.fxml", "Rent Movie");
                 });
                 tempTilePane.getChildren().addAll(tempImageView);
                 tilePane.getChildren().add(tempTilePane);
