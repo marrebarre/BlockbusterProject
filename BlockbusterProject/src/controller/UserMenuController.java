@@ -59,12 +59,14 @@ public class UserMenuController implements Initializable {
     }
 
     @FXML
-    public void handleSearchBtn(ActionEvent event) throws FileNotFoundException {
-        List<Movie> movieTitle = dbConnector.getMovieTitle(searchField.getText());
+    void handleSearchBtn(ActionEvent event) throws FileNotFoundException {
+        tilePaneBrowse.getChildren().clear();
+        searchByTitle(searchField.getText());
     }
 
     @FXML
     public void loadBrowse() {
+        tilePaneBrowse.getChildren().clear();
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie");
@@ -154,23 +156,112 @@ public class UserMenuController implements Initializable {
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
         sortBox.getItems().add("Family");
+        sortBox.getItems().add("Show All Movies");
+
         sortBox.setOnAction(event -> {
             String choice = sortBox.getSelectionModel().getSelectedItem();
-            switch (choice) {
-                case "Action":
-                    dbConnector.searchMovieByGenre("Action");
-                    //Display images of movies.
-                    break;
-                case "Adventure":
-                    dbConnector.searchMovieByGenre("Adventure");
-                    break;
-                case "Drama":
-                    dbConnector.searchMovieByGenre("Drama");
-                    break;
-                case "Family":
-                    dbConnector.searchMovieByGenre("Family");
-                    break;
+            if (choice == "Action") {
+                tilePaneBrowse.getChildren().clear();
+                sortByGenre("Action");
+                //Display images of movies.
+            } else if (choice == "Adventure") {
+                tilePaneBrowse.getChildren().clear();
+                sortByGenre("Adventure");
+            } else if (choice == "Drama") {
+                tilePaneBrowse.getChildren().clear();
+                sortByGenre("Drama");
+            } else if (choice == "Family") {
+                tilePaneBrowse.getChildren().clear();
+                sortByGenre("Family");
+            }else if (choice == "Show All Movies") {
+                loadBrowse();
             }
         });
+    }
+    @FXML
+    public void sortByGenre(String genre) {
+        dbConnector.connect();
+        try {
+            PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie WHERE genre = '" + genre + "'");
+            dbConnector.resultSet = ps.executeQuery();
+            while (dbConnector.resultSet.next()) {
+                String imagePath;
+                Movie movie = new Movie(
+                        dbConnector.resultSet.getInt("idMovie"),
+                        dbConnector.resultSet.getString("title"),
+                        dbConnector.resultSet.getString("director"),
+                        dbConnector.resultSet.getDouble("price"),
+                        Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
+                        dbConnector.resultSet.getString("releaseYear"),
+                        dbConnector.resultSet.getInt("quantity"),
+                        imagePath = dbConnector.resultSet.getString("imagePath")
+                );
+                TilePane tempTilePane = new TilePane();
+                tempTilePane.setPrefColumns(1);
+                tempTilePane.setPrefRows(5);
+                tempTilePane.setPadding(new Insets(30));
+                ImageView tempImageView = new ImageView();
+                tempImageView.getStyleClass().add("image-view-user-menu");
+                tempImageView.setFitHeight(200);
+                tempImageView.setFitWidth(133);
+                Image image = new Image(imagePath);
+                tempImageView.setImage(image);
+                tempImageView.setOnMouseClicked(e -> {
+                    RentMovieController.setMovieToRent(movie);
+                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
+                });
+                tempTilePane.getChildren().addAll(tempImageView);
+                tilePaneBrowse.getChildren().add(tempTilePane);
+                tilePaneBrowse.setPrefColumns(10);
+            }
+        } catch (Exception e) {
+            System.out.println("ohShit");
+            e.printStackTrace();
+        } finally {
+            dbConnector.disconnect();
+        }
+    }
+    @FXML
+    public void searchByTitle(String title) {
+        dbConnector.connect();
+        try {
+            PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie WHERE title LIKE '" + title + "%' ");
+            dbConnector.resultSet = ps.executeQuery();
+            while (dbConnector.resultSet.next()) {
+                String imagePath;
+                Movie movie = new Movie(
+                        dbConnector.resultSet.getInt("idMovie"),
+                        dbConnector.resultSet.getString("title"),
+                        dbConnector.resultSet.getString("director"),
+                        dbConnector.resultSet.getDouble("price"),
+                        Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
+                        dbConnector.resultSet.getString("releaseYear"),
+                        dbConnector.resultSet.getInt("quantity"),
+                        imagePath = dbConnector.resultSet.getString("imagePath")
+                );
+                TilePane tempTilePane = new TilePane();
+                tempTilePane.setPrefColumns(1);
+                tempTilePane.setPrefRows(5);
+                tempTilePane.setPadding(new Insets(30));
+                ImageView tempImageView = new ImageView();
+                tempImageView.getStyleClass().add("image-view-user-menu");
+                tempImageView.setFitHeight(200);
+                tempImageView.setFitWidth(133);
+                Image image = new Image(imagePath);
+                tempImageView.setImage(image);
+                tempImageView.setOnMouseClicked(e -> {
+                    RentMovieController.setMovieToRent(movie);
+                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
+                });
+                tempTilePane.getChildren().addAll(tempImageView);
+                tilePaneBrowse.getChildren().add(tempTilePane);
+                tilePaneBrowse.setPrefColumns(10);
+            }
+        } catch (Exception e) {
+            System.out.println("ohShit");
+            e.printStackTrace();
+        } finally {
+            dbConnector.disconnect();
+        }
     }
 }
