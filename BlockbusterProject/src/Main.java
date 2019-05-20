@@ -8,7 +8,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/loginScreenRedux.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/scene/loginScreen/loginScreenRedux.fxml"));
         root.getStylesheets().add(getClass().getResource("css/mainTheme.css").toExternalForm());
         primaryStage.setTitle("Bustblocker");
         primaryStage.setScene(new Scene(root));

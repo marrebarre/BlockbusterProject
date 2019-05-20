@@ -1,9 +1,8 @@
-package data;
+package database;
 
-import controller.AdminMenuController;
-import controller.UserMenuController;
+import scene.adminMenu.AdminMenuController;
+import scene.userMenu.UserMenuController;
 import javafx.scene.control.Alert;
-import model.Account;
 import model.Admin;
 import model.Movie;
 import model.User;
