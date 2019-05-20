@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Account implements VerifyLogin {
+public abstract class Account{
     private String email;
     private String password;
     boolean admin;
@@ -34,11 +34,4 @@ public abstract class Account implements VerifyLogin {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-
-    @Override
-    public boolean verify(String verify){
-        return false;
-    }
 }
-
-

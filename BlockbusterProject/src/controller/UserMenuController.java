@@ -18,11 +18,16 @@ import model.User;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
     @FXML
-    Button btnLogOut;
+    private TextField firstNameText, lastNameText, emailText, balanceText, addressText, phoneNumberText;
+
+    @FXML
+    Button btnLogOut, updateBtn, btnSearch;
 
     @FXML
     private ComboBox<String> sortBox;
@@ -109,6 +114,30 @@ public class UserMenuController implements Initializable {
 //?
     }
 
+    @FXML
+    void settingsHandleUpdateBtn() throws SQLException {
+        if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())){
+            loggedInUser.setFirstName(firstNameText.getText());
+            dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
+        }
+        if (!lastNameText.getText().equals("")&& !lastNameText.getText().equals(loggedInUser.getLastName())){
+            loggedInUser.setLastName(lastNameText.getText());
+            dbConnector.updateLastName(loggedInUser.getIdUser(), loggedInUser);
+        }
+        if (!emailText.getText().equals("")&& !emailText.getText().equals(loggedInUser.getEmail())){
+            loggedInUser.setEmail(emailText.getText());
+            dbConnector.updateEmail(loggedInUser.getIdUser(), loggedInUser);
+        }
+        if (!addressText.getText().equals("")&& !addressText.getText().equals(loggedInUser.getAddress())){
+            loggedInUser.setAddress(addressText.getText());
+            dbConnector.updateAddress(loggedInUser.getIdUser(), loggedInUser);
+        }
+        if (!phoneNumberText.getText().equals("")&& !phoneNumberText.getText().equals(loggedInUser.getPhoneNr())){
+            loggedInUser.setPhoneNr(phoneNumberText.getText());
+            dbConnector.updatePhoneNumber(loggedInUser.getIdUser(), loggedInUser);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -117,6 +146,11 @@ public class UserMenuController implements Initializable {
         scrollPane.setPrefWidth(primaryScreenBounds.getWidth());
         scrollPane.setPrefHeight(primaryScreenBounds.getHeight() - 115);
         loadBrowse();
+        firstNameText.setText(loggedInUser.getFirstName());
+        lastNameText.setText(loggedInUser.getLastName());
+        emailText.setText(loggedInUser.getEmail());
+        addressText.setText(loggedInUser.getAddress());
+        phoneNumberText.setText(loggedInUser.getPhoneNr());
         lblWelcomeMessage.setText("Welcome to our store, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");

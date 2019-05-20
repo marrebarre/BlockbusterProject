@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Logic {
-    public void setToFullscreen(Stage stage) {
+    private void setToFullscreen(Stage stage) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
         stage.setWidth(bounds.getWidth());

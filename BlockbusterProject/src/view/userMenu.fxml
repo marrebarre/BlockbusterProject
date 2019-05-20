@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="userMenuStackPane" maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserMenuController">
+<StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/mainTheme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserMenuController">
     <children>
         <BorderPane prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/mainTheme.css">
             <center>
@@ -28,7 +28,7 @@
                                         <Button fx:id="btnLogOut" layoutX="1164.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
                               <ComboBox fx:id="sortBox" layoutX="971.0" layoutY="16.0" onAction="#handleSortBox" prefHeight="34.0" prefWidth="164.0" promptText="Sort By Genre" stylesheets="@../css/mainTheme.css" />
                               <TextField fx:id="searchField" layoutX="48.0" layoutY="20.0" />
-                              <Button fx:id="searchBtn" layoutX="232.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSearchBtn" text="Search" />
+                              <Button fx:id="btnSearch" layoutX="232.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
                               <Button layoutX="866.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadBrowse" text="Load" />
                               <Label fx:id="lblWelcomeMessage" layoutX="331.0" layoutY="18.0" prefHeight="30.0" prefWidth="522.0">
                                  <font>
@@ -56,7 +56,15 @@
                         </Tab>
                         <Tab text="SETTINGS">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="firstNameText" layoutX="229.0" layoutY="187.0" prefHeight="25.0" prefWidth="174.0" promptText="First name" />
+                              <TextField fx:id="lastNameText" layoutX="229.0" layoutY="218.0" prefHeight="25.0" prefWidth="174.0" promptText="Last name" />
+                              <TextField fx:id="emailText" layoutX="229.0" layoutY="252.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
+                              <TextField fx:id="addressText" layoutX="229.0" layoutY="284.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
+                              <TextField fx:id="phoneNumberText" layoutX="229.0" layoutY="317.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
+                              <Button fx:id="updateBtn" layoutX="229.0" layoutY="348.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Update information" />
+                           </children></AnchorPane>
                             </content>
                         </Tab>
                     </tabs>
