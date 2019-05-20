@@ -1,4 +1,4 @@
-package controller;
+package scene.rentMovie;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

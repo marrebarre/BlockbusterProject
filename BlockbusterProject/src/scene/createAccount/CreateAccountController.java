@@ -1,6 +1,6 @@
-package controller;
+package scene.createAccount;
 
-import data.DbConnector;
+import database.DbConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -32,7 +32,7 @@ public class CreateAccountController {
     private Logic logic = new Logic();
 
     public void backToLogin(ActionEvent event) {
-        String loginFXML = "/view/loginScreenRedux.fxml";
+        String loginFXML = "/scene/loginScreen/loginScreenRedux.fxml";
         logic.changeSceneHandler(event, loginFXML, false);
     }
 
@@ -99,7 +99,7 @@ public class CreateAccountController {
             Scene scene = new Scene(layout);
             window.setScene(scene);
             window.showAndWait();
-            String logInFXML = "/view/loginScreenRedux.fxml";
+            String logInFXML = "/scene/loginScreen/loginScreenRedux.fxml";
             logic.changeSceneHandler(event, logInFXML, false);
         }
     }

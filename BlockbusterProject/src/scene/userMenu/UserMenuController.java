@@ -1,6 +1,6 @@
-package controller;
+package scene.userMenu;
 
-import data.DbConnector;
+import database.DbConnector;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -41,7 +41,7 @@ public class UserMenuController implements Initializable {
     public static User loggedInUser;
 
     public void btnPressedLogOut(MouseEvent event) {
-        String logOutFXML = "/view/loginScreenRedux.fxml";
+        String logOutFXML = "/scene/loginScreen/loginScreenRedux.fxml";
         logic.changeSceneHandler(event, logOutFXML, false);
         if (!dbConnector.users.isEmpty()) {
             dbConnector.users.clear();
@@ -104,7 +104,7 @@ public class UserMenuController implements Initializable {
         emailText.setText(loggedInUser.getEmail());
         addressText.setText(loggedInUser.getAddress());
         phoneNumberText.setText(loggedInUser.getPhoneNr());
-        lblWelcomeMessage.setText("Welcome to our store, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
+        lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
@@ -142,7 +142,7 @@ public class UserMenuController implements Initializable {
     }
 
     private void searchByTitle(String title) {
-        String query = "SELECT * FROM movie WHERE title LIKE '" + title + "%' ";
+        String query = "SELECT * FROM movie WHERE title LIKE '%" + title + "%' ";
         logic.loadBrowsePageData(query, tilePaneBrowse);
     }
 }

@@ -1,6 +1,7 @@
-package controller;
+package scene.loginScreen;
 
-import data.DbConnector;
+import scene.userMenu.UserMenuController;
+import database.DbConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,10 +36,10 @@ public class LoginScreenController implements Initializable {
         } else {
             if (dbConnector.verifyAccount(username.getText(), password.getText())) {
                 if (!dbConnector.admins.isEmpty()) {
-                    String adminMenuFXML = "/view/adminMenu.fxml";
+                    String adminMenuFXML = "/scene/adminMenu/adminMenu.fxml";
                     logic.changeSceneHandler(event, adminMenuFXML, true);
                 } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !UserMenuController.loggedInUser.isAdmin()) {
-                    String userMenuFXML = "/view/userMenu.fxml";
+                    String userMenuFXML = "/scene/userMenu/userMenu.fxml";
                     logic.changeSceneHandler(event, userMenuFXML, true);
                 } else {
                     System.out.println("Login failed");
@@ -53,12 +54,12 @@ public class LoginScreenController implements Initializable {
     }
 
     public void btnPressedCreateAccount(ActionEvent event) {
-        String createAccountFXML = "/view/createAccountScreen.fxml";
+        String createAccountFXML = "/scene/createAccount/createAccountScreen.fxml";
         logic.changeSceneHandler(event, createAccountFXML, true);
     }
 
     public void btnPressedForgotPW(MouseEvent event) {
-        String forgotPasswordFXML = "/view/forgotPW.fxml";
+        String forgotPasswordFXML = "/scene/forgotPassword/forgotPW.fxml";
         logic.changeSceneHandler(event, forgotPasswordFXML, false);
     }
 
@@ -69,7 +70,7 @@ public class LoginScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Image image = new Image("Images/BlockbusterLogo.png");
+        Image image = new Image("image/BlockbusterLogo.png");
         logo.setImage(image);
         /*Path path = new Path();
         path.getElements().add(new MoveTo(0,0));

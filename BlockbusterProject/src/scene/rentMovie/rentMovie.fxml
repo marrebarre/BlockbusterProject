@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="404.0" prefWidth="776.0" stylesheets="@../css/darkTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RentMovieController">
+<AnchorPane prefHeight="404.0" prefWidth="776.0" stylesheets="@../../css/darkTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.rentMovie.RentMovieController">
    <children>
       <Label fx:id="infoLbl" layoutX="44.0" layoutY="66.0" text="Info">
          <font>

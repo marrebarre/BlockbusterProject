@@ -1,4 +1,4 @@
-package controller;
+package scene.forgotPassword;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,7 +20,7 @@ public class ForgotPasswordController {
     private Logic logic = new Logic();
 
     public void btnPressedReturnToLogin(MouseEvent event){
-        String logInFXML = "/view/loginScreenRedux.fxml";
+        String logInFXML = "/scene/loginScreen/loginScreenRedux.fxml";
         logic.changeSceneHandler(event, logInFXML, false);
     }
 }
