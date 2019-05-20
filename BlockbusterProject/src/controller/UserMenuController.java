@@ -1,30 +1,22 @@
 package controller;
 
 import data.DbConnector;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import model.Logic;
-import model.Movie;
 import model.User;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
     @FXML
-    private TextField firstNameText, lastNameText, emailText, balanceText, addressText, phoneNumberText;
+    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText;
 
     @FXML
     Button btnLogOut, updateBtn, btnSearch;
@@ -59,80 +51,41 @@ public class UserMenuController implements Initializable {
     }
 
     @FXML
-    void handleSearchBtn(ActionEvent event) throws FileNotFoundException {
+    void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */{
         tilePaneBrowse.getChildren().clear();
         searchByTitle(searchField.getText());
     }
 
-    @FXML
     public void loadBrowse() {
         tilePaneBrowse.getChildren().clear();
-        dbConnector.connect();
-        try {
-            PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie");
-            dbConnector.resultSet = ps.executeQuery();
-            while (dbConnector.resultSet.next()) {
-                String imagePath;
-                Movie movie = new Movie(
-                        dbConnector.resultSet.getInt("idMovie"),
-                        dbConnector.resultSet.getString("title"),
-                        dbConnector.resultSet.getString("director"),
-                        dbConnector.resultSet.getDouble("price"),
-                        Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
-                        dbConnector.resultSet.getString("releaseYear"),
-                        dbConnector.resultSet.getInt("quantity"),
-                        imagePath = dbConnector.resultSet.getString("imagePath")
-                );
-                TilePane tempTilePane = new TilePane();
-                tempTilePane.setPrefColumns(1);
-                tempTilePane.setPrefRows(5);
-                tempTilePane.setPadding(new Insets(30));
-                ImageView tempImageView = new ImageView();
-                tempImageView.getStyleClass().add("image-view-user-menu");
-                tempImageView.setFitHeight(200);
-                tempImageView.setFitWidth(133);
-                Image image = new Image(imagePath);
-                tempImageView.setImage(image);
-                tempImageView.setOnMouseClicked(e -> {
-                    RentMovieController.setMovieToRent(movie);
-                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
-                });
-                tempTilePane.getChildren().addAll(tempImageView);
-                tilePaneBrowse.getChildren().add(tempTilePane);
-                tilePaneBrowse.setPrefColumns(10);
-            }
-        } catch (Exception e) {
-            System.out.println("ohShit");
-            e.printStackTrace();
-        } finally {
-            dbConnector.disconnect();
-        }
+        String SQLQuery = "SELECT * FROM movie";
+        logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
     @FXML
-    void handleSortBox(ActionEvent event) {
+    void handleSortBox(/*ActionEvent event*/) {
 //?
     }
 
     @FXML
     void settingsHandleUpdateBtn() throws SQLException {
-        if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())){
+        if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
         }
-        if (!lastNameText.getText().equals("")&& !lastNameText.getText().equals(loggedInUser.getLastName())){
+        if (!lastNameText.getText().equals("") && !lastNameText.getText().equals(loggedInUser.getLastName())) {
             loggedInUser.setLastName(lastNameText.getText());
             dbConnector.updateLastName(loggedInUser.getIdUser(), loggedInUser);
         }
-        if (!emailText.getText().equals("")&& !emailText.getText().equals(loggedInUser.getEmail())){
+        if (!emailText.getText().equals("") && !emailText.getText().equals(loggedInUser.getEmail())) {
             loggedInUser.setEmail(emailText.getText());
             dbConnector.updateEmail(loggedInUser.getIdUser(), loggedInUser);
         }
-        if (!addressText.getText().equals("")&& !addressText.getText().equals(loggedInUser.getAddress())){
+        if (!addressText.getText().equals("") && !addressText.getText().equals(loggedInUser.getAddress())) {
             loggedInUser.setAddress(addressText.getText());
             dbConnector.updateAddress(loggedInUser.getIdUser(), loggedInUser);
         }
-        if (!phoneNumberText.getText().equals("")&& !phoneNumberText.getText().equals(loggedInUser.getPhoneNr())){
+        if (!phoneNumberText.getText().equals("") && !phoneNumberText.getText().equals(loggedInUser.getPhoneNr())) {
             loggedInUser.setPhoneNr(phoneNumberText.getText());
             dbConnector.updatePhoneNumber(loggedInUser.getIdUser(), loggedInUser);
         }
@@ -157,111 +110,39 @@ public class UserMenuController implements Initializable {
         sortBox.getItems().add("Drama");
         sortBox.getItems().add("Family");
         sortBox.getItems().add("Show All Movies");
-
         sortBox.setOnAction(event -> {
             String choice = sortBox.getSelectionModel().getSelectedItem();
-            if (choice == "Action") {
-                tilePaneBrowse.getChildren().clear();
-                sortByGenre("Action");
-                //Display images of movies.
-            } else if (choice == "Adventure") {
-                tilePaneBrowse.getChildren().clear();
-                sortByGenre("Adventure");
-            } else if (choice == "Drama") {
-                tilePaneBrowse.getChildren().clear();
-                sortByGenre("Drama");
-            } else if (choice == "Family") {
-                tilePaneBrowse.getChildren().clear();
-                sortByGenre("Family");
-            }else if (choice == "Show All Movies") {
-                loadBrowse();
+            switch (choice) {
+                case "Action":
+                    tilePaneBrowse.getChildren().clear();
+                    sortByGenre("Action");
+                    break;
+                case "Adventure":
+                    tilePaneBrowse.getChildren().clear();
+                    sortByGenre("Adventure");
+                    break;
+                case "Drama":
+                    tilePaneBrowse.getChildren().clear();
+                    sortByGenre("Drama");
+                    break;
+                case "Family":
+                    tilePaneBrowse.getChildren().clear();
+                    sortByGenre("Family");
+                    break;
+                case "Show All Movies":
+                    loadBrowse();
+                    break;
             }
         });
     }
-    @FXML
-    public void sortByGenre(String genre) {
-        dbConnector.connect();
-        try {
-            PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie WHERE genre = '" + genre + "'");
-            dbConnector.resultSet = ps.executeQuery();
-            while (dbConnector.resultSet.next()) {
-                String imagePath;
-                Movie movie = new Movie(
-                        dbConnector.resultSet.getInt("idMovie"),
-                        dbConnector.resultSet.getString("title"),
-                        dbConnector.resultSet.getString("director"),
-                        dbConnector.resultSet.getDouble("price"),
-                        Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
-                        dbConnector.resultSet.getString("releaseYear"),
-                        dbConnector.resultSet.getInt("quantity"),
-                        imagePath = dbConnector.resultSet.getString("imagePath")
-                );
-                TilePane tempTilePane = new TilePane();
-                tempTilePane.setPrefColumns(1);
-                tempTilePane.setPrefRows(5);
-                tempTilePane.setPadding(new Insets(30));
-                ImageView tempImageView = new ImageView();
-                tempImageView.getStyleClass().add("image-view-user-menu");
-                tempImageView.setFitHeight(200);
-                tempImageView.setFitWidth(133);
-                Image image = new Image(imagePath);
-                tempImageView.setImage(image);
-                tempImageView.setOnMouseClicked(e -> {
-                    RentMovieController.setMovieToRent(movie);
-                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
-                });
-                tempTilePane.getChildren().addAll(tempImageView);
-                tilePaneBrowse.getChildren().add(tempTilePane);
-                tilePaneBrowse.setPrefColumns(10);
-            }
-        } catch (Exception e) {
-            System.out.println("ohShit");
-            e.printStackTrace();
-        } finally {
-            dbConnector.disconnect();
-        }
+
+    private void sortByGenre(String genre) {
+        String query = "SELECT * FROM movie WHERE genre = '" + genre + "'";
+        logic.loadBrowsePageData(query, tilePaneBrowse);
     }
-    @FXML
-    public void searchByTitle(String title) {
-        dbConnector.connect();
-        try {
-            PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM movie WHERE title LIKE '" + title + "%' ");
-            dbConnector.resultSet = ps.executeQuery();
-            while (dbConnector.resultSet.next()) {
-                String imagePath;
-                Movie movie = new Movie(
-                        dbConnector.resultSet.getInt("idMovie"),
-                        dbConnector.resultSet.getString("title"),
-                        dbConnector.resultSet.getString("director"),
-                        dbConnector.resultSet.getDouble("price"),
-                        Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
-                        dbConnector.resultSet.getString("releaseYear"),
-                        dbConnector.resultSet.getInt("quantity"),
-                        imagePath = dbConnector.resultSet.getString("imagePath")
-                );
-                TilePane tempTilePane = new TilePane();
-                tempTilePane.setPrefColumns(1);
-                tempTilePane.setPrefRows(5);
-                tempTilePane.setPadding(new Insets(30));
-                ImageView tempImageView = new ImageView();
-                tempImageView.getStyleClass().add("image-view-user-menu");
-                tempImageView.setFitHeight(200);
-                tempImageView.setFitWidth(133);
-                Image image = new Image(imagePath);
-                tempImageView.setImage(image);
-                tempImageView.setOnMouseClicked(e -> {
-                    RentMovieController.setMovieToRent(movie);
-                    logic.openSceneInNewWindow("/view/rentMovie.fxml", "Rent Movie");
-                });
-                tempTilePane.getChildren().addAll(tempImageView);
-                tilePaneBrowse.getChildren().add(tempTilePane);
-                tilePaneBrowse.setPrefColumns(10);
-            }
-        } catch (Exception e) {
-            System.out.println("ohShit");
-            e.printStackTrace();
-        } finally {
-            dbConnector.disconnect();
-        }
+
+    private void searchByTitle(String title) {
+        String query = "SELECT * FROM movie WHERE title LIKE '" + title + "%' ";
+        logic.loadBrowsePageData(query, tilePaneBrowse);
     }
 }
