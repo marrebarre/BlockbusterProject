@@ -304,105 +304,82 @@ public class DbConnector {
 
     //Krillepille
     public void updateFirstName(int idUser, User user) throws SQLException {
-
         connect();
-
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
-
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, user.getFirstName()); //needs a setter in the user class?
+            System.out.println(user.getFirstName());
             preparedStmt.setInt(2, idUser);
-
+            System.out.println(idUser);
             preparedStmt.executeUpdate();
-            //  System.out.println("Firstname updated!");
+            System.out.println("First name updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     //Krillepille
     public void updateLastName(int idUser, User user) throws SQLException {
-
         connect();
-
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
-
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, user.getLastName());
             preparedStmt.setInt(2, idUser);
-
             preparedStmt.executeUpdate();
             System.out.println("Last name updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     //Krillepille
     public void updateEmail(int idUser, User user) throws SQLException {
-
         connect();
-
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
-
-        try {
+        try{
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, user.getEmail()); //needs a setter in the user class?
             preparedStmt.setInt(2, idUser);
-
             preparedStmt.executeUpdate();
             System.out.println("Email updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     //Krillepille
     public void updateAddress(int idUser, User user) throws SQLException {
-
         connect();
-
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
-
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, user.getAddress()); //needs a setter in the user class?
             preparedStmt.setInt(2, idUser);
-
             preparedStmt.executeUpdate();
             System.out.println("Address updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     //Krillepille
     public void updatePhoneNumber(int idUser, User user) throws SQLException {
-
         connect();
-
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
-
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, user.getPhoneNr()); //needs a setter in the user class?
             preparedStmt.setInt(2, idUser);
-
             preparedStmt.executeUpdate();
             System.out.println("Phone number updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
 
-    //krillepille
+/*    //krillepille
     public String getFirstName(int idUser) {
         connect();
         String firstName = "";
@@ -426,7 +403,6 @@ public class DbConnector {
 
     //krillepille
     public String getLastname(int idUser) {
-        connect();
         String lastName = "";
         String query = "SELECT lastName FROM account WHERE idUser =?";
         try {
@@ -448,7 +424,6 @@ public class DbConnector {
 
     //krillepille
     public String getEmail(int idUser) {
-        connect();
         String email = "";
         String query = "SELECT email FROM account WHERE idUser =?";
         try {
@@ -470,7 +445,6 @@ public class DbConnector {
 
     //krillepille
     public String getAddress(int idUser) {
-        connect();
         String address = "";
         String query = "SELECT address FROM account WHERE idUser =?";
         try {
@@ -492,7 +466,6 @@ public class DbConnector {
 
     //krillepille
     public String getPhoneNumber(int idUser) {
-        connect();
         String phoneNr = "";
         String query = "SELECT phoneNr FROM account WHERE idUser =?";
         try {
@@ -507,16 +480,16 @@ public class DbConnector {
         } catch (SQLException | NullPointerException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
+        } finally {
+            disconnect();
         }
         // System.out.println("Phone number: " + phoneNr);
-        disconnect(); //do for all!
         return phoneNr;
-    }
+    }*/
 
     //Krillepille (all images put into a list from database, to later be displayed)
 
     public List<Movie> searchMovieByGenre(String genre) {
-
         connect();
         movies.clear();
         String query = "SELECT title FROM movie WHERE genre = '" + genre + "'";
