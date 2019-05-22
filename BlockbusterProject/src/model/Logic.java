@@ -1,7 +1,7 @@
 package model;
 
 import javafx.scene.control.Alert;
-import scene.rentMovie.RentMovieController;
+import scene.rentPopup.RentPopupController;
 import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 
 public class Logic {
-    private DbConnector dbConnector = new DbConnector();
+    DbConnector dbConnector = new DbConnector();
 
     public static void alert(String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
@@ -52,7 +52,7 @@ public class Logic {
         }
     }
 
-    public void openSceneInNewWindow(String fxmlPath,String title){
+    public void openSceneInNewWindow(String fxmlPath ,String title){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlPath));
@@ -94,8 +94,8 @@ public class Logic {
                 Image image = new Image(imagePath);
                 tempImageView.setImage(image);
                 tempImageView.setOnMouseClicked(e -> {
-                    RentMovieController.setMovieToRent(movie);
-                    openSceneInNewWindow("/scene/rentMovie/rentMovie.fxml", "Rent Movie");
+                    RentPopupController.setMovieToRent(movie);
+                    openSceneInNewWindow("/scene/rentPopup/rentPopup.fxml", "Rent Movie");
                 });
                 tempTilePane.getChildren().addAll(tempImageView);
                 tilePane.getChildren().add(tempTilePane);
