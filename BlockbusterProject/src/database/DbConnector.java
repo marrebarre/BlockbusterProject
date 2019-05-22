@@ -11,12 +11,11 @@ import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
 import scene.userMenu.UserMenuController;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static scene.adminMenu.AdminMenuController.alert;
+import static model.Logic.alert;
 import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
@@ -141,20 +140,6 @@ public class DbConnector {
         }
     }
 
-    public void findMovieInDB(String title) {
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT movie.title FROM movie");
-
-            while (resultSet.next()) {
-                System.out.println("Title of movie: " + resultSet.getString(1));
-            }
-        } catch (SQLException e) {
-            System.out.println("Statement couldn't be executed.");
-            e.printStackTrace();
-        }
-    }
-
     public void disconnect() {
         try {
             if (connection != null)
@@ -192,7 +177,6 @@ public class DbConnector {
         return true;
     }
 
-    //UPDATE TABLE
     public <T> void updateTableColumnById(String table, String column, String idNameInTable, int id, T newData) {
         connect();
         try {
@@ -494,5 +478,4 @@ public class DbConnector {
         disconnect(); //do for all!
         return movies;
     }
-
 }

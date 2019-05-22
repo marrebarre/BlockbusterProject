@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.control.Alert;
+import scene.rentPopup.RentPopupController;
 import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -13,13 +15,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import scene.rentPopup.RentPopupController;
-
 import java.io.IOException;
 import java.sql.PreparedStatement;
 
 public class Logic {
     DbConnector dbConnector = new DbConnector();
+
+    public static void alert(String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setContentText(message);
+        alert.setHeaderText("We got a message for you");
+        alert.setTitle("ErrorBuster 9000");
+        alert.showAndWait();
+    }
+
     private void setToFullscreen(Stage stage) {
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();

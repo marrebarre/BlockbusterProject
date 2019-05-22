@@ -9,6 +9,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
@@ -80,6 +81,7 @@
                               <TextField fx:id="addressText" layoutX="229.0" layoutY="284.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
                               <TextField fx:id="phoneNumberText" layoutX="229.0" layoutY="317.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
                               <Button fx:id="updateBtn" layoutX="229.0" layoutY="348.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Update information" />
+                              <TreeView fx:id="faq" layoutX="423.0" layoutY="85.0" prefHeight="563.0" prefWidth="855.0" />
                            </children></AnchorPane>
                             </content>
                         </Tab>

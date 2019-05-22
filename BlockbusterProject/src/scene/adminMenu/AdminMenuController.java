@@ -37,23 +37,23 @@ public class AdminMenuController implements Initializable {
     @FXML
     Button btnLogOut;
     @FXML
-    TableColumn<User, String> emailcol;
+    TableColumn<User, String> colUserEmail;
     @FXML
-    TableColumn<User, String> passwordcol;
+    TableColumn<User, String> colUserPassword;
     @FXML
-    TableColumn<User, Integer> idusercol;
+    TableColumn<User, Integer> colUserId;
     @FXML
-    TableColumn<User, Double> balancecol;
+    TableColumn<User, Double> colUserBalance;
     @FXML
-    TableColumn<User, String> firstnamecol;
+    TableColumn<User, String> colUserFirstName;
     @FXML
-    TableColumn<User, String> lastnamecol;
+    TableColumn<User, String> colUserLastName;
     @FXML
-    TableColumn<User, String> addresscol;
+    TableColumn<User, String> colUserAddress;
     @FXML
-    TableColumn<User, String> phonecol;
+    TableColumn<User, String> colUserPhone;
     @FXML
-    TableColumn<User, Boolean> isadmincol;
+    TableColumn<User, Boolean> colUserIsAdmin;
 
     //Edit movie feature
     @FXML
@@ -90,7 +90,7 @@ public class AdminMenuController implements Initializable {
     @FXML
     ComboBox<Boolean> isAdminCombo;
     @FXML
-    TextField editEmail, editUseridTxtField, editPassword,editBalance,editFirstname,editLastname,editAddress,editPhoneNr;
+    TextField editEmail, editUserIdTxtField, editPassword, editBalance, editFirstName, editLastName, editAddress, editPhoneNr;
     @FXML
     Pane editUserPane;
 
@@ -101,13 +101,13 @@ public class AdminMenuController implements Initializable {
 
     public void addMoviePressed() {
         if (titleTxt.getText().equals("") || (directorTxt.getText().equals("")) || priceTxt.getText().equals("") || releaseYearTxt.getText().equals("") || quantityTxt.getText().equals("")) {
-            alert("Make sure to fill all fields before clicking add.", Alert.AlertType.WARNING);
+            Logic.alert("Make sure to fill all fields before clicking add.", Alert.AlertType.WARNING);
         } else {
             try {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image", "*.png", "*.jpg"));
                 File selectedFile = fileChooser.showOpenDialog(null);
-                String imagePath  = "";
+                String imagePath = "";
                 if (selectedFile != null) {
                     Path movefrom = FileSystems.getDefault().getPath(selectedFile.getPath());
                     Path targetDir = FileSystems.getDefault().getPath("C:\\Users\\Max\\Documents\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\image\\" + selectedFile.getName());
@@ -121,7 +121,7 @@ public class AdminMenuController implements Initializable {
                 } else {
                     System.out.println("File chosen isn't valid");
                 }
-                Movie movie = new Movie(dbConnector.tableSizeMovie() + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()), "image/" +imagePath);
+                Movie movie = new Movie(dbConnector.tableSizeMovie() + 1, titleTxt.getText(), directorTxt.getText(), Double.parseDouble(priceTxt.getText()), genreComboBox.getValue(), releaseYearTxt.getText(), Integer.parseInt(quantityTxt.getText()), "image/" + imagePath);
                 System.out.println("TrackADMIN");
                 dbConnector.connect();
                 dbConnector.addMovieToDB(movie);
@@ -134,7 +134,7 @@ public class AdminMenuController implements Initializable {
                 verifyImageAdded.setText("Image successfully added!");
             } catch (IllegalArgumentException e) {
                 System.out.println("Wrong database type");
-                alert("Wrong database type entered. Please make sure to use dot's instead of comma's. Careful with special signs.", Alert.AlertType.WARNING);
+                Logic.alert("Wrong database type entered. Please make sure to use dot's instead of comma's. Careful with special signs.", Alert.AlertType.WARNING);
             } finally {
                 dbConnector.disconnect();
             }
@@ -154,12 +154,12 @@ public class AdminMenuController implements Initializable {
                 editMovieQuantity.setText(String.valueOf(movie.getQuantity()));
             } catch (Exception e) {
                 System.out.println("Something went wrong when loading to textfields.");
-                alert("Something went wrong..", Alert.AlertType.WARNING);
+                Logic.alert("Something went wrong..", Alert.AlertType.WARNING);
             }
             editPane.setVisible(true);
             editMovieTxt.setEditable(false);
         } else {
-            alert("Enter ID of the movie you would like to edit.", Alert.AlertType.INFORMATION);
+            Logic.alert("Enter ID of the movie you would like to edit.", Alert.AlertType.INFORMATION);
         }
     }
 
@@ -173,7 +173,7 @@ public class AdminMenuController implements Initializable {
             dbConnector.updateTableColumnById("movie", "quantity", "idMovie", Integer.parseInt(editMovieTxt.getText()), Integer.parseInt(editMovieQuantity.getText()));
         } catch (Exception e) {
             System.out.println("Somwthing went wrong when trying to update database information.");
-            alert("Something went wrong..", Alert.AlertType.WARNING);
+            Logic.alert("Something went wrong..", Alert.AlertType.WARNING);
         }
         editMovieTxt.setEditable(true);
         editPane.setVisible(false);
@@ -213,15 +213,7 @@ public class AdminMenuController implements Initializable {
         movieTable.setItems(observableListMovie);
     }
 
-    public static void alert(String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setContentText(message);
-        alert.setHeaderText("We got a message for you");
-        alert.setTitle("ErrorBuster 9000");
-        alert.showAndWait();
-    }
-
-    public void viewListbtn() {
+    public void viewListBtn() {
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM account");
@@ -244,15 +236,15 @@ public class AdminMenuController implements Initializable {
         } finally {
             dbConnector.disconnect();
         }
-        emailcol.setCellValueFactory(new PropertyValueFactory<>("email"));
-        passwordcol.setCellValueFactory(new PropertyValueFactory<>("password"));
-        idusercol.setCellValueFactory(new PropertyValueFactory<>("idUser"));
-        balancecol.setCellValueFactory(new PropertyValueFactory<>("balance"));
-        firstnamecol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        lastnamecol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        addresscol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        phonecol.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
-        isadmincol.setCellValueFactory(new PropertyValueFactory<>("admin"));
+        colUserEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colUserPassword.setCellValueFactory(new PropertyValueFactory<>("password"));
+        colUserId.setCellValueFactory(new PropertyValueFactory<>("idUser"));
+        colUserBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        colUserFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        colUserLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        colUserAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colUserPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
+        colUserIsAdmin.setCellValueFactory(new PropertyValueFactory<>("admin"));
         accountTable.setItems(observableList);
     }
 
@@ -261,51 +253,52 @@ public class AdminMenuController implements Initializable {
         logic.changeSceneHandler(event, logInFXML, false);
     }
 
-    public void editUserIdPressed(){
+    public void editUserIdPressed() {
 
-        if(!editUseridTxtField.getText().equals("")){
+        if (!editUserIdTxtField.getText().equals("")) {
             User user;
-            try{
-                user = dbConnector.findUser(Integer.parseInt(editUseridTxtField.getText()));
+            try {
+                user = dbConnector.findUser(Integer.parseInt(editUserIdTxtField.getText()));
                 editEmail.setText(user.getEmail());
                 editPassword.setText(user.getPassword());
                 editBalance.setText(String.valueOf(user.getBalance()));
-                editFirstname.setText(user.getFirstName());
-                editLastname.setText(user.getLastName());
+                editFirstName.setText(user.getFirstName());
+                editLastName.setText(user.getLastName());
                 editAddress.setText(user.getAddress());
                 editPhoneNr.setText(user.getPhoneNr());
                 isAdminCombo.setValue(user.isAdmin());
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("something went wrong...");
                 e.printStackTrace();
             }
             editUserPane.setVisible(true);
-            editUseridTxtField.setEditable(false);
-        }else{
-            alert("You must choose an User ID", Alert.AlertType.WARNING);
+            editUserIdTxtField.setEditable(false);
+        } else {
+            Logic.alert("You must choose an User ID", Alert.AlertType.WARNING);
         }
     }
-    public void updateUserInfoPressed(){
-        dbConnector.updateUserInfo("account","email","idUser", Integer.parseInt(editUseridTxtField.getText()),editEmail.getText());
-        dbConnector.updateUserInfo("account","password","idUser",Integer.parseInt(editUseridTxtField.getText()),editPassword.getText());
-        dbConnector.updateUserInfo("account","balance","idUser",Integer.parseInt(editUseridTxtField.getText()),Double.parseDouble(editBalance.getText()));
-        dbConnector.updateUserInfo("account","firstName","idUser",Integer.parseInt(editUseridTxtField.getText()),editFirstname.getText());
-        dbConnector.updateUserInfo("account","lastName","idUser",Integer.parseInt(editUseridTxtField.getText()),editLastname.getText());
-        dbConnector.updateUserInfo("account","address","idUser",Integer.parseInt(editUseridTxtField.getText()),editAddress.getText());
-        dbConnector.updateUserInfo("account","phoneNr","idUser",Integer.parseInt(editUseridTxtField.getText()),editPhoneNr.getText());
-        dbConnector.updateUserInfo("account","admin","idUser",Integer.parseInt(editUseridTxtField.getText()),isAdminCombo.getValue());
+
+    public void updateUserInfoPressed() {
+        dbConnector.updateUserInfo("account", "email", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editEmail.getText());
+        dbConnector.updateUserInfo("account", "password", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editPassword.getText());
+        dbConnector.updateUserInfo("account", "balance", "idUser", Integer.parseInt(editUserIdTxtField.getText()), Double.parseDouble(editBalance.getText()));
+        dbConnector.updateUserInfo("account", "firstName", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editFirstName.getText());
+        dbConnector.updateUserInfo("account", "lastName", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editLastName.getText());
+        dbConnector.updateUserInfo("account", "address", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editAddress.getText());
+        dbConnector.updateUserInfo("account", "phoneNr", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editPhoneNr.getText());
+        dbConnector.updateUserInfo("account", "admin", "idUser", Integer.parseInt(editUserIdTxtField.getText()), isAdminCombo.getValue());
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        genreComboBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
-        editMovieGenreBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
-        isAdminCombo.getItems().addAll(true,false);
-        editPane.setVisible(false);
-        editUserPane.setVisible(false);
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        hBox.setLayoutX(bounds.getWidth());
-        hBox.setLayoutY(bounds.getHeight());
+        @Override
+        public void initialize (URL location, ResourceBundle resources){
+            genreComboBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
+            editMovieGenreBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
+            isAdminCombo.getItems().addAll(true, false);
+            editPane.setVisible(false);
+            editUserPane.setVisible(false);
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            hBox.setLayoutX(bounds.getWidth());
+            hBox.setLayoutY(bounds.getHeight());
+        }
     }
-}

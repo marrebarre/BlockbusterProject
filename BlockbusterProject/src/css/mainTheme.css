@@ -74,3 +74,14 @@
     -fx-fit-to-height: true;
     -fx-fit-to-width: true;
 }
+
+#faq .tree-cell{
+   -fx-background-color: transparent;
+
+    -fx-text-fill: #ffffff ;
+    -fx-font-size: 14px;
+}
+#faq {
+    -fx-background-color: transparent ;
+    -fx-text-fill: #ffffff ;
+}
