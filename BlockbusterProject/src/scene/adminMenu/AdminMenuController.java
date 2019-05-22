@@ -261,32 +261,20 @@ public class AdminMenuController implements Initializable {
         logic.changeSceneHandler(event, logInFXML, false);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        genreComboBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
-        editMovieGenreBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
-        isAdminCombo.getItems().addAll(true,false);
-        editPane.setVisible(false);
-        editUserPane.setVisible(false);
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
-        hBox.setLayoutX(bounds.getWidth());
-        hBox.setLayoutY(bounds.getHeight());
-    }
     public void editUserIdPressed(){
 
         if(!editUseridTxtField.getText().equals("")){
             User user;
             try{
-               user = dbConnector.findUser(Integer.parseInt(editUseridTxtField.getText()));
-               editEmail.setText(user.getEmail());
-               editPassword.setText(user.getPassword());
-               editBalance.setText(String.valueOf(user.getBalance()));
-               editFirstname.setText(user.getFirstName());
-               editLastname.setText(user.getLastName());
-               editAddress.setText(user.getAddress());
-               editPhoneNr.setText(user.getPhoneNr());
-               isAdminCombo.setValue(user.isAdmin());
+                user = dbConnector.findUser(Integer.parseInt(editUseridTxtField.getText()));
+                editEmail.setText(user.getEmail());
+                editPassword.setText(user.getPassword());
+                editBalance.setText(String.valueOf(user.getBalance()));
+                editFirstname.setText(user.getFirstName());
+                editLastname.setText(user.getLastName());
+                editAddress.setText(user.getAddress());
+                editPhoneNr.setText(user.getPhoneNr());
+                isAdminCombo.setValue(user.isAdmin());
             }catch(Exception e){
                 System.out.println("something went wrong...");
                 e.printStackTrace();
@@ -306,6 +294,18 @@ public class AdminMenuController implements Initializable {
         dbConnector.updateUserInfo("account","address","idUser",Integer.parseInt(editUseridTxtField.getText()),editAddress.getText());
         dbConnector.updateUserInfo("account","phoneNr","idUser",Integer.parseInt(editUseridTxtField.getText()),editPhoneNr.getText());
         dbConnector.updateUserInfo("account","admin","idUser",Integer.parseInt(editUseridTxtField.getText()),isAdminCombo.getValue());
+    }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        genreComboBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
+        editMovieGenreBox.getItems().addAll(Movie.Genre.Action, Movie.Genre.Family, Movie.Genre.Adventure, Movie.Genre.Drama, Movie.Genre.Horror, Movie.Genre.Scifi);
+        isAdminCombo.getItems().addAll(true,false);
+        editPane.setVisible(false);
+        editUserPane.setVisible(false);
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        hBox.setLayoutX(bounds.getWidth());
+        hBox.setLayoutY(bounds.getHeight());
     }
 }

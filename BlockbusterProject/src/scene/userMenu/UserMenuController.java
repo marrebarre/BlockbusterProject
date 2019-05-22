@@ -28,10 +28,10 @@ public class UserMenuController implements Initializable {
     private TextField searchField;
 
     @FXML
-    TilePane tilePaneBrowse;
+    TilePane tilePaneBrowse, tilePaneMyRentals;
 
     @FXML
-    ScrollPane scrollPane;
+    ScrollPane scrollPane, scrollPaneMyRentals;
 
     @FXML
     Label lblWelcomeMessage;
@@ -50,20 +50,24 @@ public class UserMenuController implements Initializable {
         }
     }
 
-    @FXML
-    void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */{
-        tilePaneBrowse.getChildren().clear();
-        searchByTitle(searchField.getText());
+    private void loadMyRentals(){
+        tilePaneMyRentals.getChildren().clear();
+        dbConnector.loadRentals(tilePaneMyRentals);
     }
 
-    public void loadBrowse() {
+    private void loadBrowse() {
         tilePaneBrowse.getChildren().clear();
         String SQLQuery = "SELECT * FROM movie";
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
     @FXML
-    void handleSortBox(/*ActionEvent event*/) {
+    void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */{
+        tilePaneBrowse.getChildren().clear();
+        searchByTitle(searchField.getText());
+    }
+
+    public void handleSortBox(/*ActionEvent event*/) {
 //?
     }
 
@@ -91,6 +95,16 @@ public class UserMenuController implements Initializable {
         }
     }
 
+    private void sortByGenre(String genre) {
+        String query = "SELECT * FROM movie WHERE genre = '" + genre + "'";
+        logic.loadBrowsePageData(query, tilePaneBrowse);
+    }
+
+    private void searchByTitle(String title) {
+        String query = "SELECT * FROM movie WHERE title LIKE '%" + title + "%' ";
+        logic.loadBrowsePageData(query, tilePaneBrowse);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -99,6 +113,7 @@ public class UserMenuController implements Initializable {
         scrollPane.setPrefWidth(primaryScreenBounds.getWidth());
         scrollPane.setPrefHeight(primaryScreenBounds.getHeight() - 115);
         loadBrowse();
+        loadMyRentals();
         firstNameText.setText(loggedInUser.getFirstName());
         lastNameText.setText(loggedInUser.getLastName());
         emailText.setText(loggedInUser.getEmail());
@@ -134,15 +149,5 @@ public class UserMenuController implements Initializable {
                     break;
             }
         });
-    }
-
-    private void sortByGenre(String genre) {
-        String query = "SELECT * FROM movie WHERE genre = '" + genre + "'";
-        logic.loadBrowsePageData(query, tilePaneBrowse);
-    }
-
-    private void searchByTitle(String title) {
-        String query = "SELECT * FROM movie WHERE title LIKE '%" + title + "%' ";
-        logic.loadBrowsePageData(query, tilePaneBrowse);
     }
 }

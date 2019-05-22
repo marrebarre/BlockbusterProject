@@ -1,15 +1,23 @@
 package database;
 
-import scene.adminMenu.AdminMenuController;
-import scene.userMenu.UserMenuController;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.TilePane;
 import model.Admin;
+import model.Logic;
 import model.Movie;
 import model.User;
+import scene.rentPopup.RentPopupController;
+import scene.userMenu.UserMenuController;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static scene.adminMenu.AdminMenuController.alert;
+import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
     public Connection connection = null;
@@ -18,15 +26,38 @@ public class DbConnector {
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
     public List<Movie> movies = new ArrayList<>();
+    Logic logic;
+    RentPopupController rentPopupController;
+    UserMenuController userMenuController;
 
-    public Connection connect() {
+    public void connect() {
         try {
             String url = "jdbc:mysql://den1.mysql3.gear.host:3306/bustblockerdb?verifyServerCertificate=false&useSSL=false&allowPublicKeyRetrieval=true&user=bustblockerdb&password=bustblocker!&serverTimeZone=UTF-8";
             connection = DriverManager.getConnection(url);
         } catch (SQLException sql) {
             System.err.println("Connection failed" + sql);
         }
-        return connection;
+    }
+
+    public void addRental(Movie selectedMovie, Date dateRented, Date dateReturned) {
+        String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
+        connect();
+        try {
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            ps.setInt(1, loggedInUser.getIdUser());
+            ps.setInt(2, selectedMovie.getIdMovie());
+            ps.setDate(3, dateRented);
+            ps.setDate(4, dateReturned);
+            ps.setDouble(5, selectedMovie.getPrice());
+            ps.setBoolean(6, false);
+            ps.executeUpdate();
+            alert("Successfully rented movie!", Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            System.out.println("Error when loading to database");
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
     }
 
     public int tableSizeMovie() {
@@ -104,7 +135,7 @@ public class DbConnector {
             ps.setString(8, movie.getImagePath());
 
             ps.executeUpdate();
-            AdminMenuController.alert("Successfully added movie!", Alert.AlertType.INFORMATION);
+            alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
         }
@@ -151,7 +182,7 @@ public class DbConnector {
                     adminHandler(resultSet);
                 } else {
                     tempUser = userHandler(resultSet);
-                    UserMenuController.loggedInUser = tempUser;
+                    loggedInUser = tempUser;
                 }
                 resultSet.close();
             }
@@ -273,6 +304,52 @@ public class DbConnector {
         return user;
     }
 
+    public void loadRentals(TilePane tilePane){
+        connect();
+        String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ?";
+        ResultSet resultSetRental;
+        try {
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            ps.setInt(1, loggedInUser.getIdUser());
+            resultSetRental = ps.executeQuery();
+            while (resultSetRental.next()) {
+                String imagePath;
+                Movie movie = new Movie(
+                        resultSetRental.getInt("movie_idMovie"),
+                        resultSetRental.getString("title"),
+                        resultSetRental.getString("director"),
+                        resultSetRental.getDouble("price"),
+                        Movie.getStringAsGenre(resultSetRental.getString("genre")),
+                        resultSetRental.getString("releaseYear"),
+                        resultSetRental.getInt("quantity"),
+                        imagePath = resultSetRental.getString("imagePath")
+                );
+                TilePane tempTilePane = new TilePane();
+                tempTilePane.setPrefColumns(1);
+                tempTilePane.setPrefRows(5);
+                tempTilePane.setPadding(new Insets(30));
+                ImageView tempImageView = new ImageView();
+                tempImageView.getStyleClass().add("image-view-user-menu");
+                tempImageView.setFitHeight(200);
+                tempImageView.setFitWidth(133);
+                Image image = new Image(imagePath);
+                tempImageView.setImage(image);
+                tempImageView.setOnMouseClicked(e -> {
+                    RentPopupController.setMovieToRent(movie);
+                    /*logic.openSceneInNewWindow("/scene/rentPopup/rentPopup.fxml", "Rent Movie");*/
+                });
+                tempTilePane.getChildren().addAll(tempImageView);
+                tilePane.getChildren().add(tempTilePane);
+                tilePane.setPrefColumns(10);
+            }
+        } catch (Exception e) {
+            System.out.println("ohShit");
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
     public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser, T data) {
         connect();
         try {
@@ -302,7 +379,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateFirstName(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
@@ -319,7 +395,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateLastName(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
@@ -334,11 +409,10 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateEmail(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
-        try{
+        try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             preparedStmt.setString(1, user.getEmail()); //needs a setter in the user class?
             preparedStmt.setInt(2, idUser);
@@ -349,7 +423,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updateAddress(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
@@ -364,7 +437,6 @@ public class DbConnector {
         }
     }
 
-    //Krillepille
     public void updatePhoneNumber(int idUser, User user) throws SQLException {
         connect();
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
@@ -378,116 +450,6 @@ public class DbConnector {
             System.out.println(e.getMessage());
         }
     }
-
-/*    //krillepille
-    public String getFirstName(int idUser) {
-        connect();
-        String firstName = "";
-        String query = "SELECT firstName FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                firstName = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        System.out.println("First name: " + firstName);
-        return firstName;
-    }
-
-    //krillepille
-    public String getLastname(int idUser) {
-        String lastName = "";
-        String query = "SELECT lastName FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                lastName = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        //  System.out.println("Last name: " + lastName);
-        return lastName;
-    }
-
-    //krillepille
-    public String getEmail(int idUser) {
-        String email = "";
-        String query = "SELECT email FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                email = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        // System.out.println("Email : " + email);
-        return email;
-    }
-
-    //krillepille
-    public String getAddress(int idUser) {
-        String address = "";
-        String query = "SELECT address FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                address = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        // System.out.println("Address: " + address);
-        return address;
-    }
-
-    //krillepille
-    public String getPhoneNumber(int idUser) {
-        String phoneNr = "";
-        String query = "SELECT phoneNr FROM account WHERE idUser =?";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setInt(1, idUser);
-            resultSet = preparedStmt.executeQuery();
-
-            if (resultSet.next()) {
-                phoneNr = resultSet.getString(1);
-                resultSet.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        } finally {
-            disconnect();
-        }
-        // System.out.println("Phone number: " + phoneNr);
-        return phoneNr;
-    }*/
-
-    //Krillepille (all images put into a list from database, to later be displayed)
 
     public List<Movie> searchMovieByGenre(String genre) {
         connect();
@@ -534,22 +496,3 @@ public class DbConnector {
     }
 
 }
-
-    /*public String userEmail(String username) {
-        connect();
-        String email = "";
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM account WHERE email = ? AND admin = 0");
-            preparedStatement.setString(1, username);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                email = resultSet.getString(1);
-                resultSet.close();
-            }
-            //preparedStatement.setMaxRows(10);
-
-        } catch (SQLException e) {
-            System.out.println("Something went wrong!");
-            e.printStackTrace();
-        }
-    }*/
