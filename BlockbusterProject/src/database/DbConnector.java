@@ -20,7 +20,6 @@ import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
     public Connection connection = null;
-    public UserMenuController userMenuController;
     public Statement statement;
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();

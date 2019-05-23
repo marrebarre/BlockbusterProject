@@ -14,6 +14,8 @@ import model.Logic;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static scene.userMenu.UserMenuController.loggedInUser;
+
 public class LoginScreenController implements Initializable {
     @FXML
     TextField username = new TextField(), password = new TextField();
@@ -29,28 +31,27 @@ public class LoginScreenController implements Initializable {
 
     public void handleLogin(ActionEvent event) {
         dbConnector.connect();
+
         if (username.getText().isEmpty() || password.getText().isEmpty()) {
             isConnected.setText("Email and/or password not entered.");
             username.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
             password.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
-        } else {
-            if (dbConnector.verifyAccount(username.getText(), password.getText())) {
-                if (!dbConnector.admins.isEmpty()) {
-                    String adminMenuFXML = "/scene/adminMenu/adminMenu.fxml";
-                    logic.changeSceneHandler(event, adminMenuFXML, true);
-                } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !UserMenuController.loggedInUser.isAdmin()) {
-                    String userMenuFXML = "/scene/userMenu/userMenu.fxml";
-                    logic.changeSceneHandler(event, userMenuFXML, true);
-                } else {
-                    System.out.println("Login failed");
-                }
+        } else if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+            //if (dbConnector.verifyAccount(username.getText(), password.getText())) {
+            if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.admins.isEmpty()) {
+                String adminMenuFXML = "/scene/adminMenu/adminMenu.fxml";
+                logic.changeSceneHandler(event, adminMenuFXML, true);
+            } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !loggedInUser.isAdmin()) {
+                String userMenuFXML = "/scene/userMenu/userMenu.fxml";
+                logic.changeSceneHandler(event, userMenuFXML, true);
             } else {
+                System.out.println("Login failed");
                 Alert alert = new Alert(Alert.AlertType.NONE, "Invalid Email or password", ButtonType.OK);
                 alert.setTitle("Login failed");
                 alert.showAndWait();
             }
-            dbConnector.disconnect();
         }
+        dbConnector.disconnect();
     }
 
     public void btnPressedCreateAccount(ActionEvent event) {
