@@ -14,9 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
-import model.Logic;
-import model.Movie;
-import model.User;
+import model.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -105,14 +104,14 @@ public class AdminMenuController implements Initializable {
         } else {
             try {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("image", "*.png", "*.jpg"));
+                fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("images", "*.png", "*.jpg"));
                 File selectedFile = fileChooser.showOpenDialog(null);
                 String imagePath = "";
                 if (selectedFile != null) {
                     Path movefrom = FileSystems.getDefault().getPath(selectedFile.getPath());
-                    Path targetDir = FileSystems.getDefault().getPath("C:\\Users\\Max\\Documents\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\image\\" + selectedFile.getName());
+                    Path targetDir = FileSystems.getDefault().getPath("./src/image/" + selectedFile.getName());
                     try {
-                        Files.move(movefrom, targetDir, StandardCopyOption.REPLACE_EXISTING);
+                        Files.move(movefrom, targetDir, StandardCopyOption.ATOMIC_MOVE);
                         imagePath = targetDir.getFileName().toString();
                         System.out.println(targetDir.getFileName().toString());
                     } catch (IOException e) {
