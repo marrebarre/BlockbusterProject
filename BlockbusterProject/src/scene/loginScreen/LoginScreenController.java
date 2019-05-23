@@ -77,20 +77,7 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Image image = new Image("image/BlockbusterLogo.png");
         logo.setImage(image);
-        /*Path path = new Path();
-        path.getElements().add(new MoveTo(0,0));
-        path.getElements().add(new LineTo(500,280));
-        path.getElements().add(new LineTo(630,50));
-        path.getElements().add(new LineTo(550,-10));
-        path.getElements().add((new LineTo(50,280)));
-        path.getElements().add(new LineTo(0,0));
-        PathTransition transition = new PathTransition();
-        transition.setNode(aStarIsBorn);
-        transition.setDuration(Duration.seconds(10));
-        transition.setPath(path);
-        transition.setAutoReverse(true);
-        transition.setCycleCount(PathTransition.INDEFINITE);
-        transition.play();*/
+
 
 
         KeyFrame kf16 = new KeyFrame(Duration.seconds(2), new KeyValue(venturaSwap.opacityProperty(),1));
@@ -118,6 +105,5 @@ public class LoginScreenController implements Initializable {
         timelineOn.setCycleCount(Timeline.INDEFINITE);
         timelineOn.setAutoReverse(true);
         timelineOn.play();
-
     }
 }
