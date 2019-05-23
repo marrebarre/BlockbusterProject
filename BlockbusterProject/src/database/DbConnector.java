@@ -6,11 +6,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import model.Admin;
-import model.Logic;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
 import scene.userMenu.UserMenuController;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +20,12 @@ import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
     public Connection connection = null;
-    private Statement statement;
+    public UserMenuController userMenuController;
+    public Statement statement;
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
     public List<Movie> movies = new ArrayList<>();
-    Logic logic;
-    RentPopupController rentPopupController;
-    UserMenuController userMenuController;
 
     public void connect() {
         try {

@@ -29,7 +29,7 @@ public class UserMenuController implements Initializable {
     private TextField searchField;
 
     @FXML
-    TilePane tilePaneBrowse, tilePaneMyRentals;
+    public TilePane tilePaneBrowse, tilePaneMyRentals;
 
     @FXML
     ScrollPane scrollPane, scrollPaneMyRentals;
@@ -55,7 +55,7 @@ public class UserMenuController implements Initializable {
         }
     }
 
-    private void loadMyRentals() {
+    public void loadMyRentals() {
         tilePaneMyRentals.getChildren().clear();
         dbConnector.loadRentals(tilePaneMyRentals);
     }
@@ -118,10 +118,8 @@ public class UserMenuController implements Initializable {
         TreeItem q6 = new TreeItem("RETURN POLICIES?");
         TreeItem q7 = new TreeItem("FORGOT MY PASSWORD?");
 
-
         faq.setRoot(rootItem);
         rootItem.getChildren().addAll(q1, q2, q3, q4, q5, q6, q7);
-
         TreeItem a1 = new TreeItem("This is a movie rental program that allows the user to login, browse and rent movies from a store. " +
                 "\nThe application is easy to use and displays which movies are currently in stock. When logged in, " +
                 "\nthe user is able to rent movies, check stock and choose to have the movie delivered for a small " +
@@ -141,8 +139,6 @@ public class UserMenuController implements Initializable {
         q6.getChildren().addAll(a6);
         TreeItem a7 = new TreeItem("There is a link underneath the login-prompt. There you will be directed further");
         q6.getChildren().addAll(a7);
-
-
     }
 
 

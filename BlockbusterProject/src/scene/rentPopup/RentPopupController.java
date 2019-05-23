@@ -12,6 +12,8 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Movie;
 import model.User;
+import scene.userMenu.UserMenuController;
+
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -29,6 +31,7 @@ public class RentPopupController implements Initializable {
 
     private LocalDate localDate = LocalDate.now();
     DbConnector dbConnector = new DbConnector();
+    UserMenuController userMenuController;
     private static User balance;
 
     public static User getBalance() {
