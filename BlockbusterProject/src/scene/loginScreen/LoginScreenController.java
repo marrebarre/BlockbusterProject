@@ -1,6 +1,5 @@
 package scene.loginScreen;
 
-import scene.userMenu.UserMenuController;
 import database.DbConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,40 +17,45 @@ import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class LoginScreenController implements Initializable {
     @FXML
-    TextField username = new TextField(), password = new TextField();
+    TextField username = new TextField();
+    @FXML
+    PasswordField password = new PasswordField();
     @FXML
     Label forgotPW = new Label(), isConnected = new Label();
     @FXML
     Button signIn, btnCreateAccount;
     @FXML
-    ImageView imageSwap, logo;
+    ImageView /*imageSwap, */logo;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
 
     public void handleLogin(ActionEvent event) {
         dbConnector.connect();
-
-        if (username.getText().isEmpty() || password.getText().isEmpty()) {
-            isConnected.setText("Email and/or password not entered.");
-            username.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
-            password.setStyle("-fx-background-color: #c12403; -fx-border-color: black; -fx-text-fill: black; -fx-prompt-text-fill: black");
-        } else if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
-            //if (dbConnector.verifyAccount(username.getText(), password.getText())) {
-            if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.admins.isEmpty()) {
-                String adminMenuFXML = "/scene/adminMenu/adminMenu.fxml";
-                logic.changeSceneHandler(event, adminMenuFXML, true);
-            } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !loggedInUser.isAdmin()) {
-                String userMenuFXML = "/scene/userMenu/userMenu.fxml";
-                logic.changeSceneHandler(event, userMenuFXML, true);
-            } else {
-                System.out.println("Login failed");
-                Alert alert = new Alert(Alert.AlertType.NONE, "Invalid Email or password", ButtonType.OK);
-                alert.setTitle("Login failed");
-                alert.showAndWait();
+        try {
+            if (username.getText().isEmpty() || password.getText().isEmpty()) {
+                isConnected.setText("Email and/or password not entered.");
+                //System.out.println("Email and/or password not entered.");
+                username.setStyle("-fx-prompt-text-fill: red");
+                password.setStyle("-fx-prompt-text-fill: red");
+            } else if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+                if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.admins.isEmpty()) {
+                    String adminMenuFXML = "/scene/adminMenu/adminMenu.fxml";
+                    logic.changeSceneHandler(event, adminMenuFXML, true);
+                } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !loggedInUser.isAdmin()) {
+                    String userMenuFXML = "/scene/userMenu/userMenu.fxml";
+                    logic.changeSceneHandler(event, userMenuFXML, true);
+                }
             }
+            dbConnector.disconnect();
+        } catch (NullPointerException e) {
+            System.out.println("Login failed");
+            Alert alert = new Alert(Alert.AlertType.NONE, "Invalid email or password", ButtonType.OK);
+            alert.setTitle("Login failed");
+            alert.showAndWait();
+            //e.printStackTrace();
+            System.out.println("Match to entered data not found within DB. Error thrown: " + e.toString());
         }
-        dbConnector.disconnect();
     }
 
     public void btnPressedCreateAccount(ActionEvent event) {
@@ -62,11 +66,6 @@ public class LoginScreenController implements Initializable {
     public void btnPressedForgotPW(MouseEvent event) {
         String forgotPasswordFXML = "/scene/forgotPassword/forgotPW.fxml";
         logic.changeSceneHandler(event, forgotPasswordFXML, false);
-    }
-
-    public void exitProgram() {
-        System.exit(0);
-        System.out.println("Program closed");
     }
 
     @Override

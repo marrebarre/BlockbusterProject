@@ -12,8 +12,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Movie;
 import model.User;
-import scene.userMenu.UserMenuController;
-
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -30,8 +28,6 @@ public class RentPopupController implements Initializable {
     TextField enterDaysOfRental;
 
     private LocalDate localDate = LocalDate.now();
-    DbConnector dbConnector = new DbConnector();
-    UserMenuController userMenuController;
     private static User balance;
 
     public static User getBalance() {
@@ -40,11 +36,11 @@ public class RentPopupController implements Initializable {
 
     private static Movie movieToRent;
 
-    public static Movie getMovieToRent() {
+    private static Movie getMovieToRent() {
         return movieToRent;
     }
 
-    public Date convertToDateFormat(LocalDate localDate) {
+    private Date convertToDateFormat(LocalDate localDate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         dateTimeFormatter.format(localDate);
         return java.sql.Date.valueOf(localDate);
@@ -60,6 +56,7 @@ public class RentPopupController implements Initializable {
     }
 
     public void rentalHandler(){
+        DbConnector dbConnector = new DbConnector();
         dbConnector.addRental(getMovieToRent(), convertToDateFormat(localDate), convertToDateFormat(localDate.plusDays(Integer.parseInt(enterDaysOfRental.getText()))));
     }
 
