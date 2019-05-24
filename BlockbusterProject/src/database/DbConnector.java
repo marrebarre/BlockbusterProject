@@ -9,8 +9,6 @@ import model.Admin;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
-import scene.userMenu.UserMenuController;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
     public Connection connection = null;
-    public UserMenuController userMenuController;
     public Statement statement;
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
@@ -33,6 +30,19 @@ public class DbConnector {
             connection = DriverManager.getConnection(url);
         } catch (SQLException sql) {
             System.err.println("Connection failed" + sql);
+        }
+    }
+
+    public void disconnect() {
+        try {
+            if (connection != null)
+                connection.close();
+            if (statement != null)
+                statement.close();
+            if (resultSet != null)
+                resultSet.close();
+        } catch (SQLException ex) {
+            System.out.println("Failed to disconnect");
         }
     }
 
@@ -56,6 +66,23 @@ public class DbConnector {
             disconnect();
         }
     }
+
+/*  // TODO av Max
+    public void movieStockHandler(Movie selectedMovie){
+        String SQLQuery = "UPDATE movie SET quantity WHERE idMovie = ?";
+        connect();
+        try {
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            *//*ps.setInt(1, selectedMovie.getQuantity());*//*
+            ps.executeUpdate();
+            alert("Movie successfully subtracted from quantity!", Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            System.out.println("Error when loading to database");
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }*/
 
     public int tableSizeMovie() {
         connect();
@@ -135,19 +162,6 @@ public class DbConnector {
             alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
-        }
-    }
-
-    public void disconnect() {
-        try {
-            if (connection != null)
-                connection.close();
-            if (statement != null)
-                statement.close();
-            if (resultSet != null)
-                resultSet.close();
-        } catch (SQLException ex) {
-            System.out.println("Failed to disconnect");
         }
     }
 
@@ -286,7 +300,7 @@ public class DbConnector {
         return user;
     }
 
-    public void loadRentals(TilePane tilePane){
+    public void loadRentals(TilePane tilePane) {
         connect();
         String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ?";
         ResultSet resultSetRental;
@@ -361,7 +375,7 @@ public class DbConnector {
         }
     }
 
-    public void updateFirstName(int idUser, User user) throws SQLException {
+    public void updateFirstName(int idUser, User user){
         connect();
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
         try {
@@ -377,7 +391,7 @@ public class DbConnector {
         }
     }
 
-    public void updateLastName(int idUser, User user) throws SQLException {
+    public void updateLastName(int idUser, User user){
         connect();
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
         try {
@@ -391,7 +405,7 @@ public class DbConnector {
         }
     }
 
-    public void updateEmail(int idUser, User user) throws SQLException {
+    public void updateEmail(int idUser, User user){
         connect();
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
         try {
@@ -405,7 +419,7 @@ public class DbConnector {
         }
     }
 
-    public void updateAddress(int idUser, User user) throws SQLException {
+    public void updateAddress(int idUser, User user){
         connect();
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
         try {
@@ -419,7 +433,7 @@ public class DbConnector {
         }
     }
 
-    public void updatePhoneNumber(int idUser, User user) throws SQLException {
+    public void updatePhoneNumber(int idUser, User user){
         connect();
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
         try {
@@ -433,6 +447,8 @@ public class DbConnector {
         }
     }
 
+
+/*
     public List<Movie> searchMovieByGenre(String genre) {
         connect();
         movies.clear();
@@ -475,5 +491,5 @@ public class DbConnector {
         System.out.println(movies);
         disconnect(); //do for all!
         return movies;
-    }
+    }*/
 }
