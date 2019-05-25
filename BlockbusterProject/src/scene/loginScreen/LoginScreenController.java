@@ -4,7 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import scene.userMenu.UserMenuController;
 import database.DbConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.Logic;
 import java.net.URL;
-import java.security.Key;
 import java.util.ResourceBundle;
 
 import static scene.userMenu.UserMenuController.loggedInUser;
@@ -77,8 +75,6 @@ public class LoginScreenController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         Image image = new Image("image/BlockbusterLogo.png");
         logo.setImage(image);
-
-
 
         KeyFrame kf16 = new KeyFrame(Duration.seconds(2), new KeyValue(venturaSwap.opacityProperty(),1));
         KeyFrame kf12 = new KeyFrame(Duration.seconds(3),new KeyValue(venturaSwap.opacityProperty(),0));

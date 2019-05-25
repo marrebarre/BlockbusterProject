@@ -1,7 +1,17 @@
 .root{
     -fx-background-color: linear-gradient(from 10% 10% to 50% 50%, reflect, #000031, red);
     -fx-text-fill: white, 12px;
+    /*-fx-animated: pulse 10s infinite;*/
 }
+
+/*@keyframes pulse {
+    0% {
+        background-color: #001F3F;
+    }
+    100% {
+        background-color: #FF4136;
+    }
+}*/
 
 .tab{
     -fx-font-size: 12px;
