@@ -33,7 +33,7 @@
                                     <Font size="18.0" />
                                  </font></TextField>
                               <Button fx:id="btnSearch" layoutX="344.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchBtn" text="Search" />
-                              <Label fx:id="lblWelcomeMessage" layoutX="449.0" layoutY="19.0" prefHeight="30.0" prefWidth="522.0">
+                              <Label fx:id="lblWelcomeMessage" layoutX="449.0" layoutY="19.0" prefHeight="30.0" prefWidth="522.0" textFill="white">
                                  <font>
                                     <Font size="20.0" />
                                  </font></Label>

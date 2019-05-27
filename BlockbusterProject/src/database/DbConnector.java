@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static model.Logic.alert;
+import static scene.rentPopup.RentPopupController.movieToRent;
 import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
@@ -22,7 +23,6 @@ public class DbConnector {
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
-    public List<Movie> movies = new ArrayList<>();
 
     public void connect() {
         try {
@@ -46,19 +46,25 @@ public class DbConnector {
         }
     }
 
-    public void addRental(Movie selectedMovie, Date dateRented, Date dateReturned) {
+    public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
         connect();
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
             ps.setInt(1, loggedInUser.getIdUser());
-            ps.setInt(2, selectedMovie.getIdMovie());
+            ps.setInt(2, movieToRent.getIdMovie());
             ps.setDate(3, dateRented);
             ps.setDate(4, dateReturned);
-            ps.setDouble(5, selectedMovie.getPrice());
+            ps.setDouble(5, movieToRent.getPrice());
             ps.setBoolean(6, false);
+            movieStockHandler();
             ps.executeUpdate();
-            alert("Successfully rented movie!", Alert.AlertType.INFORMATION);
+            /*if (movieToRent.getQuantity() <= 0){
+                alert("Rental failed! Movie out of stock.", Alert.AlertType.ERROR);
+            } else if (movieToRent.getQuantity() > 0 ){
+
+                alert("Successfully rented movie!", Alert.AlertType.CONFIRMATION);
+            }*/
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
@@ -67,22 +73,30 @@ public class DbConnector {
         }
     }
 
-/*  // TODO av Max
-    public void movieStockHandler(Movie selectedMovie){
-        String SQLQuery = "UPDATE movie SET quantity WHERE idMovie = ?";
+  // TODO av Max
+    public void movieStockHandler(){
         connect();
+        String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            *//*ps.setInt(1, selectedMovie.getQuantity());*//*
-            ps.executeUpdate();
-            alert("Movie successfully subtracted from quantity!", Alert.AlertType.INFORMATION);
+            ps.setInt(1, movieToRent.getQuantity() - 1);
+            ps.setInt(2, movieToRent.getIdMovie());
+            //System.out.println("Title: " + movieToRent.getTitle());
+            //System.out.println(movieToRent.getQuantity() - 1);
+            if (movieToRent.getQuantity() <= 0){
+                System.out.println("Slut i lager!");
+            } else if (movieToRent.getQuantity() > 0){
+                movieToRent.setQuantity(movieToRent.getQuantity()-1);
+                ps.executeUpdate();
+                alert("Movie successfully subtracted from quantity!", Alert.AlertType.INFORMATION);
+            }
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
         } finally {
             disconnect();
         }
-    }*/
+    }
 
     public int tableSizeMovie() {
         connect();
