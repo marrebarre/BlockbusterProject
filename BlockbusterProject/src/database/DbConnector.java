@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import model.Account_Has_Movie;
 import model.Admin;
 import model.Movie;
 import model.User;
@@ -23,6 +24,7 @@ public class DbConnector {
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
     public List<Movie> movies = new ArrayList<>();
+    private List<Account_Has_Movie> accMovies = new ArrayList<>();
 
     public void connect() {
         try {
@@ -492,4 +494,33 @@ public class DbConnector {
         disconnect(); //do for all!
         return movies;
     }*/
+public List<Account_Has_Movie> showRentals(int userid) {
+    connect();
+    accMovies.clear();
+    String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" +userid+"'";
+    try {
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        resultSet = preparedStmt.executeQuery();
+
+        while (resultSet.next()) {
+            Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
+                    resultSet.getInt("account_idUser"),
+                    resultSet.getInt("movie_idMovie"),
+                    resultSet.getString("dateRented"),
+                    resultSet.getString("estimatedDateOfReturned"),
+                    resultSet.getDouble("fee"),
+                    resultSet.getInt("returned"));
+
+            accMovies.add(accountHasMovie);
+
+
+        }
+    } catch (SQLException | NullPointerException ex) {
+        System.out.println(ex.getMessage());
+        ex.printStackTrace();
+    }
+    System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
+    disconnect(); //do for all!
+    return accMovies;
+}
 }

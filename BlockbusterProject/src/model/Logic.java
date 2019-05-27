@@ -1,5 +1,9 @@
 package model;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.scene.control.Alert;
 import scene.rentPopup.RentPopupController;
 import database.DbConnector;
@@ -15,8 +19,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+
+import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class Logic {
     DbConnector dbConnector = new DbConnector();
@@ -106,6 +115,25 @@ public class Logic {
             e.printStackTrace();
         } finally {
             dbConnector.disconnect();
+        }
+    }
+    public  void pdf(){
+        Document document = new Document();
+        try
+        {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
+            document.open();
+            document.add(new Paragraph("Receipt of Rentals"));
+            String rentals = String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()));
+            document.add(new Paragraph(String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()))));
+            document.close();
+            writer.close();
+        } catch (DocumentException e)
+        {
+            e.printStackTrace();
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
         }
     }
 }
