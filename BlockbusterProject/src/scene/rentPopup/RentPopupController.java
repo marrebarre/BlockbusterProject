@@ -34,7 +34,7 @@ public class RentPopupController implements Initializable {
         return balance;
     }
 
-    private static Movie movieToRent;
+    public static Movie movieToRent;
 
     private static Movie getMovieToRent() {
         return movieToRent;
@@ -62,18 +62,19 @@ public class RentPopupController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        int inStock = 0;
-        if (movieToRent.getQuantity() == 0){
-            System.out.println("Slut i lager!");
+        String inStock;
+        if (movieToRent.getQuantity() <= 0){
+            inStock = "Out of stock";
         } else {
-            inStock = movieToRent.getQuantity();
+            //inStock = Integer.toString(movieToRent.getQuantity());
+            inStock = "In stock!";
         }
         infoLbl.setText(
                         "Title: " + movieToRent.getTitle() +
                         "\nDirector: " + movieToRent.getDirector() +
                         "\nGenre: " + movieToRent.getGenreAsString() +
                         "\nRelease Year: " + movieToRent.getReleaseYear() +
-                        "\n\nIn Stock: " + inStock +
+                        "\n\n" + "Status: " +  inStock +
                         "\n\nPrice: " + movieToRent.getPrice() +"$"
         );
         Image image = new Image(movieToRent.getImagePath());
