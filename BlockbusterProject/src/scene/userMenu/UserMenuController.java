@@ -55,8 +55,8 @@ public class UserMenuController implements Initializable {
     private Logic logic = new Logic();
     public static User loggedInUser;
 
-    private static String ourEmail = "thebustblocker1@gmail.com";  // GMail user name (just the part before "@gmail.com")
-    private static String ourEmailsPassword = "Buster!321"; // GMail password (Maybe make one just for this project team)
+    private static String ourEmail = "thebustblocker1@gmail.com";  // Mail-name
+    private static String ourEmailsPassword = "Buster!321"; // Mail password (Maybe make one just for this project team
     private static String emailTitle = "Bust Blocker"; // Add the title of the e-mail here.
 
     public void btnPressedLogOut(MouseEvent event) {
@@ -85,10 +85,10 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
-    @FXML
-    void handleSendReceipt(ActionEvent event) {
+    @FXML //krille
+    private void handleSendReceipt(ActionEvent event) {
         logic.pdf();
-        String recipent = "kristiankatona1@gmail.com";
+        String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
         String mess = "Here is your receipt";
 
         String recipientEmailString = recipent;
@@ -129,7 +129,7 @@ public class UserMenuController implements Initializable {
             message.setSubject(emailTitle);
             messageBodyPart.setText(messageToBeSent);
             messageBodyPart = new MimeBodyPart();
-            String filename = "C:\\Users\\krill\\OneDrive\\Dokument\\GitHub\\BlockbusterProject\\BlockbusterProject\\src\\receipt\\Receipt.pdf";
+            String filename = "C:\\Users\\krill\\OneDrive\\Dokument\\GitHub\\BlockbusterProject\\BlockbusterProject\\Receipt.pdf";
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
@@ -220,7 +220,7 @@ public class UserMenuController implements Initializable {
                 "\ntheir lending-period, additional fees will be drawn from this user.");
         q6.getChildren().addAll(a6);
         TreeItem a7 = new TreeItem("There is a link underneath the login-prompt. There you will be directed further");
-        q6.getChildren().addAll(a7);
+        q7.getChildren().addAll(a7);
     }
 
 

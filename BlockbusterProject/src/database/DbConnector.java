@@ -449,6 +449,22 @@ public class DbConnector {
         }
     }
 
+    /*krille - work in progress
+    public void updatePassword(int idUser, User user){
+        connect();
+        String query = "UPDATE account SET password = ? WHERE idUser = ?";
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString(1, user.getPassword()); //needs a setter in the user class?
+            preparedStmt.setInt(2, idUser);
+            preparedStmt.executeUpdate();
+            System.out.println("Password updated!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    */
+
 
 /*
     public List<Movie> searchMovieByGenre(String genre) {
@@ -494,7 +510,9 @@ public class DbConnector {
         disconnect(); //do for all!
         return movies;
     }*/
-public List<Account_Has_Movie> showRentals(int userid) {
+
+//krille
+  public List<Account_Has_Movie> showRentals(int userid) {
     connect();
     accMovies.clear();
     String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" +userid+"'";
@@ -512,7 +530,7 @@ public List<Account_Has_Movie> showRentals(int userid) {
                     resultSet.getInt("returned"));
 
             accMovies.add(accountHasMovie);
-
+            accMovies.toString().replace("[","").replace("]","");
 
         }
     } catch (SQLException | NullPointerException ex) {
@@ -523,4 +541,5 @@ public List<Account_Has_Movie> showRentals(int userid) {
     disconnect(); //do for all!
     return accMovies;
 }
+
 }

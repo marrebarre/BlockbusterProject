@@ -11,7 +11,7 @@ public class Account_Has_Movie {
     private int returned;
 
 
-    public Account_Has_Movie(int rentalID, int account_idUser, int movie_idMovie, String rented , String estimatedReturnDate, double fee, int returned) {
+    public Account_Has_Movie(int rentalID, int account_idUser, int movie_idMovie, String rented, String estimatedReturnDate, double aDouble, double fee) {
 
         this.rentalID = rentalID;
         this.account_idUser = account_idUser;
@@ -19,7 +19,7 @@ public class Account_Has_Movie {
         this.rented = rented;
         this.estimatedReturnDate = estimatedReturnDate;
         this.fee = fee;
-        this.returned = returned;
+
     }
 
     public void setAccount_idUser(int account_idUser) {
@@ -77,8 +77,9 @@ public class Account_Has_Movie {
     public int getReturned() {
         return returned;
     }
+
     public String toString(){
-        return "\n---------------------------------------------------\n"+"\nRental ID: "+rentalID + "\nUser ID: " +account_idUser+ " \nMovie ID: "+movie_idMovie+"\nDate of Rent: "+rented+
-                "\nEstimated Return Date: "+estimatedReturnDate+"\nFee: "+fee+"\nIf it's returned: "+returned+"\n"+"\n---------------------------------------------------";
+        return "\n---------------------------------------------------\n"+"\nRental ID: "+rentalID + "\nUser ID: " +account_idUser+ " \nMovie ID: "+ movie_idMovie +"\nDate of Rent: "+rented+
+                "\nEstimated Return Date: "+estimatedReturnDate+"\nFee: "+fee+"\n"+"\n---------------------------------------------------";
     }
 }
