@@ -55,9 +55,9 @@ public class RentPopupController implements Initializable {
         stage.close();
     }
 
-    public void rentalHandler(){
+    public void rentalHandler(ActionEvent event){
         DbConnector dbConnector = new DbConnector();
-        dbConnector.addRental(getMovieToRent(), convertToDateFormat(localDate), convertToDateFormat(localDate.plusDays(Integer.parseInt(enterDaysOfRental.getText()))));
+        dbConnector.addRental(getMovieToRent(), convertToDateFormat(localDate), convertToDateFormat(localDate.plusDays(Integer.parseInt(enterDaysOfRental.getText()))), event);
     }
 
     @Override

@@ -1,10 +1,13 @@
 package database;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Stage;
 import model.Admin;
 import model.Movie;
 import model.User;
@@ -47,7 +50,7 @@ public class DbConnector {
         }
     }
 
-    public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned) {
+    public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned, ActionEvent event) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
         connect();
         try {
@@ -67,6 +70,8 @@ public class DbConnector {
             movieStockHandler();
             economyHandler();
             ps.executeUpdate();
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.close();
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
