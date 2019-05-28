@@ -9,6 +9,7 @@ import model.Admin;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +58,15 @@ public class DbConnector {
             ps.setDate(4, dateReturned);
             ps.setDouble(5, movieToRent.getPrice());
             ps.setBoolean(6, false);
-            movieStockHandler();
-            ps.executeUpdate();
-            /*if (movieToRent.getQuantity() <= 0){
-                alert("Rental failed! Movie out of stock.", Alert.AlertType.ERROR);
-            } else if (movieToRent.getQuantity() > 0 ){
-
-                alert("Successfully rented movie!", Alert.AlertType.CONFIRMATION);
+            /*if (movieToRent.getPrice() > loggedInUser.getBalance()){
+                System.out.println("Du e fattig!");
+            } else if (movieToRent.getPrice() <= loggedInUser.getBalance()){
+                loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+                System.out.println(loggedInUser.getBalance());
             }*/
+            movieStockHandler();
+            economyHandler();
+            ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
@@ -73,22 +75,50 @@ public class DbConnector {
         }
     }
 
-  // TODO av Max
-    public void movieStockHandler(){
+    public void economyHandler() {
+        connect();
+        String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
+        //System.out.println("Movie price: " + movieToRent.getPrice());
+        //System.out.println("Pre: " + loggedInUser.getBalance());
+        loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+        //System.out.println("Post: " + loggedInUser.getBalance());
+        try {
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            ps.setDouble(1, loggedInUser.getBalance());
+            ps.setInt(2, loggedInUser.getIdUser());
+            if (loggedInUser.getBalance() < movieToRent.getPrice()) {
+                System.out.println("Insufficient funds");
+            } else if (loggedInUser.getBalance() >= movieToRent.getPrice()) {
+                ps.executeUpdate();
+                System.out.println("Sufficient funds on user account");
+            }
+        } catch (Exception e) {
+            System.out.println("Fel på banken!");
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    private void movieStockHandler() {
         connect();
         String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
             ps.setInt(1, movieToRent.getQuantity() - 1);
             ps.setInt(2, movieToRent.getIdMovie());
-            //System.out.println("Title: " + movieToRent.getTitle());
-            //System.out.println(movieToRent.getQuantity() - 1);
-            if (movieToRent.getQuantity() <= 0){
-                System.out.println("Slut i lager!");
-            } else if (movieToRent.getQuantity() > 0){
-                movieToRent.setQuantity(movieToRent.getQuantity()-1);
+            if (movieToRent.getQuantity() <= 0 || loggedInUser.getBalance() < movieToRent.getPrice()) {
+                if (movieToRent.getQuantity() <= 0) {
+                    System.out.println("Slut i lager!");
+                    alert("Out of stock", Alert.AlertType.WARNING);
+                } else if (loggedInUser.getBalance() < movieToRent.getPrice()) {
+                    System.out.println("Insufficient funds");
+                    alert("Insufficient funds", Alert.AlertType.WARNING);
+                }
+            } else if ((loggedInUser.getBalance() >= movieToRent.getPrice()) && movieToRent.getQuantity() > 0) {
+                movieToRent.setQuantity(movieToRent.getQuantity() - 1);
                 ps.executeUpdate();
-                alert("Movie successfully subtracted from quantity!", Alert.AlertType.INFORMATION);
+                alert("Movie successfully subtracted from quantity!", Alert.AlertType.CONFIRMATION);
             }
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
@@ -105,7 +135,6 @@ public class DbConnector {
             System.out.println("tableSizeMovie tracker1");
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
             resultSet = ps.executeQuery();
-
             if (resultSet.next()) {
                 temp = resultSet.getString("COUNT(idMovie)");
             }
@@ -288,7 +317,6 @@ public class DbConnector {
         connect();
         User user = null;
         String query = "SELECT * FROM account WHERE idUser = ?";
-
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, i);
@@ -389,7 +417,7 @@ public class DbConnector {
         }
     }
 
-    public void updateFirstName(int idUser, User user){
+    public void updateFirstName(int idUser, User user) {
         connect();
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
         try {
@@ -405,7 +433,7 @@ public class DbConnector {
         }
     }
 
-    public void updateLastName(int idUser, User user){
+    public void updateLastName(int idUser, User user) {
         connect();
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
         try {
@@ -419,7 +447,7 @@ public class DbConnector {
         }
     }
 
-    public void updateEmail(int idUser, User user){
+    public void updateEmail(int idUser, User user) {
         connect();
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
         try {
@@ -433,7 +461,7 @@ public class DbConnector {
         }
     }
 
-    public void updateAddress(int idUser, User user){
+    public void updateAddress(int idUser, User user) {
         connect();
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
         try {
@@ -447,7 +475,7 @@ public class DbConnector {
         }
     }
 
-    public void updatePhoneNumber(int idUser, User user){
+    public void updatePhoneNumber(int idUser, User user) {
         connect();
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
         try {
@@ -460,7 +488,6 @@ public class DbConnector {
             System.out.println(e.getMessage());
         }
     }
-
 
 /*
     public List<Movie> searchMovieByGenre(String genre) {
