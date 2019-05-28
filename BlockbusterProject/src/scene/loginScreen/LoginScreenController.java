@@ -27,7 +27,7 @@ public class LoginScreenController implements Initializable {
     @FXML
     Label forgotPW = new Label(), isConnected = new Label();
     @FXML
-    Button signIn, btnCreateAccount, changeImage;
+    Button signIn, btnCreateAccount/*, changeImage*/;
     @FXML
     ImageView imageSwap, logo/*,avengersSwap,kingarthurSwap,hpSwap,warcraftSwap,lotrSwap,wpSwap,inceptionSwap,venturaSwap*/;
 
@@ -43,23 +43,24 @@ public class LoginScreenController implements Initializable {
                 //System.out.println("Email and/or password not entered.");
                 username.setStyle("-fx-prompt-text-fill: red");
                 password.setStyle("-fx-prompt-text-fill: red");
-            } else if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+            } else {
                 if (dbConnector.verifyAccount(username.getText(), password.getText()) && !dbConnector.admins.isEmpty()) {
                     String adminMenuFXML = "/scene/adminMenu/adminMenu.fxml";
                     logic.changeSceneHandler(event, adminMenuFXML, true);
-                } else if (dbConnector.verifyAccount(username.getText(), password.getText()) && !loggedInUser.isAdmin()) {
-                    String userMenuFXML = "/scene/userMenu/userMenu.fxml";
-                    logic.changeSceneHandler(event, userMenuFXML, true);
+                } else if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+                    if (dbConnector.verifyAccount(username.getText(), password.getText()) && !loggedInUser.isAdmin()) {
+                        String userMenuFXML = "/scene/userMenu/userMenu.fxml";
+                        logic.changeSceneHandler(event, userMenuFXML, true);
+                    }
                 }
             }
-            dbConnector.disconnect();
         } catch (NullPointerException e) {
-            System.out.println("Login failed");
             Alert alert = new Alert(Alert.AlertType.NONE, "Invalid email or password", ButtonType.OK);
             alert.setTitle("Login failed");
             alert.showAndWait();
-            //e.printStackTrace();
             System.out.println("Match to entered data not found within DB. Error thrown: " + e.toString());
+        } finally {
+            dbConnector.disconnect();
         }
     }
 
@@ -78,7 +79,6 @@ public class LoginScreenController implements Initializable {
             imageList.add(new Image(getClass().getResource(i + ".png").toExternalForm()));
         }
     }*/
-
 /*
     private void init(Image[] images) {
         this.imageSwap = new ImageView(images[3]);

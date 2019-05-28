@@ -35,7 +35,7 @@ public class UserMenuController implements Initializable {
     ScrollPane scrollPane, scrollPaneMyRentals;
 
     @FXML
-    Label lblWelcomeMessage;
+    Label lblWelcomeMessage, currentBalance;
 
     @FXML
     private TreeView faq;
@@ -55,7 +55,7 @@ public class UserMenuController implements Initializable {
         }
     }
 
-    public void loadMyRentals() {
+    private void loadMyRentals() {
         tilePaneMyRentals.getChildren().clear();
         dbConnector.loadRentals(tilePaneMyRentals);
     }
@@ -71,11 +71,7 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
-    public void handleSortBox(/*ActionEvent event*/) {
-//?
-    }
-
-    public void settingsHandleUpdateBtn() throws SQLException {
+    public void settingsHandleUpdateBtn(){
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
@@ -158,6 +154,7 @@ public class UserMenuController implements Initializable {
         addressText.setText(loggedInUser.getAddress());
         phoneNumberText.setText(loggedInUser.getPhoneNr());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
+        currentBalance.setText("Balance: " + loggedInUser.getBalance() + "$");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
