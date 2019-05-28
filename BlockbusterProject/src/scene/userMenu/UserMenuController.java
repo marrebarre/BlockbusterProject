@@ -55,7 +55,7 @@ public class UserMenuController implements Initializable {
         }
     }
 
-    private void loadMyRentals() {
+    public void loadMyRentals() {
         tilePaneMyRentals.getChildren().clear();
         dbConnector.loadRentals(tilePaneMyRentals);
     }
