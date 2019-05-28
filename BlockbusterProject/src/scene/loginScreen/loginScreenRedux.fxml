@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -20,7 +19,8 @@
                 <Label fx:id="isConnected" layoutX="101.0" layoutY="226.0" prefHeight="17.0" prefWidth="304.0" />
             <ImageView fx:id="logo" fitHeight="115.0" fitWidth="269.0" layoutX="84.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
-            <ImageView fx:id="avengersSwap" fitHeight="305.0" fitWidth="225.0" layoutX="393.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imageSwap" fitHeight="295.0" fitWidth="200.0" layoutX="400.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+            <!--<ImageView fx:id="avengersSwap" fitHeight="305.0" fitWidth="225.0" layoutX="393.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../image/AvengersEndgame.jpg" />
                </image>
@@ -59,13 +59,14 @@
                <image>
                   <Image url="@../../image/AceVentura1.jpg" />
                </image>
-            </ImageView>
+            </ImageView>-->
             </children></AnchorPane>
     </center>
     <bottom>
         <AnchorPane prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
                 <Button fx:id="btnCreateAccount" layoutX="446.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnPressedCreateAccount" prefHeight="41.0" prefWidth="140.0" text="Create account" />
+            <!--<Button fx:id="changeImage" layoutX="450.0" mnemonicParsing="false" text="Change image" />-->
          </children>
       </AnchorPane>
     </bottom>

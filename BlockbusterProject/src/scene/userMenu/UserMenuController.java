@@ -45,7 +45,7 @@ public class UserMenuController implements Initializable {
     ScrollPane scrollPane, scrollPaneMyRentals;
 
     @FXML
-    Label lblWelcomeMessage;
+    Label lblWelcomeMessage, currentBalance;
 
     @FXML
     private TreeView faq;
@@ -84,6 +84,7 @@ public class UserMenuController implements Initializable {
         String SQLQuery = "SELECT * FROM movie";
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
+
 
     @FXML //krille
     private void handleSendReceipt(ActionEvent event) {
@@ -158,6 +159,7 @@ public class UserMenuController implements Initializable {
     }
 
     public void settingsHandleUpdateBtn() throws SQLException {
+
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
@@ -240,6 +242,7 @@ public class UserMenuController implements Initializable {
         addressText.setText(loggedInUser.getAddress());
         phoneNumberText.setText(loggedInUser.getPhoneNr());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
+        currentBalance.setText("Balance: " + loggedInUser.getBalance() + "$");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");

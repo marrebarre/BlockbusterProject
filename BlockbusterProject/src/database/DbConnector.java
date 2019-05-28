@@ -1,20 +1,28 @@
 package database;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+
 import model.Account_Has_Movie;
+
+import javafx.stage.Stage;
+
 import model.Admin;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static model.Logic.alert;
+import static scene.rentPopup.RentPopupController.movieToRent;
 import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
@@ -23,8 +31,10 @@ public class DbConnector {
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
+
     public List<Movie> movies = new ArrayList<>();
     private List<Account_Has_Movie> accMovies = new ArrayList<>();
+
 
     public void connect() {
         try {
@@ -48,19 +58,28 @@ public class DbConnector {
         }
     }
 
-    public void addRental(Movie selectedMovie, Date dateRented, Date dateReturned) {
+    public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned, ActionEvent event) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
         connect();
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
             ps.setInt(1, loggedInUser.getIdUser());
-            ps.setInt(2, selectedMovie.getIdMovie());
+            ps.setInt(2, movieToRent.getIdMovie());
             ps.setDate(3, dateRented);
             ps.setDate(4, dateReturned);
-            ps.setDouble(5, selectedMovie.getPrice());
+            ps.setDouble(5, movieToRent.getPrice());
             ps.setBoolean(6, false);
+            /*if (movieToRent.getPrice() > loggedInUser.getBalance()){
+                System.out.println("Du e fattig!");
+            } else if (movieToRent.getPrice() <= loggedInUser.getBalance()){
+                loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+                System.out.println(loggedInUser.getBalance());
+            }*/
+            movieStockHandler();
+            economyHandler();
             ps.executeUpdate();
-            alert("Successfully rented movie!", Alert.AlertType.INFORMATION);
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.close();
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
@@ -69,22 +88,58 @@ public class DbConnector {
         }
     }
 
-/*  // TODO av Max
-    public void movieStockHandler(Movie selectedMovie){
-        String SQLQuery = "UPDATE movie SET quantity WHERE idMovie = ?";
+    public void economyHandler() {
         connect();
+        String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
+        //System.out.println("Movie price: " + movieToRent.getPrice());
+        //System.out.println("Pre: " + loggedInUser.getBalance());
+        loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+        //System.out.println("Post: " + loggedInUser.getBalance());
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            *//*ps.setInt(1, selectedMovie.getQuantity());*//*
-            ps.executeUpdate();
-            alert("Movie successfully subtracted from quantity!", Alert.AlertType.INFORMATION);
+            ps.setDouble(1, loggedInUser.getBalance());
+            ps.setInt(2, loggedInUser.getIdUser());
+            if (loggedInUser.getBalance() < movieToRent.getPrice()) {
+                System.out.println("Insufficient funds");
+            } else if (loggedInUser.getBalance() >= movieToRent.getPrice()) {
+                ps.executeUpdate();
+                System.out.println("Sufficient funds on user account");
+            }
+        } catch (Exception e) {
+            System.out.println("Fel på banken!");
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    private void movieStockHandler() {
+        connect();
+        String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            ps.setInt(1, movieToRent.getQuantity() - 1);
+            ps.setInt(2, movieToRent.getIdMovie());
+            if (movieToRent.getQuantity() <= 0 || loggedInUser.getBalance() < movieToRent.getPrice()) {
+                if (movieToRent.getQuantity() <= 0) {
+                    System.out.println("Slut i lager!");
+                    alert("Out of stock", Alert.AlertType.WARNING);
+                } else if (loggedInUser.getBalance() < movieToRent.getPrice()) {
+                    System.out.println("Insufficient funds");
+                    alert("Insufficient funds", Alert.AlertType.WARNING);
+                }
+            } else if ((loggedInUser.getBalance() >= movieToRent.getPrice()) && movieToRent.getQuantity() > 0) {
+                movieToRent.setQuantity(movieToRent.getQuantity() - 1);
+                ps.executeUpdate();
+                alert("Movie successfully subtracted from quantity!", Alert.AlertType.CONFIRMATION);
+            }
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
         } finally {
             disconnect();
         }
-    }*/
+    }
 
     public int tableSizeMovie() {
         connect();
@@ -93,7 +148,6 @@ public class DbConnector {
             System.out.println("tableSizeMovie tracker1");
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
             resultSet = ps.executeQuery();
-
             if (resultSet.next()) {
                 temp = resultSet.getString("COUNT(idMovie)");
             }
@@ -276,7 +330,6 @@ public class DbConnector {
         connect();
         User user = null;
         String query = "SELECT * FROM account WHERE idUser = ?";
-
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, i);
@@ -377,7 +430,7 @@ public class DbConnector {
         }
     }
 
-    public void updateFirstName(int idUser, User user){
+    public void updateFirstName(int idUser, User user) {
         connect();
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
         try {
@@ -393,7 +446,7 @@ public class DbConnector {
         }
     }
 
-    public void updateLastName(int idUser, User user){
+    public void updateLastName(int idUser, User user) {
         connect();
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
         try {
@@ -407,7 +460,7 @@ public class DbConnector {
         }
     }
 
-    public void updateEmail(int idUser, User user){
+    public void updateEmail(int idUser, User user) {
         connect();
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
         try {
@@ -421,7 +474,7 @@ public class DbConnector {
         }
     }
 
-    public void updateAddress(int idUser, User user){
+    public void updateAddress(int idUser, User user) {
         connect();
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
         try {
@@ -435,7 +488,7 @@ public class DbConnector {
         }
     }
 
-    public void updatePhoneNumber(int idUser, User user){
+    public void updatePhoneNumber(int idUser, User user) {
         connect();
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
         try {
@@ -448,6 +501,7 @@ public class DbConnector {
             System.out.println(e.getMessage());
         }
     }
+
 
     /*krille - work in progress
     public void updatePassword(int idUser, User user){
@@ -464,6 +518,7 @@ public class DbConnector {
         }
     }
     */
+
 
 
 /*

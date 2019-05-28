@@ -67,4 +67,8 @@ public class User extends Account {
     public void setPhoneNr(String phoneNr) {
         this.phoneNr = phoneNr;
     }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

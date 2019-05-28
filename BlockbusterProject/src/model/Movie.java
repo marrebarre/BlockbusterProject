@@ -107,4 +107,7 @@ public class Movie {
         return imagePath;
     }
 
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
