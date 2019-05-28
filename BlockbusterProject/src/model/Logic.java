@@ -1,7 +1,9 @@
 package model;
 
-import javafx.scene.control.Alert;
-import scene.rentPopup.RentPopupController;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +12,20 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import scene.rentPopup.RentPopupController;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+
+import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class Logic {
     DbConnector dbConnector = new DbConnector();
@@ -108,4 +117,46 @@ public class Logic {
             dbConnector.disconnect();
         }
     }
+    public  void pdf(){
+        Document document = new Document();
+        try
+        {
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
+            document.open();
+            document.add(new Paragraph("Receipt of Rentals"));
+            String rentals = String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()));
+            document.add(new Paragraph(String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()))));
+            document.close();
+            writer.close();
+        } catch (DocumentException e)
+        {
+            e.printStackTrace();
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    /* krille - work in progress
+    public void generatePassword(){
+        int length = 10;
+        String symbol = "-/.^&*_!@%=+>)";
+        String cap_letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String small_letter = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+
+        String finalString = cap_letter + small_letter +
+                numbers + symbol;
+
+        Random random = new Random();
+
+        char[] password = new char[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            password[i] =
+                    finalString.charAt(random.nextInt(finalString.length()));
+        }
+        System.out.println(password);
+    }
+    */
 }
