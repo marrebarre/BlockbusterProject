@@ -1,5 +1,8 @@
 package database;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -31,6 +34,19 @@ public class DbConnector {
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
+    private static final String ACCOUNT_SID = "AC6f314e8681deaa0ae4d82eaf59876daa";
+    private static final String AUTH_TOKEN = "79be81f419784528cdb25a38226909df";
+    public static boolean verify = true;
+
+    private static boolean isVerify() {
+        return verify;
+    }
+
+    public static void setVerify(boolean verify) {
+        DbConnector.verify = verify;
+    }
+
+    private Date estDateReturned;
 
     public List<Movie> movies = new ArrayList<>();
     private List<Account_Has_Movie> accMovies = new ArrayList<>();
@@ -61,25 +77,27 @@ public class DbConnector {
     public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned, ActionEvent event) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
         connect();
+        setVerify(true);
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            ps.setInt(1, loggedInUser.getIdUser());
-            ps.setInt(2, movieToRent.getIdMovie());
-            ps.setDate(3, dateRented);
-            ps.setDate(4, dateReturned);
-            ps.setDouble(5, movieToRent.getPrice());
-            ps.setBoolean(6, false);
-            /*if (movieToRent.getPrice() > loggedInUser.getBalance()){
-                System.out.println("Du e fattig!");
-            } else if (movieToRent.getPrice() <= loggedInUser.getBalance()){
-                loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
-                System.out.println(loggedInUser.getBalance());
-            }*/
-            movieStockHandler();
-            economyHandler();
-            ps.executeUpdate();
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.close();
+            estDateReturned = dateReturned;
+            if (isVerify() == true) {
+                movieStockHandler();
+            }
+            if (isVerify() == true) {
+                economyHandler();
+            }
+            if (isVerify() == true) {
+                ps.setInt(1, loggedInUser.getIdUser());
+                ps.setInt(2, movieToRent.getIdMovie());
+                ps.setDate(3, dateRented);
+                ps.setDate(4, dateReturned);
+                ps.setDouble(5, movieToRent.getPrice());
+                ps.setBoolean(6, false);
+                ps.executeUpdate();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.close();
+            }
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
@@ -88,48 +106,74 @@ public class DbConnector {
         }
     }
 
+    public void textMessageHandler() throws SQLException {
+        //System.out.println("Pre textHandler; " + isVerify());
+        if (isVerify() == true) {
+            String SQLQuery = "SELECT * FROM account_has_movie WHERE account_idUser = ?";
+            connect();
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            ps.setInt(1, loggedInUser.getIdUser());
+
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            Message message = Message
+                    .creator(new PhoneNumber("+46734453860"), // to
+                            new PhoneNumber("+46769448476"), // from
+                            "Hello " + loggedInUser.getFirstName() + "!" +
+                                    "\nYou just rented " + movieToRent.getTitle() + "." +
+                                    "\nReturn expected " + estDateReturned.toString() + "." +
+                                    "\nBest regards," +
+                                    "\nBustblockers")
+                    .create();
+            System.out.println(message.getSid());
+        }
+    }
+
     public void economyHandler() {
         connect();
+        //System.out.println("Pre economyHandler verified: " + isVerify());
         String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
-        //System.out.println("Movie price: " + movieToRent.getPrice());
+        System.out.println("Movie price: " + movieToRent.getPrice());
         //System.out.println("Pre: " + loggedInUser.getBalance());
-        loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
-        //System.out.println("Post: " + loggedInUser.getBalance());
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            ps.setDouble(1, loggedInUser.getBalance());
-            ps.setInt(2, loggedInUser.getIdUser());
             if (loggedInUser.getBalance() < movieToRent.getPrice()) {
                 System.out.println("Insufficient funds");
+                setVerify(false);
             } else if (loggedInUser.getBalance() >= movieToRent.getPrice()) {
+                loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+                System.out.println("Post: " + loggedInUser.getBalance());
+                ps.setDouble(1, loggedInUser.getBalance() - movieToRent.getPrice());
+                ps.setInt(2, loggedInUser.getIdUser());
                 ps.executeUpdate();
                 System.out.println("Sufficient funds on user account");
             }
         } catch (Exception e) {
-            System.out.println("Fel på banken!");
+            System.out.println("Banking error");
             e.printStackTrace();
         } finally {
+            //System.out.println("Post economyHandler verified: " + isVerify());
             disconnect();
         }
     }
 
     private void movieStockHandler() {
         connect();
+        //System.out.println("Pre stockHandler: " + isVerify());
         String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            ps.setInt(1, movieToRent.getQuantity() - 1);
-            ps.setInt(2, movieToRent.getIdMovie());
             if (movieToRent.getQuantity() <= 0 || loggedInUser.getBalance() < movieToRent.getPrice()) {
                 if (movieToRent.getQuantity() <= 0) {
-                    System.out.println("Slut i lager!");
                     alert("Out of stock", Alert.AlertType.WARNING);
+                    setVerify(false);
                 } else if (loggedInUser.getBalance() < movieToRent.getPrice()) {
-                    System.out.println("Insufficient funds");
-                    alert("Insufficient funds", Alert.AlertType.WARNING);
+                    alert("Balance insufficient", Alert.AlertType.WARNING);
+                    setVerify(false);
                 }
             } else if ((loggedInUser.getBalance() >= movieToRent.getPrice()) && movieToRent.getQuantity() > 0) {
                 movieToRent.setQuantity(movieToRent.getQuantity() - 1);
+                ps.setInt(1, movieToRent.getQuantity() - 1);
+                ps.setInt(2, movieToRent.getIdMovie());
                 ps.executeUpdate();
                 alert("Movie successfully subtracted from quantity!", Alert.AlertType.CONFIRMATION);
             }
@@ -137,6 +181,7 @@ public class DbConnector {
             System.out.println("Error when loading to database");
             e.printStackTrace();
         } finally {
+            //System.out.println("Post stockHandler: " + isVerify());
             disconnect();
         }
     }
@@ -249,20 +294,7 @@ public class DbConnector {
         connect();
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE " + table + " SET " + column + " = ? WHERE " + idNameInTable + " = " + id);
-            if (newData instanceof String) {
-                String temp = (String) newData;
-                ps.setString(1, temp);
-            } else if (newData instanceof Integer) {
-                int temp = (Integer) newData;
-                ps.setInt(1, temp);
-            } else if (newData instanceof Double) {
-                Double temp = (Double) newData;
-                ps.setDouble(1, temp);
-            } else if (newData instanceof Boolean) {
-                Boolean temp = (Boolean) newData;
-                ps.setBoolean(1, temp);
-            }
-            ps.executeUpdate();
+            updateData(newData, ps);
         } catch (SQLException e) {
             System.out.println("Could not update " + column);
             e.printStackTrace();
@@ -407,20 +439,7 @@ public class DbConnector {
             String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + iduser;
 
             PreparedStatement ps = connection.prepareStatement(query);
-            if (data instanceof String) {
-                String temp = (String) data;
-                ps.setString(1, temp);
-            } else if (data instanceof Integer) {
-                int temp = (Integer) data;
-                ps.setInt(1, temp);
-            } else if (data instanceof Double) {
-                Double temp = (Double) data;
-                ps.setDouble(1, temp);
-            } else if (data instanceof Boolean) {
-                Boolean temp = (Boolean) data;
-                ps.setBoolean(1, temp);
-            }
-            ps.executeUpdate();
+            updateData(data, ps);
 
         } catch (SQLException e) {
             System.out.println("Something went wrong...");
@@ -428,6 +447,23 @@ public class DbConnector {
         } finally {
             disconnect();
         }
+    }
+
+    private <T> void updateData(T data, PreparedStatement ps) throws SQLException {
+        if (data instanceof String) {
+            String temp = (String) data;
+            ps.setString(1, temp);
+        } else if (data instanceof Integer) {
+            int temp = (Integer) data;
+            ps.setInt(1, temp);
+        } else if (data instanceof Double) {
+            Double temp = (Double) data;
+            ps.setDouble(1, temp);
+        } else if (data instanceof Boolean) {
+            Boolean temp = (Boolean) data;
+            ps.setBoolean(1, temp);
+        }
+        ps.executeUpdate();
     }
 
     public void updateFirstName(int idUser, User user) {
@@ -566,35 +602,34 @@ public class DbConnector {
         return movies;
     }*/
 
-//krille
-  public List<Account_Has_Movie> showRentals(int userid) {
-    connect();
-    accMovies.clear();
-    String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" +userid+"'";
-    try {
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        resultSet = preparedStmt.executeQuery();
+    //krille
+    public List<Account_Has_Movie> showRentals(int userid) {
+        connect();
+        accMovies.clear();
+        String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" + userid + "'";
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            resultSet = preparedStmt.executeQuery();
 
-        while (resultSet.next()) {
-            Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
-                    resultSet.getInt("account_idUser"),
-                    resultSet.getInt("movie_idMovie"),
-                    resultSet.getString("dateRented"),
-                    resultSet.getString("estimatedDateOfReturned"),
-                    resultSet.getDouble("fee"),
-                    resultSet.getInt("returned"));
+            while (resultSet.next()) {
+                Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
+                        resultSet.getInt("account_idUser"),
+                        resultSet.getInt("movie_idMovie"),
+                        resultSet.getString("dateRented"),
+                        resultSet.getString("estimatedDateOfReturned"),
+                        resultSet.getDouble("fee"),
+                        resultSet.getInt("returned"));
 
-            accMovies.add(accountHasMovie);
-            accMovies.toString().replace("[","").replace("]","");
+                accMovies.add(accountHasMovie);
+                accMovies.toString().replace("[", "").replace("]", "");
 
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
-    } catch (SQLException | NullPointerException ex) {
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+        System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
+        disconnect(); //do for all!
+        return accMovies;
     }
-    System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
-    disconnect(); //do for all!
-    return accMovies;
-}
-
 }
