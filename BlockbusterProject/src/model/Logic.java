@@ -157,7 +157,8 @@ public class Logic {
         {
             e.printStackTrace();
         }
-    }
+    }*/
+
     /* krille - work in progress
     public void generatePassword(){
         int length = 10;

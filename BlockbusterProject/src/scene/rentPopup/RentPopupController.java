@@ -87,7 +87,7 @@ public class RentPopupController implements Initializable {
                         "\nDirector: " + movieToRent.getDirector() +
                         "\nGenre: " + movieToRent.getGenreAsString() +
                         "\nRelease Year: " + movieToRent.getReleaseYear() +
-                        "\n\n" + "Status: " +  inStock +
+                        "\n\n" + "Amount: " +  inStock +
                         "\n\nPrice: " + movieToRent.getPrice() +"$"
         );
         Image image = new Image(movieToRent.getImagePath());

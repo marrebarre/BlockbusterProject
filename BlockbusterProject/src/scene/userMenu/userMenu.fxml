@@ -89,7 +89,7 @@
                                     </TilePane>
                                  </content>
                               </ScrollPane>
-                              <Button fx:id="sendReceiptBtn" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" />
+                             <!-- <Button fx:id="sendReceiptBtn" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" />-->
                            </children></AnchorPane>
 
                             </content>

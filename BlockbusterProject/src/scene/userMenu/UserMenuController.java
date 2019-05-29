@@ -11,14 +11,15 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import model.Logic;
 import model.User;
+//import javax.activation.DataHandler;
+//import javax.activation.DataSource;
+//import javax.activation.FileDataSource;
+//import javax.mail.*;
+//import javax.mail.internet.*;
 import java.net.URL;
 import java.text.DecimalFormat;
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-import javax.mail.*;
-import javax.mail.internet.*;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -87,7 +88,7 @@ public class UserMenuController implements Initializable {
     }
 
 
-    @FXML //krille
+    /*@FXML //krille
     private void handleSendReceipt(ActionEvent event) {
         logic.pdf();
         String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
@@ -153,7 +154,7 @@ public class UserMenuController implements Initializable {
             me.printStackTrace();
         }
 
-    }
+    }*/
 
     public void handleSortBox(/*ActionEvent event*/) {
 //?

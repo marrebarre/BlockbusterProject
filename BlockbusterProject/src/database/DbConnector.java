@@ -10,11 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-
 import model.Account_Has_Movie;
-
 import javafx.stage.Stage;
-
 import model.Admin;
 import model.Movie;
 import model.User;
@@ -80,7 +77,8 @@ public class DbConnector {
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
             estDateReturned = dateReturned;
-            if (isVerify() == true){
+
+            if (isVerify() == true) {
                 movieStockHandler();
             }
             if (isVerify() == true) {
@@ -257,7 +255,6 @@ public class DbConnector {
             ps.setString(6, movie.getReleaseYear());
             ps.setInt(7, movie.getQuantity());
             ps.setString(8, movie.getImagePath());
-
             ps.executeUpdate();
             alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
@@ -293,7 +290,7 @@ public class DbConnector {
         connect();
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE " + table + " SET " + column + " = ? WHERE " + idNameInTable + " = " + id);
-            dataHandler(newData, ps);
+            updateData(newData, ps);
         } catch (SQLException e) {
             System.out.println("Could not update " + column);
             e.printStackTrace();
@@ -436,10 +433,8 @@ public class DbConnector {
         connect();
         try {
             String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + iduser;
-
             PreparedStatement ps = connection.prepareStatement(query);
             dataHandler(data, ps);
-
         } catch (SQLException e) {
             System.out.println("Something went wrong...");
             e.printStackTrace();
@@ -601,35 +596,34 @@ public class DbConnector {
         return movies;
     }*/
 
-//krille
-  public List<Account_Has_Movie> showRentals(int userid) {
-    connect();
-    accMovies.clear();
-    String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" +userid+"'";
-    try {
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        resultSet = preparedStmt.executeQuery();
+    //krille
+    public List<Account_Has_Movie> showRentals(int userid) {
+        connect();
+        accMovies.clear();
+        String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" + userid + "'";
+        try {
+            PreparedStatement preparedStmt = connection.prepareStatement(query);
+            resultSet = preparedStmt.executeQuery();
 
-        while (resultSet.next()) {
-            Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
-                    resultSet.getInt("account_idUser"),
-                    resultSet.getInt("movie_idMovie"),
-                    resultSet.getString("dateRented"),
-                    resultSet.getString("estimatedDateOfReturned"),
-                    resultSet.getDouble("fee"),
-                    resultSet.getInt("returned"));
+            while (resultSet.next()) {
+                Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
+                        resultSet.getInt("account_idUser"),
+                        resultSet.getInt("movie_idMovie"),
+                        resultSet.getString("dateRented"),
+                        resultSet.getString("estimatedDateOfReturned"),
+                        resultSet.getDouble("fee"),
+                        resultSet.getInt("returned"));
 
-            accMovies.add(accountHasMovie);
-            accMovies.toString().replace("[","").replace("]","");
+                accMovies.add(accountHasMovie);
+                accMovies.toString().replace("[", "").replace("]", "");
 
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
-    } catch (SQLException | NullPointerException ex) {
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+        System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
+        disconnect(); //do for all!
+        return accMovies;
     }
-    System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
-    disconnect(); //do for all!
-    return accMovies;
-}
-
 }
