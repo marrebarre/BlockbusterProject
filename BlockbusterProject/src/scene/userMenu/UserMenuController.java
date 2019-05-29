@@ -1,6 +1,7 @@
 package scene.userMenu;
 
 import database.DbConnector;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -12,7 +13,15 @@ import model.Logic;
 import model.User;
 import java.net.URL;
 import java.text.DecimalFormat;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.*;
+import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
 
 public class UserMenuController implements Initializable {
     @FXML
@@ -21,6 +30,8 @@ public class UserMenuController implements Initializable {
     @FXML
     Button btnLogOut, updateBtn, btnSearch;
 
+    @FXML
+    Button sendReceiptBtn;
     @FXML
     private ComboBox<String> sortBox;
 
@@ -44,6 +55,10 @@ public class UserMenuController implements Initializable {
     private Logic logic = new Logic();
     public static User loggedInUser;
     private static DecimalFormat df = new DecimalFormat("0.00");
+
+    private static String ourEmail = "thebustblocker1@gmail.com";  // Mail-name
+    private static String ourEmailsPassword = "Buster!321"; // Mail password (Maybe make one just for this project team
+    private static String emailTitle = "Bust Blocker"; // Add the title of the e-mail here.
 
     public void btnPressedLogOut(MouseEvent event) {
         String logOutFXML = "/scene/loginScreen/loginScreenRedux.fxml";
@@ -71,7 +86,81 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
-    public void settingsHandleUpdateBtn(){
+
+    @FXML //krille
+    private void handleSendReceipt(ActionEvent event) {
+        logic.pdf();
+        String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
+        String mess = "Here is your receipt";
+
+        String recipientEmailString = recipent;
+        String messageToBeSent = mess;
+
+
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", ourEmail);
+        props.put("mail.smtp.password", ourEmailsPassword);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getDefaultInstance(props);
+        System.out.println("after session");
+
+        Message message = new MimeMessage(session);
+        System.out.println("after mime");
+        String[] recipientEmail = new String[]{
+                recipientEmailString}; //Change the String into a String[]
+        try {
+            message.setFrom(new InternetAddress(ourEmail));
+
+            InternetAddress[] toAddress = new InternetAddress[recipientEmail.length];
+            // To get the array of addresses
+            for (int i = 0; i < recipientEmail.length; i++) {
+                toAddress[i] = new InternetAddress(recipientEmail[i]);
+            }
+
+            for (int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            Multipart multipart = new MimeMultipart();
+            message.setSubject(emailTitle);
+            messageBodyPart.setText(messageToBeSent);
+            messageBodyPart = new MimeBodyPart();
+            String filename = "C:\\Users\\krill\\OneDrive\\Dokument\\GitHub\\BlockbusterProject\\BlockbusterProject\\Receipt.pdf";
+            DataSource source = new FileDataSource(filename);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(filename);
+            multipart.addBodyPart(messageBodyPart);
+            message.setContent(multipart);
+
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, ourEmail, ourEmailsPassword);
+            transport.sendMessage(message, message.getAllRecipients());
+            System.out.println("email sent");
+            transport.close();
+        } catch (AddressException ae) {
+            System.out.println( "address Exception");
+            ae.getMessage();
+            ae.printStackTrace();
+        } catch (MessagingException me) {
+            System.out.println( "Message Exception");
+            me.getMessage();
+            me.printStackTrace();
+        }
+
+    }
+
+    public void handleSortBox(/*ActionEvent event*/) {
+//?
+    }
+
+    public void settingsHandleUpdateBtn() throws SQLException {
+
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
@@ -185,6 +274,8 @@ public class UserMenuController implements Initializable {
             }
         });
     }
+
+
 }
 
 

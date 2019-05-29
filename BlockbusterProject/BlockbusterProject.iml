@@ -8,6 +8,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-java-5.1.28-bin" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" name="twilio-6.6.10-jar-with-dependencies" level="project" />
+=======
+    <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="itextpdf-5.1.0" level="project" />
+    <orderEntry type="library" name="javax.mail" level="project" />
+>>>>>>> 8fd4747ba19eebf7087a4d7dc08c65d34f685d4d
   </component>
 </module>
