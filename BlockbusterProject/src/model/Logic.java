@@ -1,9 +1,14 @@
 package model;
 
-/*import com.itextpdf.text.Document;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import javafx.scene.control.Alert;
+import scene.rentPopup.RentPopupController;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;*/
+import com.itextpdf.text.pdf.PdfWriter;
 import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -118,7 +123,23 @@ public class Logic {
         }
     }
 
-    /*public  void pdf(){
+    public static final String ACCOUNT_SID = "AC6f314e8681deaa0ae4d82eaf59876daa";
+    public static final String AUTH_TOKEN = "79be81f419784528cdb25a38226909df";
+
+    public static void textMessageHandler() {
+
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message
+                .creator(new PhoneNumber("+46734453860"), // to
+                        new PhoneNumber("+46769448476"), // from
+                        "Test text")
+                .create();
+
+        System.out.println(message.getSid());
+    }
+
+    public  void pdf(){
         Document document = new Document();
         try
         {

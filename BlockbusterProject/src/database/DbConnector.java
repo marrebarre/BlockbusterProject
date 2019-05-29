@@ -10,16 +10,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-
 import model.Account_Has_Movie;
-
 import javafx.stage.Stage;
-
 import model.Admin;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +77,7 @@ public class DbConnector {
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
             estDateReturned = dateReturned;
+
             if (isVerify() == true) {
                 movieStockHandler();
             }
@@ -258,7 +255,6 @@ public class DbConnector {
             ps.setString(6, movie.getReleaseYear());
             ps.setInt(7, movie.getQuantity());
             ps.setString(8, movie.getImagePath());
-
             ps.executeUpdate();
             alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
@@ -437,10 +433,8 @@ public class DbConnector {
         connect();
         try {
             String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + iduser;
-
             PreparedStatement ps = connection.prepareStatement(query);
-            updateData(data, ps);
-
+            dataHandler(data, ps);
         } catch (SQLException e) {
             System.out.println("Something went wrong...");
             e.printStackTrace();
@@ -449,7 +443,7 @@ public class DbConnector {
         }
     }
 
-    private <T> void updateData(T data, PreparedStatement ps) throws SQLException {
+    private <T> void dataHandler(T data, PreparedStatement ps) throws SQLException {
         if (data instanceof String) {
             String temp = (String) data;
             ps.setString(1, temp);

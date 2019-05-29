@@ -32,6 +32,7 @@ public class RentPopupController implements Initializable {
     public CheckBox smsCheck;
 
     private LocalDate localDate = LocalDate.now();
+
     private static User balance;
 
     public static User getBalance() {
@@ -92,5 +93,4 @@ public class RentPopupController implements Initializable {
         Image image = new Image(movieToRent.getImagePath());
         rentImageView.setImage(image);
     }
-
 }
