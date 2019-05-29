@@ -10,9 +10,8 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import model.Logic;
 import model.User;
-
 import java.net.URL;
-import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
@@ -38,12 +37,13 @@ public class UserMenuController implements Initializable {
     Label lblWelcomeMessage, currentBalance;
 
     @FXML
-    private TreeView faq;
+    private TreeView<String> faq;
 
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
     public static User loggedInUser;
+    private static DecimalFormat df = new DecimalFormat("0.00");
 
     public void btnPressedLogOut(MouseEvent event) {
         String logOutFXML = "/scene/loginScreen/loginScreenRedux.fxml";
@@ -105,35 +105,35 @@ public class UserMenuController implements Initializable {
     }
 
     private void treeview() {
-        TreeItem rootItem = new TreeItem("FAQ's");
-        TreeItem q1 = new TreeItem("ABOUT US");
-        TreeItem q2 = new TreeItem("IS IT FREE?");
-        TreeItem q3 = new TreeItem("WHAT DOES THIS SERVICE OFFER?");
-        TreeItem q4 = new TreeItem("PAYMENTS?");
-        TreeItem q5 = new TreeItem("HOW DO I GET THE MOVIE/S?");
-        TreeItem q6 = new TreeItem("RETURN POLICIES?");
-        TreeItem q7 = new TreeItem("FORGOT MY PASSWORD?");
+        TreeItem<String> rootItem = new TreeItem<>("FAQ's");
+        TreeItem<String> q1 = new TreeItem<>("ABOUT US");
+        TreeItem<String> q2 = new TreeItem<>("IS IT FREE?");
+        TreeItem<String> q3 = new TreeItem<>("WHAT DOES THIS SERVICE OFFER?");
+        TreeItem<String> q4 = new TreeItem<>("PAYMENTS?");
+        TreeItem<String> q5 = new TreeItem<>("HOW DO I GET THE MOVIE/S?");
+        TreeItem<String> q6 = new TreeItem<>("RETURN POLICIES?");
+        TreeItem<String> q7 = new TreeItem<>("FORGOT MY PASSWORD?");
 
         faq.setRoot(rootItem);
         rootItem.getChildren().addAll(q1, q2, q3, q4, q5, q6, q7);
-        TreeItem a1 = new TreeItem("This is a movie rental program that allows the user to login, browse and rent movies from a store. " +
+        TreeItem<String> a1 = new TreeItem<>("This is a movie rental program that allows the user to login, browse and rent movies from a store. " +
                 "\nThe application is easy to use and displays which movies are currently in stock. When logged in, " +
                 "\nthe user is able to rent movies, check stock and choose to have the movie delivered for a small " +
                 "\nfee or to pick it up from a local store.");
         q1.getChildren().addAll(a1);
-        TreeItem a2 = new TreeItem("Renting a movie comes with a fee, but being a member to this service is free of cost.");
+        TreeItem<String> a2 = new TreeItem<>("Renting a movie comes with a fee, but being a member to this service is free of cost.");
         q2.getChildren().addAll(a2);
-        TreeItem a3 = new TreeItem("This service offers users to rent physical copies of movies.");
+        TreeItem<String> a3 = new TreeItem<>("This service offers users to rent physical copies of movies.");
         q3.getChildren().addAll(a3);
-        TreeItem a4 = new TreeItem("Every user has a economical balance which payments will be drawn from.");
+        TreeItem<String> a4 = new TreeItem<>("Every user has a economical balance which payments will be drawn from.");
         q4.getChildren().addAll(a4);
-        TreeItem a5 = new TreeItem("The movies can be aqquired by a user simply by picking it up at the designated store, " +
+        TreeItem<String> a5 = new TreeItem<>("The movies can be aqquired by a user simply by picking it up at the designated store, " +
                 "\nor a user can have the movie sent home for a small fee.");
         q5.getChildren().addAll(a5);
-        TreeItem a6 = new TreeItem("The movies are being lent out during a specific period of time. If a user overdraws " +
+        TreeItem<String> a6 = new TreeItem<>("The movies are being lent out during a specific period of time. If a user overdraws " +
                 "\ntheir lending-period, additional fees will be drawn from this user.");
         q6.getChildren().addAll(a6);
-        TreeItem a7 = new TreeItem("There is a link underneath the login-prompt. There you will be directed further");
+        TreeItem<String> a7 = new TreeItem<>("There is a link underneath the login-prompt. There you will be directed further");
         q6.getChildren().addAll(a7);
     }
 
@@ -154,7 +154,7 @@ public class UserMenuController implements Initializable {
         addressText.setText(loggedInUser.getAddress());
         phoneNumberText.setText(loggedInUser.getPhoneNr());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
-        currentBalance.setText("Balance: " + loggedInUser.getBalance() + "$");
+        currentBalance.setText("Balance: " + df.format(loggedInUser.getBalance()) + "$");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");

@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import model.Logic;
-
 import java.net.URL;
 import java.util.*;
 
@@ -27,7 +26,7 @@ public class LoginScreenController implements Initializable {
     @FXML
     Label forgotPW = new Label(), isConnected = new Label();
     @FXML
-    Button signIn, btnCreateAccount/*, changeImage*/;
+    Button signIn, btnCreateAccount;
     @FXML
     ImageView imageSwap, logo/*,avengersSwap,kingarthurSwap,hpSwap,warcraftSwap,lotrSwap,wpSwap,inceptionSwap,venturaSwap*/;
 

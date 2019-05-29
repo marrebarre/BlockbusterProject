@@ -1,5 +1,8 @@
 package model;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import javafx.scene.control.Alert;
 import scene.rentPopup.RentPopupController;
 import database.DbConnector;
@@ -107,5 +110,21 @@ public class Logic {
         } finally {
             dbConnector.disconnect();
         }
+    }
+
+    public static final String ACCOUNT_SID = "AC6f314e8681deaa0ae4d82eaf59876daa";
+    public static final String AUTH_TOKEN = "79be81f419784528cdb25a38226909df";
+
+    public static void textMessageHandler() {
+
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message
+                .creator(new PhoneNumber("+46734453860"), // to
+                        new PhoneNumber("+46769448476"), // from
+                        "Test text")
+                .create();
+
+        System.out.println(message.getSid());
     }
 }
