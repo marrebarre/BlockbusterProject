@@ -290,7 +290,7 @@ public class DbConnector {
         connect();
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE " + table + " SET " + column + " = ? WHERE " + idNameInTable + " = " + id);
-            updateData(newData, ps);
+            dataHandler(newData, ps);
         } catch (SQLException e) {
             System.out.println("Could not update " + column);
             e.printStackTrace();
@@ -548,8 +548,6 @@ public class DbConnector {
         }
     }
     */
-
-
 
 /*
     public List<Movie> searchMovieByGenre(String genre) {
