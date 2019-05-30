@@ -72,7 +72,7 @@ public class DbConnector {
 
     public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned, ActionEvent event) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
-        connect();
+        //connect();
         setVerify(true);
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
@@ -98,9 +98,9 @@ public class DbConnector {
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
-        } finally {
+        } /*finally {
             disconnect();
-        }
+        }*/
     }
 
     public void textMessageHandler() throws SQLException {
@@ -126,7 +126,7 @@ public class DbConnector {
     }
 
     public void economyHandler() {
-        connect();
+        //connect();
         //System.out.println("Pre economyHandler verified: " + isVerify());
         String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
         System.out.println("Movie price: " + movieToRent.getPrice());
@@ -147,14 +147,14 @@ public class DbConnector {
         } catch (Exception e) {
             System.out.println("Banking error");
             e.printStackTrace();
-        } finally {
-            //System.out.println("Post economyHandler verified: " + isVerify());
+        } /*finally {
+            System.out.println("Post economyHandler verified: " + isVerify());
             disconnect();
-        }
+        }*/
     }
 
     private void movieStockHandler() {
-        connect();
+        //connect();
         //System.out.println("Pre stockHandler: " + isVerify());
         String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
         try {
@@ -177,10 +177,10 @@ public class DbConnector {
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
-        } finally {
-            //System.out.println("Post stockHandler: " + isVerify());
+        } /*finally {
+            System.out.println("Post stockHandler: " + isVerify());
             disconnect();
-        }
+        }*/
     }
 
     public int tableSizeMovie() {

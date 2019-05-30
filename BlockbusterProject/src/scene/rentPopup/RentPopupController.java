@@ -62,6 +62,7 @@ public class RentPopupController implements Initializable {
 
     public void rentalHandler(ActionEvent event){
         DbConnector dbConnector = new DbConnector();
+        dbConnector.connect();
         dbConnector.addRental(getMovieToRent(), convertToDateFormat(localDate), convertToDateFormat(localDate.plusDays(Integer.parseInt(enterDaysOfRental.getText()))), event);
         if (DbConnector.verify == true && smsCheck.isSelected()){
             try {
@@ -72,6 +73,7 @@ public class RentPopupController implements Initializable {
             }
         }
         dbConnector.setVerify(true);
+        dbConnector.disconnect();
     }
 
     @Override
