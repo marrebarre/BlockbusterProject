@@ -20,53 +20,12 @@
             <ImageView fx:id="logo" fitHeight="115.0" fitWidth="269.0" layoutX="84.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>
             <ImageView fx:id="imageSwap" fitHeight="295.0" fitWidth="200.0" layoutX="400.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-            <!--<ImageView fx:id="avengersSwap" fitHeight="305.0" fitWidth="225.0" layoutX="393.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/AvengersEndgame.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="kingarthurSwap" fitHeight="314.0" fitWidth="224.0" layoutX="390.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/KingArthur.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="hpSwap" fitHeight="315.0" fitWidth="229.0" layoutX="389.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/HPSorcStone.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="warcraftSwap" fitHeight="308.0" fitWidth="293.0" layoutX="391.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/Warcraft.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="lotrSwap" fitHeight="324.0" fitWidth="210.0" layoutX="391.0" layoutY="-4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/LOTRReturnKing.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="wpSwap" fitHeight="306.0" fitWidth="234.0" layoutX="393.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/wtp.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="inceptionSwap" fitHeight="311.0" fitWidth="225.0" layoutX="390.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/inception.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="venturaSwap" fitHeight="304.0" fitWidth="219.0" layoutX="393.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../image/AceVentura1.jpg" />
-               </image>
-            </ImageView>-->
             </children></AnchorPane>
     </center>
     <bottom>
         <AnchorPane prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
                 <Button fx:id="btnCreateAccount" layoutX="446.0" layoutY="45.0" mnemonicParsing="false" onAction="#btnPressedCreateAccount" prefHeight="41.0" prefWidth="140.0" text="Create account" />
-            <!--<Button fx:id="changeImage" layoutX="450.0" mnemonicParsing="false" text="Change image" />-->
          </children>
       </AnchorPane>
     </bottom>

@@ -20,7 +20,6 @@ import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-
 public class UserMenuController implements Initializable {
     @FXML
     private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText;
@@ -79,7 +78,7 @@ public class UserMenuController implements Initializable {
         searchByTitle(searchField.getText());
     }
 
-    private void loadBrowse() {
+    public void loadBrowse() {
         tilePaneBrowse.getChildren().clear();
         String SQLQuery = "SELECT * FROM movie";
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);

@@ -125,7 +125,7 @@ public class DbConnector {
     private void economyHandler() {
         //System.out.println("Pre economyHandler verified: " + isVerify());
         String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
-        System.out.println("Movie price: " + movieToRent.getPrice());
+        //System.out.println("Movie price: " + movieToRent.getPrice());
         //System.out.println("Pre: " + loggedInUser.getBalance());
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
@@ -134,8 +134,8 @@ public class DbConnector {
                 setVerify(false);
             } else if (loggedInUser.getBalance() >= movieToRent.getPrice()) {
                 loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
-                System.out.println("Post: " + loggedInUser.getBalance());
-                ps.setDouble(1, loggedInUser.getBalance() - movieToRent.getPrice());
+                //System.out.println("Post: " + loggedInUser.getBalance());
+                ps.setDouble(1, loggedInUser.getBalance());
                 ps.setInt(2, loggedInUser.getIdUser());
                 ps.executeUpdate();
                 System.out.println("Sufficient funds on user account");
@@ -161,7 +161,7 @@ public class DbConnector {
                 }
             } else if ((loggedInUser.getBalance() >= movieToRent.getPrice()) && movieToRent.getQuantity() > 0) {
                 movieToRent.setQuantity(movieToRent.getQuantity() - 1);
-                ps.setInt(1, movieToRent.getQuantity() - 1);
+                ps.setInt(1, movieToRent.getQuantity());
                 ps.setInt(2, movieToRent.getIdMovie());
                 ps.executeUpdate();
                 alert("Movie successfully subtracted from quantity!", Alert.AlertType.CONFIRMATION);

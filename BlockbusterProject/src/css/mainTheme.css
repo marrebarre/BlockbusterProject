@@ -1,7 +1,6 @@
 .root{
     -fx-background-color: linear-gradient(from 10% 10% to 50% 50%, reflect, #000031, red);
     -fx-text-fill: white, 12px;
-    -fx-animated: pulse 10s infinite;
 }
 
 @keyframes pulse {
@@ -13,11 +12,6 @@
     }
 }
 
-.tab{
-    -fx-font-size: 12px;
-    -fx-pref-width: 175;
-    -fx-pref-height: 40;
-}
 .image-view-user-menu:hover {
     -fx-effect: dropshadow(two-pass-box, #343434, 14, 0.0 , 10, 0);
     -fx-scale-x: 1.6;
@@ -33,6 +27,43 @@
 
 .lblWelcomeMessage{
     -fx-font-size: 22;
+}
+
+.tab{
+    -fx-background-color:
+            #000000,
+            linear-gradient(#ff272d, #b72b2d),
+            linear-gradient(#ff272d, #751923),
+            linear-gradient(#b72b2d, #751923);
+    -fx-margin: 3px 2px;
+    -fx-border: no;
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 10 28 10 28;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-pref-width: 175;
+    -fx-pref-height: 40;
+}
+
+.tab:hover{
+    -fx-background-color:
+            #000000,
+            linear-gradient(#b72b2d, #ff272d),
+            linear-gradient(#751923, #ff272d),
+            linear-gradient(#b72b2d, #751923);
+    -fx-background-insets: 0,1,2,3;
+    -fx-background-radius: 3,2,2,2;
+    -fx-text-fill: white;
+}
+
+.tab-label{
+    -fx-text-fill: white;
+}
+
+.tab-header-background{
+    -fx-opacity: 25%;
+    -fx-background-color: linear-gradient( black, #000031);/*from 10% 10% to 50% 50%, reflect,*/
 }
 
 .text-field {
@@ -88,7 +119,7 @@
 #faq .tree-cell{
    -fx-background-color: transparent;
 
-    -fx-text-fill: #ffffff ;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
 }
 #faq {
