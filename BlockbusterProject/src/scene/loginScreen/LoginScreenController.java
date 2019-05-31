@@ -72,6 +72,8 @@ public class LoginScreenController implements Initializable {
         String forgotPasswordFXML = "/scene/forgotPassword/forgotPW.fxml";
         logic.changeSceneHandler(event, forgotPasswordFXML, false);
     }
+
+
 /*
     public void loadImages() {
         for (int i = 0; i < 10; i++) {
