@@ -1,7 +1,6 @@
 package scene.userMenu;
 
 import database.DbConnector;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -11,14 +10,12 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import model.Logic;
 import model.User;
-//import javax.activation.DataHandler;
-//import javax.activation.DataSource;
-//import javax.activation.FileDataSource;
-//import javax.mail.*;
-//import javax.mail.internet.*;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.*;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -33,6 +30,7 @@ public class UserMenuController implements Initializable {
 
     @FXML
     Button sendReceiptBtn;
+
     @FXML
     private ComboBox<String> sortBox;
 
@@ -46,7 +44,7 @@ public class UserMenuController implements Initializable {
     ScrollPane scrollPane, scrollPaneMyRentals;
 
     @FXML
-    Label lblWelcomeMessage, currentBalance;
+    public Label lblWelcomeMessage, currentBalance;
 
     @FXML
     private TreeView<String> faq;
@@ -55,7 +53,7 @@ public class UserMenuController implements Initializable {
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
     public static User loggedInUser;
-    private static DecimalFormat df = new DecimalFormat("0.00");
+    public static DecimalFormat df = new DecimalFormat("0.00");
 
     private static String ourEmail = "thebustblocker1@gmail.com";  // Mail-name
     private static String ourEmailsPassword = "Buster!321"; // Mail password (Maybe make one just for this project team
@@ -76,7 +74,7 @@ public class UserMenuController implements Initializable {
         dbConnector.loadRentals(tilePaneMyRentals);
     }
 
-    public void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */ {
+    public void handleSearchBtn(){
         tilePaneBrowse.getChildren().clear();
         searchByTitle(searchField.getText());
     }
@@ -87,9 +85,8 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
-
-    /*@FXML //krille
-    private void handleSendReceipt(ActionEvent event) {
+    @FXML //krille
+    private void handleSendReceipt(){
         logic.pdf();
         String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
         String mess = "Here is your receipt";
@@ -122,7 +119,6 @@ public class UserMenuController implements Initializable {
             for (int i = 0; i < recipientEmail.length; i++) {
                 toAddress[i] = new InternetAddress(recipientEmail[i]);
             }
-
             for (int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
@@ -154,13 +150,9 @@ public class UserMenuController implements Initializable {
             me.printStackTrace();
         }
 
-    }*/
-
-    public void handleSortBox(/*ActionEvent event*/) {
-//?
     }
 
-    public void settingsHandleUpdateBtn() throws SQLException {
+    public void settingsHandleUpdateBtn(){
 
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
@@ -227,7 +219,6 @@ public class UserMenuController implements Initializable {
         q6.getChildren().addAll(a7);
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -275,8 +266,4 @@ public class UserMenuController implements Initializable {
             }
         });
     }
-
-
 }
-
-

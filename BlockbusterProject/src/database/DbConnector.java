@@ -16,6 +16,7 @@ import model.Admin;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class DbConnector {
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
-    private static final String ACCOUNT_SID = "AC6f314e8681deaa0ae4d82eaf59876daa";
-    private static final String AUTH_TOKEN = "79be81f419784528cdb25a38226909df";
+    private static final String ACCOUNT_SID = "AC0eb02f6d7980e28e685a99eb1e6dfbb3";
+    private static final String AUTH_TOKEN = "7196be33b314fe016e8ac0e0ed7495e2";
     public static boolean verify = true;
 
     private static boolean isVerify() {
@@ -46,7 +47,6 @@ public class DbConnector {
 
     public List<Movie> movies = new ArrayList<>();
     private List<Account_Has_Movie> accMovies = new ArrayList<>();
-
 
     public void connect() {
         try {
@@ -72,7 +72,6 @@ public class DbConnector {
 
     public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned, ActionEvent event) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
-        //connect();
         setVerify(true);
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
@@ -98,9 +97,7 @@ public class DbConnector {
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
-        } /*finally {
-            disconnect();
-        }*/
+        }
     }
 
     public void textMessageHandler() throws SQLException {
@@ -114,7 +111,7 @@ public class DbConnector {
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
             Message message = Message
                     .creator(new PhoneNumber("+46734453860"), // to
-                            new PhoneNumber("+46769448476"), // from
+                            new PhoneNumber("+12018066425"), // from
                             "Hello " + loggedInUser.getFirstName() + "!" +
                                     "\nYou just rented " + movieToRent.getTitle() + "." +
                                     "\nReturn expected " + estDateReturned.toString() + "." +
@@ -125,8 +122,7 @@ public class DbConnector {
         }
     }
 
-    public void economyHandler() {
-        //connect();
+    private void economyHandler() {
         //System.out.println("Pre economyHandler verified: " + isVerify());
         String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
         System.out.println("Movie price: " + movieToRent.getPrice());
@@ -147,14 +143,10 @@ public class DbConnector {
         } catch (Exception e) {
             System.out.println("Banking error");
             e.printStackTrace();
-        } /*finally {
-            System.out.println("Post economyHandler verified: " + isVerify());
-            disconnect();
-        }*/
+        }
     }
 
     private void movieStockHandler() {
-        //connect();
         //System.out.println("Pre stockHandler: " + isVerify());
         String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
         try {
@@ -177,10 +169,7 @@ public class DbConnector {
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
-        } /*finally {
-            System.out.println("Post stockHandler: " + isVerify());
-            disconnect();
-        }*/
+        }
     }
 
     public int tableSizeMovie() {
@@ -242,6 +231,13 @@ public class DbConnector {
             disconnect();
         }
         return movie;
+    }
+
+    public void retrieveCurrentBalance() throws SQLException {
+        connect();
+        PreparedStatement ps = connection.prepareStatement("SELECT balance FROM account WHERE idUser = ?");
+        ps.setInt(1, loggedInUser.getIdUser());
+        ps.execute();
     }
 
     public void addMovieToDB(Movie movie) {
