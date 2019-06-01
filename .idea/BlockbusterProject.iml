@@ -12,5 +12,7 @@
     <orderEntry type="library" name="itextpdf-5.1.0" level="project" />
     <orderEntry type="library" name="javax.mail" level="project" />
     <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="twilio-java-sdk-3.3.12" level="project" />
+    <orderEntry type="library" name="twilio-6.6.10-jar-with-dependencies" level="project" />
   </component>
 </module>

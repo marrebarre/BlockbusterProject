@@ -84,13 +84,13 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <Label layoutX="14.0" layoutY="59.0" prefHeight="51.0" prefWidth="313.0" text="Edit user information" textOverrun="CLIP" underline="true">
+                                        <Label layoutX="14.0" layoutY="59.0" prefHeight="51.0" prefWidth="368.0" text="Edit user information" textOverrun="CLIP">
                                             <font>
-                                                <Font name="Verdana" size="29.0" />
+                                                <Font name="Verdana Bold" size="29.0" />
                                             </font>
                                         </Label>
-                                        <Button layoutX="32.0" layoutY="167.0" mnemonicParsing="false" onAction="#viewListBtn" prefHeight="41.0" prefWidth="201.0" text="View list of Accounts" textFill="#ffc9c9" />
-                                        <TableView fx:id="accountTable" layoutX="249.0" layoutY="228.0" prefHeight="368.0" prefWidth="691.0">
+                                        <Button layoutX="19.0" layoutY="247.0" mnemonicParsing="false" onAction="#viewListBtn" prefHeight="41.0" prefWidth="201.0" text="View list of Accounts" textFill="#ffc9c9" />
+                                        <TableView fx:id="accountTable" layoutX="249.0" layoutY="233.0" prefHeight="368.0" prefWidth="691.0">
                                             <columns>
                                                 <TableColumn fx:id="colUserId" prefWidth="75.0" text="idUser" />
                                                 <TableColumn fx:id="colUserEmail" prefWidth="75.0" text="E-mail" />
@@ -122,7 +122,7 @@
                                     <TextField fx:id="editFirstName" layoutX="224.0" prefHeight="25.0" prefWidth="74.0" />
                                  </children>
                               </Pane>
-                              <Button layoutX="26.0" layoutY="338.0" mnemonicParsing="false" onAction="#updateUserInfoPressed" text="Update user information" />
+                              <Button layoutX="18.0" layoutY="338.0" mnemonicParsing="false" onAction="#updateUserInfoPressed" prefHeight="41.0" prefWidth="201.0" text="Update user information" />
                                     </children></AnchorPane>
                             </content>
                         </Tab>

@@ -5,10 +5,10 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import javafx.scene.control.Alert;
 import scene.rentPopup.RentPopupController;
-/*import com.itextpdf.text.Document;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;*/
+import com.itextpdf.text.pdf.PdfWriter;
 import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -139,7 +139,7 @@ public class Logic {
         System.out.println(message.getSid());
     }
 
-/*    public  void pdf(){
+        public  void pdf(){
         Document document = new Document();
         try
         {
@@ -157,9 +157,9 @@ public class Logic {
         {
             e.printStackTrace();
         }
-    }*/
-
-    /* krille - work in progress
+    }
+/*
+    // krille - work in progress
     public void generatePassword(){
         int length = 10;
         String symbol = "-/.^&*_!@%=+>)";
