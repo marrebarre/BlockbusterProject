@@ -12,6 +12,18 @@
     }
 }
 
+
+.tab{
+    -fx-font-size: 12px;
+    -fx-pref-width: 175;
+    -fx-pref-height: 40;
+    -fx-text-fill: white;
+
+}
+
+
+
+
 .image-view-user-menu:hover {
     -fx-effect: dropshadow(two-pass-box, #343434, 14, 0.0 , 10, 0);
     -fx-scale-x: 1.6;
@@ -125,4 +137,112 @@
 #faq {
     -fx-background-color: transparent ;
     -fx-text-fill: #ffffff ;
+}
+.table-cell {
+     -fx-text-fill: white;
+     -fx-font-size: 14px;
+}
+.table-view {
+    -fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+}
+#editUserPane{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+}
+#editEmail{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
+}
+#editPassword{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
+}
+#editBalance{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
+}
+#editFirstName{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
+}
+#editLastName{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
+}
+#editAddress{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
+}
+#editPhoneNr{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: white;
+         -fx-font-size: 14px;
 }

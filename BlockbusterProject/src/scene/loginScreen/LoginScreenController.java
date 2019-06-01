@@ -65,7 +65,7 @@ public class LoginScreenController implements Initializable {
 
     public void btnPressedCreateAccount(ActionEvent event) {
         String createAccountFXML = "/scene/createAccount/createAccountScreen.fxml";
-        logic.changeSceneHandler(event, createAccountFXML, true);
+        logic.changeSceneHandler(event, createAccountFXML, false);
     }
 
     public void btnPressedForgotPW(MouseEvent event) {
