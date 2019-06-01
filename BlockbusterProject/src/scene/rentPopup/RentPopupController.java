@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Movie;
-import model.User;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -32,12 +31,6 @@ public class RentPopupController implements Initializable {
     public CheckBox smsCheck;
 
     private LocalDate localDate = LocalDate.now();
-
-    private static User balance;
-
-    public static User getBalance() {
-        return balance;
-    }
 
     public static Movie movieToRent;
 
@@ -62,8 +55,9 @@ public class RentPopupController implements Initializable {
 
     public void rentalHandler(ActionEvent event){
         DbConnector dbConnector = new DbConnector();
+        dbConnector.connect();
         dbConnector.addRental(getMovieToRent(), convertToDateFormat(localDate), convertToDateFormat(localDate.plusDays(Integer.parseInt(enterDaysOfRental.getText()))), event);
-        if (DbConnector.verify == true && smsCheck.isSelected()){
+        if (DbConnector.verify && smsCheck.isSelected()){
             try {
                 dbConnector.textMessageHandler();
             } catch (SQLException e) {
@@ -71,7 +65,8 @@ public class RentPopupController implements Initializable {
                 e.printStackTrace();
             }
         }
-        dbConnector.setVerify(true);
+        DbConnector.setVerify(true);
+        dbConnector.disconnect();
     }
 
     @Override

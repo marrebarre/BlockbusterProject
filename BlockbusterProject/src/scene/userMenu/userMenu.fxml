@@ -22,7 +22,7 @@
             <center>
                 <TabPane minHeight="480.0" minWidth="680.0" prefHeight="200.0" prefWidth="1305.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                     <tabs>
-                        <Tab text="BROWSE">
+                        <Tab onSelectionChanged="#loadBrowse" text="BROWSE">
                             <content>
                                 <AnchorPane>
                                     <children>
@@ -79,7 +79,6 @@
                               </ScrollPane>
                              <Button fx:id="sendReceiptBtn" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" />
                            </children></AnchorPane>
-
                             </content>
                         </Tab>
                         <Tab text="SETTINGS">
