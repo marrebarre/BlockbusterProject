@@ -84,9 +84,9 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
+
     @FXML //krille
     private void handleSendReceipt() {
-
         logic.pdf();
         String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
         String mess = "Here is your receipt";

@@ -73,9 +73,9 @@ public class Logic {
         try {
             Parent parent1 = FXMLLoader.load(getClass().getResource(addressForFXML));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(parent1);
+            Scene scene = new Scene(parent1,600,400);
             stage.setScene(scene);
-            stage.setMaximized(maximizeScene);
+
             /*Group root = new Group();
             Group circles = new Group();
             for (int i = 0; i < 30; i++) {
@@ -116,6 +116,9 @@ public class Logic {
             timeline.play();*/
             if (maximizeScene) {
                 setToFullscreen(stage);
+                stage.setMaximized(maximizeScene);
+            }else{
+                stage.setMaximized(maximizeScene);
             }
             stage.show();
         } catch (IOException e) {
@@ -197,9 +200,11 @@ public class Logic {
         System.out.println(message.getSid());
     }
 
-    public void pdf() {
-        Document document = new Document();
-        try {
+    public  void pdf(){
+        com.itextpdf.text.Document document = new Document();
+
+        try
+        {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
             document.open();
             document.add(new Paragraph("Receipt of Rentals"));
