@@ -84,8 +84,14 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
+
+
+    @FXML //krille
+    private void handleSendReceipt(ActionEvent event) {
+
     @FXML //krille
     private void handleSendReceipt(){
+
         logic.pdf();
         String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
         String mess = "Here is your receipt";
@@ -148,6 +154,12 @@ public class UserMenuController implements Initializable {
             me.getMessage();
             me.printStackTrace();
         }
+
+
+    }
+
+    public void handleSortBox(/*ActionEvent event*/) {
+//?
 
     }
 
