@@ -297,7 +297,6 @@ public class AdminMenuController implements Initializable {
             editUserPane.setVisible(false);
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-            hBox.setLayoutX(bounds.getWidth());
-            hBox.setLayoutY(bounds.getHeight());
+
         }
     }
