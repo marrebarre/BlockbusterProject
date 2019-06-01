@@ -86,13 +86,38 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
                                     <children>
-                                        <TextField fx:id="firstNameText" layoutX="229.0" layoutY="187.0" prefHeight="25.0" prefWidth="174.0" promptText="First name" />
-                                        <TextField fx:id="lastNameText" layoutX="229.0" layoutY="218.0" prefHeight="25.0" prefWidth="174.0" promptText="Last name" />
-                                        <TextField fx:id="emailText" layoutX="229.0" layoutY="252.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
-                                        <TextField fx:id="addressText" layoutX="229.0" layoutY="284.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
-                                        <TextField fx:id="phoneNumberText" layoutX="229.0" layoutY="317.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
-                                        <Button fx:id="updateBtn" layoutX="229.0" layoutY="348.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Update information" />
-                                        <TreeView fx:id="faq" layoutX="423.0" layoutY="85.0" prefHeight="563.0" prefWidth="855.0" />
+                                        <TextField fx:id="firstNameText" layoutX="370.0" layoutY="227.0" prefHeight="25.0" prefWidth="174.0" promptText="First name" />
+                                        <TextField fx:id="lastNameText" layoutX="370.0" layoutY="258.0" prefHeight="25.0" prefWidth="174.0" promptText="Last name" />
+                                        <TextField fx:id="emailText" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
+                                        <TextField fx:id="addressText" layoutX="370.0" layoutY="324.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
+                                        <TextField fx:id="phoneNumberText" layoutX="370.0" layoutY="357.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
+                                        <Button fx:id="updateBtn" layoutX="370.0" layoutY="388.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Update information" />
+                                        <TreeView fx:id="faq" layoutX="695.0" layoutY="78.0" prefHeight="563.0" prefWidth="855.0" />
+                              <Label layoutX="289.0" layoutY="227.0" text="First name" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="289.0" layoutY="258.0" text="Last name" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="290.0" layoutY="292.0" text="E-mail" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="290.0" layoutY="325.0" text="Address" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="290.0" layoutY="357.0" text="Phone" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
                                     </children>
                                 </AnchorPane>
 
