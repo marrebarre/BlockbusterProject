@@ -12,7 +12,6 @@ public class Account_Has_Movie {
 
 
     public Account_Has_Movie(int rentalID, int account_idUser, int movie_idMovie, String rented, String estimatedReturnDate, double aDouble, double fee) {
-
         this.rentalID = rentalID;
         this.account_idUser = account_idUser;
         this.movie_idMovie = movie_idMovie;

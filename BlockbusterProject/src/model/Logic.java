@@ -42,6 +42,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -123,7 +124,7 @@ public class Logic {
     }
 
 
-    public void openSceneInNewWindow(String fxmlPath ,String title){
+    public void openSceneInNewWindow(String fxmlPath, String title) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlPath));
@@ -137,7 +138,7 @@ public class Logic {
         }
     }
 
-    public void loadBrowsePageData(String query, TilePane tilePane){
+    public void loadBrowsePageData(String query, TilePane tilePane) {
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement(query);
@@ -196,14 +197,9 @@ public class Logic {
         System.out.println(message.getSid());
     }
 
-        public  void pdf(){
+    public void pdf() {
         Document document = new Document();
-
-    public  void pdf(){
-        com.itextpdf.text.Document document = new Document();
-
-        try
-        {
+        try {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
             document.open();
             document.add(new Paragraph("Receipt of Rentals"));
@@ -211,11 +207,9 @@ public class Logic {
             document.add(new Paragraph(String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()))));
             document.close();
             writer.close();
-        } catch (DocumentException e)
-        {
+        } catch (DocumentException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }

@@ -1,6 +1,6 @@
 .root{
     -fx-background-color: linear-gradient(from 10% 10% to 50% 50%, reflect, #000031, red);
-    -fx-text-fill: white, 12px;
+    -fx-text-fill: #faab04, 12px;
 }
 
 @keyframes pulse {
@@ -12,6 +12,19 @@
     }
 }
 
+.tab{
+    -fx-font-size: 30px;
+    -fx-pref-width: 175;
+    -fx-pref-height: 40;
+    -fx-text-fill: #faab04;
+    -fx-font-weight: bold;
+
+}
+
+#forgotPW{
+    -fx-text-fill: black;
+}
+
 .image-view-user-menu:hover {
     -fx-effect: dropshadow(two-pass-box, #343434, 14, 0.0 , 10, 0);
     -fx-scale-x: 1.6;
@@ -20,7 +33,7 @@
 }
 
 #forgotPW:hover{
-    -fx-text-fill: white, 12px;
+    -fx-text-fill: black, 12px;
     -fx-underline: true;
     -fx-cursor: HAND;
 }
@@ -40,7 +53,7 @@
     -fx-background-insets: 0,1,2,3;
     -fx-background-radius: 3,2,2,2;
     -fx-padding: 10 28 10 28;
-    -fx-text-fill: white;
+    -fx-text-fill: #faab04;
     -fx-font-size: 12px;
     -fx-pref-width: 175;
     -fx-pref-height: 40;
@@ -54,11 +67,11 @@
             linear-gradient(#b72b2d, #751923);
     -fx-background-insets: 0,1,2,3;
     -fx-background-radius: 3,2,2,2;
-    -fx-text-fill: white;
+    -fx-text-fill: #faab04;
 }
 
 .tab-label{
-    -fx-text-fill: white;
+    -fx-text-fill: #faab04;
 }
 
 .tab-header-background{
@@ -87,7 +100,7 @@
     -fx-background-insets: 0,1,2,3;
     -fx-background-radius: 3,2,2,2;
     -fx-padding: 10 28 10 28;
-    -fx-text-fill: white;
+    -fx-text-fill: #faab04;
     -fx-font-size: 12px;
 }
 
@@ -103,7 +116,7 @@
             linear-gradient(#395cab, #223768);
     -fx-background-insets: 0,1,2,3;
     -fx-background-radius: 3,2,2,2;
-    -fx-text-fill: white;
+    -fx-text-fill: #faab04;
 }
 
 .scroll-pane{
@@ -118,11 +131,119 @@
 
 #faq .tree-cell{
    -fx-background-color: transparent;
-
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #faab04;
     -fx-font-size: 14px;
 }
 #faq {
     -fx-background-color: transparent ;
-    -fx-text-fill: #ffffff ;
+    -fx-text-fill: #faab04;
+}
+.table-cell {
+     -fx-text-fill: #faab04;
+     -fx-font-size: 14px;
+}
+
+.table-view {
+    -fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+}
+#editUserPane{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+}
+#editEmail{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
+}
+#editPassword{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
+}
+#editBalance{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
+}
+#editFirstName{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
+}
+#editLastName{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
+}
+#editAddress{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
+}
+#editPhoneNr{
+-fx-font-size: 12px;
+    -fx-base: rgb(0,0,0,0);
+    -fx-background-color:
+        linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
+
+    -fx-background-color: rgba(0,0,0,.75);
+    -fx-border-color: gray;
+    -fx-border-width: 1 1 0 0;
+    -fx-text-fill: #faab04;
+         -fx-font-size: 14px;
 }
