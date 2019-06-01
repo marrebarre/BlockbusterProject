@@ -87,9 +87,6 @@ public class UserMenuController implements Initializable {
 
 
     @FXML //krille
-    private void handleSendReceipt(ActionEvent event) {
-
-    @FXML //krille
     private void handleSendReceipt(){
 
         logic.pdf();
