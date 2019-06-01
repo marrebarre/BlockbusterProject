@@ -73,7 +73,7 @@ public class UserMenuController implements Initializable {
         dbConnector.loadRentals(tilePaneMyRentals);
     }
 
-    public void handleSearchBtn(){
+    public void handleSearchBtn() {
         tilePaneBrowse.getChildren().clear();
         searchByTitle(searchField.getText());
     }
@@ -85,17 +85,14 @@ public class UserMenuController implements Initializable {
     }
 
 
-
     @FXML //krille
-    private void handleSendReceipt(){
-
+    private void handleSendReceipt() {
         logic.pdf();
         String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
         String mess = "Here is your receipt";
 
         String recipientEmailString = recipent;
         String messageToBeSent = mess;
-
 
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
@@ -143,16 +140,14 @@ public class UserMenuController implements Initializable {
             System.out.println("email sent");
             transport.close();
         } catch (AddressException ae) {
-            System.out.println( "address Exception");
+            System.out.println("address Exception");
             ae.getMessage();
             ae.printStackTrace();
         } catch (MessagingException me) {
-            System.out.println( "Message Exception");
+            System.out.println("Message Exception");
             me.getMessage();
             me.printStackTrace();
         }
-
-
     }
 
     public void handleSortBox(/*ActionEvent event*/) {
@@ -160,7 +155,7 @@ public class UserMenuController implements Initializable {
 
     }
 
-    public void settingsHandleUpdateBtn(){
+    public void settingsHandleUpdateBtn() {
 
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
