@@ -474,66 +474,22 @@ public class DbConnector {
     }
 
 
-    /*krille - work in progress
-    public void updatePassword(int idUser, User user){
+    //krille
+    public void updatePassword(String userMail, User user){
+
         connect();
-        String query = "UPDATE account SET password = ? WHERE idUser = ?";
+        String query = "UPDATE account SET password = ? WHERE email = ?";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, user.getPassword()); //needs a setter in the user class?
-            preparedStmt.setInt(2, idUser);
+            preparedStmt.setString(1,user.getPassword()); //needs a setter in the user class?
+            preparedStmt.setString(2,userMail );
             preparedStmt.executeUpdate();
             System.out.println("Password updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    */
 
-/*
-    public List<Movie> searchMovieByGenre(String genre) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE genre = '" + genre + "'";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-        System.out.println(movies);
-        return movies;
-    }
-
-    //krillepille
-    public List<Movie> getMovieTitle(String title) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE title LIKE '" + title + "%' ";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            resultSet = preparedStmt.executeQuery();
-
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        System.out.println(movies);
-        disconnect(); //do for all!
-        return movies;
-    }*/
 
     //krille
     public List<Account_Has_Movie> showRentals(int idUser) {

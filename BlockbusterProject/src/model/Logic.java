@@ -236,32 +236,32 @@ public class Logic {
         }
     }
 
-/*
     // krille - work in progress
+    public static String generatePassword(){
+        int n = 8 ;
+        // chose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
 
 
-    /* krille - work in progress
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
 
-    public void generatePassword(){
-        int length = 10;
-        String symbol = "-/.^&*_!@%=+>)";
-        String cap_letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String small_letter = "abcdefghijklmnopqrstuvwxyz";
-        String numbers = "0123456789";
+        for (int i = 0; i < n; i++) {
 
-        String finalString = cap_letter + small_letter +
-                numbers + symbol;
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int)(AlphaNumericString.length()
+                    * Math.random());
 
-        Random random = new Random();
-
-        char[] password = new char[length];
-
-        for (int i = 0; i < length; i++)
-        {
-            password[i] =
-                    finalString.charAt(random.nextInt(finalString.length()));
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
         }
-        System.out.println(password);
+
+        return sb.toString();
     }
-    */
+
 }
