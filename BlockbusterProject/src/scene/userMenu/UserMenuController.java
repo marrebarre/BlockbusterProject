@@ -78,7 +78,6 @@ public class UserMenuController implements Initializable {
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
-
     @FXML //krille
     private void handleSendReceipt() {
         logic.pdf();
@@ -115,13 +114,12 @@ public class UserMenuController implements Initializable {
             for (int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
-
             BodyPart messageBodyPart = new MimeBodyPart();
             Multipart multipart = new MimeMultipart();
             message.setSubject(emailTitle);
             messageBodyPart.setText(messageToBeSent);
             messageBodyPart = new MimeBodyPart();
-            String filename = "\\Receipt.pdf";
+            String filename = "pdf/Receipt.pdf";
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
@@ -144,7 +142,6 @@ public class UserMenuController implements Initializable {
     }
 
     public void settingsHandleUpdateBtn() {
-
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
@@ -182,7 +179,7 @@ public class UserMenuController implements Initializable {
     }
 
     private void treeview() {
-        TreeItem<String> rootItem = new TreeItem<>("FAQ's");
+        TreeItem<String> rootItem = new TreeItem<>("FAQ");
         TreeItem<String> q1 = new TreeItem<>("ABOUT US");
         TreeItem<String> q2 = new TreeItem<>("IS IT FREE?");
         TreeItem<String> q3 = new TreeItem<>("WHAT DOES THIS SERVICE OFFER?");
@@ -232,6 +229,8 @@ public class UserMenuController implements Initializable {
         passwordText.setText(loggedInUser.getPassword());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         currentBalance.setText("Balance: " + df.format(loggedInUser.getBalance()) + "$");
+        sortBox.getItems().add("Horror");
+        sortBox.getItems().add("Scifi");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
@@ -240,6 +239,14 @@ public class UserMenuController implements Initializable {
         sortBox.setOnAction(event -> {
             String choice = sortBox.getSelectionModel().getSelectedItem();
             switch (choice) {
+                case "Horror":
+                    tilePaneBrowse.getChildren().clear();
+                    sortByGenre("Horror");
+                    break;
+                case "Scifi":
+                    tilePaneBrowse.getChildren().clear();
+                    sortByGenre("Scifi");
+                    break;
                 case "Action":
                     tilePaneBrowse.getChildren().clear();
                     sortByGenre("Action");
@@ -261,8 +268,5 @@ public class UserMenuController implements Initializable {
                     break;
             }
         });
-    }
-
-    public void handleSortBox(ActionEvent actionEvent) {
     }
 }

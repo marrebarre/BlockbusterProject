@@ -490,16 +490,15 @@ public class DbConnector {
         }
     }
 
-
     //krille
     public List<Account_Has_Movie> showRentals(int idUser) {
         connect();
         accMovies.clear();
-        String query = "SELECT * FROM movie INNER JOIN account_has_movie WHERE account_idUser = '" + idUser + "'";
+        String query = "SELECT * FROM movie inner join account_has_movie ON account_has_movie.movie_idMovie = movie.idMovie WHERE account_idUser = ?";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setInt(1, loggedInUser.getIdUser());
             resultSet = preparedStmt.executeQuery();
-
             while (resultSet.next()) {
                 Account_Has_Movie accountHasMovie = new Account_Has_Movie(
                         resultSet.getInt("movie_idMovie"),
@@ -518,8 +517,6 @@ public class DbConnector {
                         resultSet.getDouble("fee"),
                         resultSet.getBoolean("returned"));
                 accMovies.add(accountHasMovie);
-                accMovies.toString().replace("[", "").replace("]", "");
-
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println(ex.getMessage());

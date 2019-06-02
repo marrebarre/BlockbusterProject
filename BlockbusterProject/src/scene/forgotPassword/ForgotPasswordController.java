@@ -3,9 +3,7 @@ package scene.forgotPassword;
 import database.DbConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import model.Logic;
 import model.User;
@@ -34,18 +32,18 @@ public class ForgotPasswordController {
     private static String ourEmail = "thebustblocker1@gmail.com";  // Mail-name
     private static String ourEmailsPassword = "Buster!321"; // Mail password (Maybe make one just for this project team
     private static String emailTitle = "Bust Blocker"; // Add the title of the e-mail here.
-    private User user = new User("","",false,"","",2,"","",1);
+    private User user = new User("", "", false, "", "", 2, "", "", 1);
 
-    public void btnPressedReturnToLogin(MouseEvent event){
+    public void btnPressedReturnToLogin(MouseEvent event) {
         String logInFXML = "/scene/loginScreen/loginScreenRedux.fxml";
         logic.changeSceneHandler(event, logInFXML, false);
     }
 
-    public void getEmailForPW(){
+    public void getEmailForPW() {
         final String emailForPw = enterEmailForReset.getText();
         String mess = Logic.generatePassword(); // message to be sent
         user.setPassword(mess);
-        dbConnector.updatePassword(emailForPw,user);
+        dbConnector.updatePassword(emailForPw, user);
 
         String recipientEmailString = emailForPw;
         String messageToBeSent = mess;
@@ -87,15 +85,18 @@ public class ForgotPasswordController {
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         } catch (AddressException ae) {
-            System.out.println( "address Exception");
+            System.out.println("address Exception");
             ae.getMessage();
-            ae.printStackTrace();
+            //ae.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.NONE, "Invalid email entered", ButtonType.OK);
+            alert.setTitle("Error");
+            alert.showAndWait();
         } catch (MessagingException me) {
-            System.out.println( "Message Exception");
+            System.out.println("Message Exception");
             me.getMessage();
             me.printStackTrace();
         }
-        }
+    }
 
     public void handleReset(ActionEvent actionEvent) {
         getEmailForPW();

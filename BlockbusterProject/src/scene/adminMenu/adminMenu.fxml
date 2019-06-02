@@ -114,8 +114,8 @@
                                                 <Font size="30.0" />
                                             </font>
                                         </Label>
-                                        <Button layoutX="166.0" layoutY="175.0" mnemonicParsing="false" onAction="#viewListBtn" prefHeight="41.0" prefWidth="201.0" text="View list of Accounts" textFill="#ffc9c9" />
-                                        <TableView fx:id="accountTable" layoutX="396.0" layoutY="161.0" prefHeight="368.0" prefWidth="691.0">
+                                        <Button layoutX="804.0" layoutY="63.0" mnemonicParsing="false" onAction="#viewListBtn" prefHeight="41.0" prefWidth="102.0" text="Refresh" textFill="#ffc9c9" />
+                                        <TableView fx:id="accountTable" layoutX="213.0" layoutY="110.0" prefHeight="368.0" prefWidth="691.0">
                                             <columns>
                                                 <TableColumn fx:id="colUserId" prefWidth="75.0" text="idUser" />
                                                 <TableColumn fx:id="colUserEmail" prefWidth="75.0" text="E-mail" />
@@ -128,26 +128,26 @@
                                                 <TableColumn fx:id="colUserIsAdmin" prefWidth="75.0" text="IsAdmin" />
                                             </columns>
                                         </TableView>
-                              <TextField fx:id="editUserIdTxtField" layoutX="459.0" layoutY="544.0" prefHeight="35.0" prefWidth="43.0" />
-                              <Label layoutX="396.0" layoutY="545.0" prefHeight="33.0" prefWidth="56.0" text="User ID :">
+                              <TextField fx:id="editUserIdTxtField" layoutX="311.0" layoutY="524.0" prefHeight="35.0" prefWidth="43.0" />
+                              <Label layoutX="213.0" layoutY="525.0" prefHeight="33.0" prefWidth="98.0" text="Enter user ID :">
                                  <font>
                                     <Font name="System Bold Italic" size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="517.0" layoutY="543.0" mnemonicParsing="false" onAction="#editUserIdPressed" text="Edit User" />
-                              <Pane fx:id="editUserPane" layoutX="473.0" layoutY="136.0">
+                              <Button layoutX="362.0" layoutY="523.0" mnemonicParsing="false" onAction="#editUserIdPressed" text="Edit User" />
+                              <Pane fx:id="editUserPane" layoutX="213.0" layoutY="486.0" prefHeight="32.0" prefWidth="690.0">
                                  <children>
                                     <TextField fx:id="editEmail" layoutX="1.0" prefHeight="25.0" prefWidth="74.0" />
-                                    <TextField fx:id="editPassword" layoutX="75.0" prefHeight="25.0" prefWidth="74.0" />
-                                    <TextField fx:id="editBalance" layoutX="149.0" prefHeight="25.0" prefWidth="75.0" />
-                                    <TextField fx:id="editLastName" layoutX="298.0" prefHeight="25.0" prefWidth="76.0" />
-                                    <TextField fx:id="editAddress" layoutX="374.0" prefHeight="25.0" prefWidth="74.0" />
-                                    <TextField fx:id="editPhoneNr" layoutX="448.0" prefHeight="25.0" prefWidth="76.0" />
-                                    <ComboBox fx:id="isAdminCombo" layoutX="524.0" prefHeight="25.0" prefWidth="92.0" />
-                                    <TextField fx:id="editFirstName" layoutX="224.0" prefHeight="25.0" prefWidth="74.0" />
+                                    <TextField fx:id="editPassword" layoutX="75.0" prefHeight="31.0" prefWidth="76.0" />
+                                    <TextField fx:id="editBalance" layoutX="153.0" layoutY="-1.0" prefHeight="31.0" prefWidth="80.0" />
+                                    <TextField fx:id="editLastName" layoutX="310.0" layoutY="-1.0" prefHeight="31.0" prefWidth="83.0" />
+                                    <TextField fx:id="editAddress" layoutX="393.0" layoutY="-1.0" prefHeight="31.0" prefWidth="81.0" />
+                                    <TextField fx:id="editPhoneNr" layoutX="474.0" layoutY="-1.0" prefHeight="31.0" prefWidth="96.0" />
+                                    <ComboBox fx:id="isAdminCombo" layoutX="572.0" layoutY="3.0" prefHeight="25.0" prefWidth="118.0" />
+                                    <TextField fx:id="editFirstName" layoutX="233.0" layoutY="-1.0" prefHeight="31.0" prefWidth="77.0" />
                                  </children>
                               </Pane>
-                              <Button layoutX="165.0" layoutY="266.0" mnemonicParsing="false" onAction="#updateUserInfoPressed" prefHeight="41.0" prefWidth="201.0" text="Update user information" />
+                              <Button layoutX="704.0" layoutY="521.0" mnemonicParsing="false" onAction="#updateUserInfoPressed" prefHeight="41.0" prefWidth="201.0" text="Add new user data" />
                               <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
                                     </children></AnchorPane>
                             </content>
