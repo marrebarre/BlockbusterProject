@@ -105,6 +105,7 @@
     -fx-padding: 10 28 10 28;
     -fx-text-fill: #faab04;
     -fx-font-size: 12px;
+    -fx-font-weight: bold;
 }
 
 .button Text {
