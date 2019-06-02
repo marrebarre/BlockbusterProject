@@ -449,21 +449,21 @@ public class DbConnector {
         }
     }
 
-    /*krille - work in progress
-    public void updatePassword(int idUser, User user){
+    //krille
+    public void updatePassword(String userMail, User user){
         connect();
-        String query = "UPDATE account SET password = ? WHERE idUser = ?";
+        String query = "UPDATE account SET password = ? WHERE email = ?";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, user.getPassword()); //needs a setter in the user class?
-            preparedStmt.setInt(2, idUser);
+            preparedStmt.setString(1,user.getPassword()); //needs a setter in the user class?
+            preparedStmt.setString(2,userMail );
             preparedStmt.executeUpdate();
             System.out.println("Password updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    */
+
 
 
 /*
