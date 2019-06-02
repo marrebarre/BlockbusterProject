@@ -22,19 +22,13 @@ import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
     @FXML
-    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText;
+    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText, searchField;
 
     @FXML
-    Button btnLogOut, updateBtn, btnSearch;
-
-    @FXML
-    Button sendReceiptBtn;
+    Button btnLogOut, updateBtn, btnSearch, sendReceiptBtn;
 
     @FXML
     private ComboBox<String> sortBox;
-
-    @FXML
-    private TextField searchField;
 
     @FXML
     public TilePane tilePaneBrowse, tilePaneMyRentals;
@@ -70,7 +64,7 @@ public class UserMenuController implements Initializable {
 
     public void loadMyRentals() {
         tilePaneMyRentals.getChildren().clear();
-        dbConnector.loadRentals(tilePaneMyRentals);
+        logic.loadRentals(tilePaneMyRentals);
     }
 
     public void handleSearchBtn() {
@@ -127,13 +121,12 @@ public class UserMenuController implements Initializable {
             message.setSubject(emailTitle);
             messageBodyPart.setText(messageToBeSent);
             messageBodyPart = new MimeBodyPart();
-            String filename = "C:\\Users\\krill\\OneDrive\\Dokument\\GitHub\\BlockbusterProject\\BlockbusterProject\\Receipt.pdf";
+            String filename = "\\Receipt.pdf";
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
-
             Transport transport = session.getTransport("smtp");
             transport.connect(host, ourEmail, ourEmailsPassword);
             transport.sendMessage(message, message.getAllRecipients());
@@ -148,11 +141,6 @@ public class UserMenuController implements Initializable {
             me.getMessage();
             me.printStackTrace();
         }
-    }
-
-    public void handleSortBox(/*ActionEvent event*/) {
-//?
-
     }
 
     public void settingsHandleUpdateBtn() {
