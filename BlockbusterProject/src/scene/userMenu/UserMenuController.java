@@ -1,6 +1,7 @@
 package scene.userMenu;
 
 import database.DbConnector;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -260,5 +261,8 @@ public class UserMenuController implements Initializable {
                     break;
             }
         });
+    }
+
+    public void handleSortBox(ActionEvent actionEvent) {
     }
 }
