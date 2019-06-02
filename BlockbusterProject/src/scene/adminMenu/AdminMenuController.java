@@ -299,7 +299,16 @@ public class AdminMenuController implements Initializable {
             ps.setString(1, searchRentalTxt.getText());
             dbConnector.resultSet = ps.executeQuery();
             while (dbConnector.resultSet.next()){
-                Account_Has_Movie rental = new Account_Has_Movie(dbConnector.resultSet.getInt("rentalID"),
+                Account_Has_Movie rental = new Account_Has_Movie(
+                        dbConnector.resultSet.getInt("movie_idMovie"),
+                        dbConnector.resultSet.getString("title"),
+                        dbConnector.resultSet.getString("director"),
+                        dbConnector.resultSet.getDouble("price"),
+                        Movie.getStringAsGenre(dbConnector.resultSet.getString("genre")),
+                        dbConnector.resultSet.getString("releaseYear"),
+                        dbConnector.resultSet.getInt("quantity"),
+                        dbConnector.resultSet.getString("imagePath"),
+                        dbConnector.resultSet.getInt("rentalID"),
                         dbConnector.resultSet.getInt("account_idUser"),
                         dbConnector.resultSet.getInt("movie_idMovie"),
                         dbConnector.resultSet.getString("dateRented"),
