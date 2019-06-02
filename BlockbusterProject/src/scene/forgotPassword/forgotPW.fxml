@@ -9,7 +9,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.forgotPassword.ForgotPasswordController">
    <children>
       <TextField fx:id="enterEmailForReset" layoutX="129.0" layoutY="175.0" prefHeight="25.0" prefWidth="246.0" promptText="Enter email" />
-      <Button fx:id="btnResetPW" layoutX="381.0" layoutY="169.0" mnemonicParsing="false" text="Reset password" />
+      <Button fx:id="btnResetPW" layoutX="381.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleReset" text="Reset password" />
       <Label fx:id="lblForgotPW" layoutX="130.0" layoutY="79.0" text="Forgotten password menu">
          <font>
             <Font size="21.0" />

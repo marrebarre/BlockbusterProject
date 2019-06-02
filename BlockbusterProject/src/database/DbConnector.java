@@ -10,11 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-import model.Account_Has_Movie;
+import model.*;
 import javafx.stage.Stage;
-import model.Admin;
-import model.Movie;
-import model.User;
 import scene.rentPopup.RentPopupController;
 
 import java.sql.*;
@@ -29,6 +26,7 @@ public class DbConnector {
     public Connection connection = null;
     public Statement statement;
     public ResultSet resultSet;
+    Logic logic;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
     private static final String ACCOUNT_SID = "AC0eb02f6d7980e28e685a99eb1e6dfbb3";
@@ -233,13 +231,6 @@ public class DbConnector {
         return movie;
     }
 
-    public void retrieveCurrentBalance() throws SQLException {
-        connect();
-        PreparedStatement ps = connection.prepareStatement("SELECT balance FROM account WHERE idUser = ?");
-        ps.setInt(1, loggedInUser.getIdUser());
-        ps.execute();
-    }
-
     public void addMovieToDB(Movie movie) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre, releaseYear, quantity, imagePath) VALUES (?,?,?,?,?,?,?,?)");
@@ -379,51 +370,6 @@ public class DbConnector {
         return user;
     }
 
-    public void loadRentals(TilePane tilePane) {
-        connect();
-        String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ? AND returned = 0";
-        ResultSet resultSetRental;
-        try {
-            PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            ps.setInt(1, loggedInUser.getIdUser());
-            resultSetRental = ps.executeQuery();
-            while (resultSetRental.next()) {
-                String imagePath;
-                Movie movie = new Movie(
-                        resultSetRental.getInt("movie_idMovie"),
-                        resultSetRental.getString("title"),
-                        resultSetRental.getString("director"),
-                        resultSetRental.getDouble("price"),
-                        Movie.getStringAsGenre(resultSetRental.getString("genre")),
-                        resultSetRental.getString("releaseYear"),
-                        resultSetRental.getInt("quantity"),
-                        imagePath = resultSetRental.getString("imagePath")
-                );
-                TilePane tempTilePane = new TilePane();
-                tempTilePane.setPrefColumns(1);
-                tempTilePane.setPrefRows(5);
-                tempTilePane.setPadding(new Insets(30));
-                ImageView tempImageView = new ImageView();
-                tempImageView.getStyleClass().add("image-view-user-menu");
-                tempImageView.setFitHeight(200);
-                tempImageView.setFitWidth(133);
-                Image image = new Image(imagePath);
-                tempImageView.setImage(image);
-                tempImageView.setOnMouseClicked(e -> {
-                    RentPopupController.setMovieToRent(movie);
-                    /*logic.openSceneInNewWindow("/scene/rentPopup/rentPopup.fxml", "Rent Movie");*/
-                });
-                tempTilePane.getChildren().addAll(tempImageView);
-                tilePane.getChildren().add(tempTilePane);
-                tilePane.setPrefColumns(10);
-            }
-        } catch (Exception e) {
-            System.out.println("ohShit");
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-    }
 
     public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser, T data) {
         connect();
@@ -528,78 +474,43 @@ public class DbConnector {
     }
 
 
-    /*krille - work in progress
-    public void updatePassword(int idUser, User user){
+    //krille
+    public void updatePassword(String userMail, User user){
+
         connect();
-        String query = "UPDATE account SET password = ? WHERE idUser = ?";
+        String query = "UPDATE account SET password = ? WHERE email = ?";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
-            preparedStmt.setString(1, user.getPassword()); //needs a setter in the user class?
-            preparedStmt.setInt(2, idUser);
+            preparedStmt.setString(1,user.getPassword()); //needs a setter in the user class?
+            preparedStmt.setString(2,userMail );
             preparedStmt.executeUpdate();
             System.out.println("Password updated!");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
-    */
 
-/*
-    public List<Movie> searchMovieByGenre(String genre) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE genre = '" + genre + "'";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-        System.out.println(movies);
-        return movies;
-    }
-
-    //krillepille
-    public List<Movie> getMovieTitle(String title) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE title LIKE '" + title + "%' ";
-        try {
-            PreparedStatement preparedStmt = connection.prepareStatement(query);
-            resultSet = preparedStmt.executeQuery();
-
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        System.out.println(movies);
-        disconnect(); //do for all!
-        return movies;
-    }*/
 
     //krille
-    public List<Account_Has_Movie> showRentals(int userid) {
+    public List<Account_Has_Movie> showRentals(int idUser) {
         connect();
         accMovies.clear();
-        String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" + userid + "'";
+        String query = "SELECT * FROM movie INNER JOIN account_has_movie WHERE account_idUser = '" + idUser + "'";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             resultSet = preparedStmt.executeQuery();
 
             while (resultSet.next()) {
-                Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
+                Account_Has_Movie accountHasMovie = new Account_Has_Movie(
+                        resultSet.getInt("movie_idMovie"),
+                        resultSet.getString("title"),
+                        resultSet.getString("director"),
+                        resultSet.getDouble("price"),
+                        Movie.getStringAsGenre(resultSet.getString("genre")),
+                        resultSet.getString("releaseYear"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getString("imagePath"),
+                        resultSet.getInt("rentalID"),
                         resultSet.getInt("account_idUser"),
                         resultSet.getInt("movie_idMovie"),
                         resultSet.getString("dateRented"),

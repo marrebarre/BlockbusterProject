@@ -1,6 +1,7 @@
 package scene.userMenu;
 
 import database.DbConnector;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -22,19 +23,13 @@ import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
     @FXML
-    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText;
+    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText, searchField, passwordText;
 
     @FXML
-    Button btnLogOut, updateBtn, btnSearch;
-
-    @FXML
-    Button sendReceiptBtn;
+    Button btnLogOut, updateBtn, btnSearch, sendReceiptBtn;
 
     @FXML
     private ComboBox<String> sortBox;
-
-    @FXML
-    private TextField searchField;
 
     @FXML
     public TilePane tilePaneBrowse, tilePaneMyRentals;
@@ -47,7 +42,6 @@ public class UserMenuController implements Initializable {
 
     @FXML
     private TreeView<String> faq;
-
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -70,7 +64,7 @@ public class UserMenuController implements Initializable {
 
     public void loadMyRentals() {
         tilePaneMyRentals.getChildren().clear();
-        dbConnector.loadRentals(tilePaneMyRentals);
+        logic.loadRentals(tilePaneMyRentals);
     }
 
     public void handleSearchBtn() {
@@ -127,13 +121,12 @@ public class UserMenuController implements Initializable {
             message.setSubject(emailTitle);
             messageBodyPart.setText(messageToBeSent);
             messageBodyPart = new MimeBodyPart();
-            String filename = "C:\\Users\\krill\\OneDrive\\Dokument\\GitHub\\BlockbusterProject\\BlockbusterProject\\Receipt.pdf";
+            String filename = "\\Receipt.pdf";
             DataSource source = new FileDataSource(filename);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(filename);
             multipart.addBodyPart(messageBodyPart);
             message.setContent(multipart);
-
             Transport transport = session.getTransport("smtp");
             transport.connect(host, ourEmail, ourEmailsPassword);
             transport.sendMessage(message, message.getAllRecipients());
@@ -148,11 +141,6 @@ public class UserMenuController implements Initializable {
             me.getMessage();
             me.printStackTrace();
         }
-    }
-
-    public void handleSortBox(/*ActionEvent event*/) {
-//?
-
     }
 
     public void settingsHandleUpdateBtn() {
@@ -176,6 +164,10 @@ public class UserMenuController implements Initializable {
         if (!phoneNumberText.getText().equals("") && !phoneNumberText.getText().equals(loggedInUser.getPhoneNr())) {
             loggedInUser.setPhoneNr(phoneNumberText.getText());
             dbConnector.updatePhoneNumber(loggedInUser.getIdUser(), loggedInUser);
+        }
+        if (!passwordText.getText().equals("") && !passwordText.getText().equals(loggedInUser.getPassword())) {
+            loggedInUser.setPassword(passwordText.getText());
+            dbConnector.updatePassword(loggedInUser.getEmail(), loggedInUser);
         }
     }
 
@@ -237,6 +229,7 @@ public class UserMenuController implements Initializable {
         emailText.setText(loggedInUser.getEmail());
         addressText.setText(loggedInUser.getAddress());
         phoneNumberText.setText(loggedInUser.getPhoneNr());
+        passwordText.setText(loggedInUser.getPassword());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         currentBalance.setText("Balance: " + df.format(loggedInUser.getBalance()) + "$");
         sortBox.getItems().add("Action");
@@ -268,5 +261,8 @@ public class UserMenuController implements Initializable {
                     break;
             }
         });
+    }
+
+    public void handleSortBox(ActionEvent actionEvent) {
     }
 }

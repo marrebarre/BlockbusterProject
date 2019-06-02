@@ -1,7 +1,7 @@
 package model;
 
 
-public class Account_Has_Movie {
+public class Account_Has_Movie extends Movie{
     private int rentalID;
     private int account_idUser;
     private int movie_idMovie;
@@ -9,6 +9,7 @@ public class Account_Has_Movie {
     private String estimatedReturnDate;
     private double fee;
     private boolean returned;
+
     private String title;
 
     public String getTitle() {
@@ -19,7 +20,10 @@ public class Account_Has_Movie {
         this.title = title;
     }
 
-    public Account_Has_Movie(int rentalID, int account_idUser, int movie_idMovie, String rented, String estimatedReturnDate, double fee, boolean returned) {
+
+    public Account_Has_Movie(int idMovie, String title, String director, double price, Genre genre, String releaseYear, int quantity, String imagePath, int rentalID, int account_idUser, int movie_idMovie, String rented, String estimatedReturnDate, double fee, boolean returned) {
+        super(idMovie, title, director, price, genre, releaseYear, quantity, imagePath);
+
         this.rentalID = rentalID;
         this.account_idUser = account_idUser;
         this.movie_idMovie = movie_idMovie;
