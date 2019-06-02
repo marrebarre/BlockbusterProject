@@ -381,7 +381,7 @@ public class DbConnector {
 
     public void loadRentals(TilePane tilePane) {
         connect();
-        String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ?";
+        String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ? AND returned = 0";
         ResultSet resultSetRental;
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
@@ -433,7 +433,6 @@ public class DbConnector {
             dataHandler(data, ps);
         } catch (SQLException e) {
             System.out.println("Something went wrong...");
-            e.printStackTrace();
         } finally {
             disconnect();
         }
@@ -606,7 +605,7 @@ public class DbConnector {
                         resultSet.getString("dateRented"),
                         resultSet.getString("estimatedDateOfReturned"),
                         resultSet.getDouble("fee"),
-                        resultSet.getInt("returned"));
+                        resultSet.getBoolean("returned"));
 
                 accMovies.add(accountHasMovie);
                 accMovies.toString().replace("[", "").replace("]", "");

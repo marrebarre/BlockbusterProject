@@ -26,14 +26,14 @@
                             <content>
                                 <AnchorPane>
                                     <children>
-                                        <Button fx:id="btnLogOut" layoutX="1164.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
-                                        <ComboBox fx:id="sortBox" layoutX="971.0" layoutY="16.0" prefHeight="34.0" prefWidth="164.0" promptText="Sort By Genre" />
-                                        <TextField fx:id="searchField" layoutX="29.0" layoutY="13.0" onAction="#handleSearchBtn" prefHeight="39.0" prefWidth="307.0">
+                                        <Button fx:id="btnLogOut" layoutX="1255.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
+                                        <ComboBox fx:id="sortBox" layoutX="971.0" layoutY="13.0" prefHeight="34.0" prefWidth="164.0" promptText="Sort By Genre" />
+                                        <TextField fx:id="searchField" layoutX="29.0" layoutY="9.0" onAction="#handleSearchBtn" prefHeight="39.0" prefWidth="307.0">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Button fx:id="btnSearch" layoutX="344.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchBtn" text="Search" />
+                                        <Button fx:id="btnSearch" layoutX="344.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleSearchBtn" text="Search" />
                                         <Label fx:id="lblWelcomeMessage" layoutX="449.0" layoutY="19.0" prefHeight="30.0" prefWidth="522.0" textFill="white">
                                             <font>
                                                 <Font size="20.0" />
@@ -51,7 +51,7 @@
                                                 </TilePane>
                                             </content>
                                         </ScrollPane>
-                                        <Label fx:id="currentBalance" layoutX="804.0" layoutY="24.0" textFill="white">
+                                        <Label fx:id="currentBalance" layoutX="804.0" layoutY="20.0" textFill="white">
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -77,6 +77,7 @@
                                     </TilePane>
                                  </content>
                               </ScrollPane>
+                              <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
                              <Button fx:id="sendReceiptBtn" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" />
                            </children></AnchorPane>
                             </content>
@@ -86,38 +87,34 @@
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
                                     <children>
-                                        <TextField fx:id="firstNameText" layoutX="370.0" layoutY="227.0" prefHeight="25.0" prefWidth="174.0" promptText="First name" />
-                                        <TextField fx:id="lastNameText" layoutX="370.0" layoutY="258.0" prefHeight="25.0" prefWidth="174.0" promptText="Last name" />
+                                        <TextField fx:id="firstNameText" layoutX="370.0" layoutY="258.0" prefHeight="25.0" prefWidth="72.0" promptText="First name" />
+                                        <TextField fx:id="lastNameText" layoutX="449.0" layoutY="258.0" prefHeight="25.0" prefWidth="95.0" promptText="Last name" />
                                         <TextField fx:id="emailText" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
                                         <TextField fx:id="addressText" layoutX="370.0" layoutY="324.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
                                         <TextField fx:id="phoneNumberText" layoutX="370.0" layoutY="357.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
-                                        <Button fx:id="updateBtn" layoutX="370.0" layoutY="388.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Update information" />
+                                        <Button fx:id="updateBtn" layoutX="370.0" layoutY="390.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Confirm changes" />
                                         <TreeView fx:id="faq" layoutX="695.0" layoutY="78.0" prefHeight="563.0" prefWidth="855.0" />
-                              <Label layoutX="289.0" layoutY="227.0" text="First name" textFill="WHITE">
+                              <Label layoutX="290.0" layoutY="258.0" text="Name" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="289.0" layoutY="258.0" text="Last name" textFill="WHITE">
+                              <Label layoutX="290.0" layoutY="292.0" text="E-mail" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="292.0" text="E-mail" textFill="WHITE">
+                              <Label layoutX="290.0" layoutY="325.0" text="Address" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="325.0" text="Address" textFill="WHITE">
+                              <Label layoutX="290.0" layoutY="357.0" text="Phone" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="357.0" text="Phone" textFill="WHITE">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Label>
+                              <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
                                     </children>
                                 </AnchorPane>
 
