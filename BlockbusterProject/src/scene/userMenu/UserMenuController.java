@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 public class UserMenuController implements Initializable {
     @FXML
-    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText;
+    private TextField firstNameText, lastNameText, emailText, addressText, phoneNumberText,passwordText;
 
     @FXML
     Button btnLogOut, updateBtn, btnSearch;
@@ -177,6 +177,10 @@ public class UserMenuController implements Initializable {
             loggedInUser.setPhoneNr(phoneNumberText.getText());
             dbConnector.updatePhoneNumber(loggedInUser.getIdUser(), loggedInUser);
         }
+        if (!passwordText.getText().equals("") && !passwordText.getText().equals(loggedInUser.getPassword())) {
+            loggedInUser.setPassword(passwordText.getText());
+            dbConnector.updatePassword(loggedInUser.getEmail(), loggedInUser);
+        }
     }
 
     private void sortByGenre(String genre) {
@@ -237,6 +241,7 @@ public class UserMenuController implements Initializable {
         emailText.setText(loggedInUser.getEmail());
         addressText.setText(loggedInUser.getAddress());
         phoneNumberText.setText(loggedInUser.getPhoneNr());
+        passwordText.setText(loggedInUser.getPassword());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         currentBalance.setText("Balance: " + df.format(loggedInUser.getBalance()) + "$");
         sortBox.getItems().add("Action");
