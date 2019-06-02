@@ -89,34 +89,40 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TextField fx:id="firstNameText" layoutX="370.0" layoutY="258.0" prefHeight="25.0" prefWidth="72.0" promptText="First name" />
-                                        <TextField fx:id="lastNameText" layoutX="449.0" layoutY="258.0" prefHeight="25.0" prefWidth="95.0" promptText="Last name" />
-                                        <TextField fx:id="emailText" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
-                                        <TextField fx:id="addressText" layoutX="370.0" layoutY="324.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
-                                        <TextField fx:id="phoneNumberText" layoutX="370.0" layoutY="357.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
-                                        <Button fx:id="updateBtn" layoutX="370.0" layoutY="390.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Confirm changes" />
+                                        <TextField fx:id="firstNameText" layoutX="370.0" layoutY="233.0" prefHeight="25.0" prefWidth="72.0" promptText="First name" />
+                                        <TextField fx:id="lastNameText" layoutX="451.0" layoutY="233.0" prefHeight="25.0" prefWidth="95.0" promptText="Last name" />
+                                        <TextField fx:id="emailText" layoutX="371.0" layoutY="266.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
+                                        <TextField fx:id="addressText" layoutX="371.0" layoutY="326.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
+                                        <TextField fx:id="phoneNumberText" layoutX="371.0" layoutY="358.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
+                                        <Button fx:id="updateBtn" layoutX="370.0" layoutY="406.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Confirm changes" />
                                         <TreeView fx:id="faq" layoutX="695.0" layoutY="78.0" prefHeight="563.0" prefWidth="855.0" />
-                              <Label layoutX="290.0" layoutY="258.0" text="Name" textFill="#faab04">
+                              <Label layoutX="291.0" layoutY="233.0" text="Name" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="292.0" text="E-mail" textFill="#faab04">
+                              <Label layoutX="290.0" layoutY="266.0" text="E-mail" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="325.0" text="Address" textFill="#faab04">
+                              <Label layoutX="284.0" layoutY="326.0" text="Address" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="290.0" layoutY="357.0" text="Phone" textFill="#faab04">
+                              <Label layoutX="290.0" layoutY="358.0" text="Phone" textFill="#faab04">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
                               </Label>
                               <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
+                              <TextField fx:id="passwordText" layoutX="370.0" layoutY="297.0" prefHeight="25.0" prefWidth="178.0" promptText="Password" />
+                              <Label layoutX="279.0" layoutY="297.0" text="Password">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
                                     </children>
                                 </AnchorPane>
                             </content>
