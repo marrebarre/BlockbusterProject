@@ -22,7 +22,6 @@
     -fx-pref-height: 40;
     -fx-text-fill: #faab04;
     -fx-font-weight: bold;
-
 }
 
 #forgotPW{
@@ -62,8 +61,6 @@
     -fx-pref-width: 175;
     -fx-pref-height: 40;
 }
-
-
 
 .tab:hover{
     -fx-background-color:
@@ -155,7 +152,6 @@
     -fx-base: rgb(0,0,0,0);
     -fx-background-color:
         linear-gradient( to top, derive(-fx-color, 35.77966101694915%) 0%, derive(-fx-color, 10.05084745762713%) 50%, derive(-fx-color, -8.559322033898283%) 50.5%, derive(-fx-color, -30.0%) 100%);
-
     -fx-background-color: rgba(0,0,0,.75);
     -fx-border-color: gray;
     -fx-border-width: 1 1 0 0;

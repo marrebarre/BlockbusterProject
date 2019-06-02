@@ -219,14 +219,13 @@ public class Logic {
 
     public  void pdf(){
         com.itextpdf.text.Document document = new Document();
-
         try
         {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
             document.open();
             document.add(new Paragraph("Receipt of Rentals"));
             String rentals = String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()));
-            document.add(new Paragraph(String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()))));
+            document.add(new Paragraph(String.valueOf(rentals)));
             document.close();
             writer.close();
         } catch (DocumentException e) {
