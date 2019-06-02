@@ -1,20 +1,28 @@
 package database;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import model.Account_Has_Movie;
+import javafx.stage.Stage;
 import model.Admin;
 import model.Movie;
 import model.User;
 import scene.rentPopup.RentPopupController;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static model.Logic.alert;
+import static scene.rentPopup.RentPopupController.movieToRent;
 import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
@@ -23,6 +31,20 @@ public class DbConnector {
     public ResultSet resultSet;
     public List<User> users = new ArrayList<>();
     public List<Admin> admins = new ArrayList<>();
+    private static final String ACCOUNT_SID = "AC0eb02f6d7980e28e685a99eb1e6dfbb3";
+    private static final String AUTH_TOKEN = "7196be33b314fe016e8ac0e0ed7495e2";
+    public static boolean verify = true;
+
+    private static boolean isVerify() {
+        return verify;
+    }
+
+    public static void setVerify(boolean verify) {
+        DbConnector.verify = verify;
+    }
+
+    private Date estDateReturned;
+
     public List<Movie> movies = new ArrayList<>();
     private List<Account_Has_Movie> accMovies = new ArrayList<>();
 
@@ -48,43 +70,107 @@ public class DbConnector {
         }
     }
 
-    public void addRental(Movie selectedMovie, Date dateRented, Date dateReturned) {
+    public void addRental(Movie chosenMovie, Date dateRented, Date dateReturned, ActionEvent event) {
         String SQLQuery = "INSERT INTO `account_has_movie` (account_idUser, movie_idMovie, dateRented, estimatedDateOfReturned, fee, returned) VALUES (?,?,?,?,?,?)";
-        connect();
+        setVerify(true);
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            ps.setInt(1, loggedInUser.getIdUser());
-            ps.setInt(2, selectedMovie.getIdMovie());
-            ps.setDate(3, dateRented);
-            ps.setDate(4, dateReturned);
-            ps.setDouble(5, selectedMovie.getPrice());
-            ps.setBoolean(6, false);
-            ps.executeUpdate();
-            alert("Successfully rented movie!", Alert.AlertType.INFORMATION);
+            estDateReturned = dateReturned;
+
+            if (isVerify() == true) {
+                movieStockHandler();
+            }
+            if (isVerify() == true) {
+                economyHandler();
+            }
+            if (isVerify() == true) {
+                ps.setInt(1, loggedInUser.getIdUser());
+                ps.setInt(2, movieToRent.getIdMovie());
+                ps.setDate(3, dateRented);
+                ps.setDate(4, dateReturned);
+                ps.setDouble(5, movieToRent.getPrice());
+                ps.setBoolean(6, false);
+                ps.executeUpdate();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.close();
+            }
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
-        } finally {
-            disconnect();
         }
     }
 
-/*  // TODO av Max
-    public void movieStockHandler(Movie selectedMovie){
-        String SQLQuery = "UPDATE movie SET quantity WHERE idMovie = ?";
-        connect();
+    public void textMessageHandler() throws SQLException {
+        //System.out.println("Pre textHandler; " + isVerify());
+        if (isVerify() == true) {
+            String SQLQuery = "SELECT * FROM account_has_movie WHERE account_idUser = ?";
+            connect();
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            ps.setInt(1, loggedInUser.getIdUser());
+
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+            Message message = Message
+                    .creator(new PhoneNumber("+46734453860"), // to
+                            new PhoneNumber("+12018066425"), // from
+                            "Hello " + loggedInUser.getFirstName() + "!" +
+                                    "\nYou just rented " + movieToRent.getTitle() + "." +
+                                    "\nReturn expected " + estDateReturned.toString() + "." +
+                                    "\nBest regards," +
+                                    "\nBustblockers")
+                    .create();
+            System.out.println(message.getSid());
+        }
+    }
+
+    private void economyHandler() {
+        //System.out.println("Pre economyHandler verified: " + isVerify());
+        String SQLQuery = "UPDATE account INNER JOIN movie SET balance = ? WHERE idUser = ?";
+        //System.out.println("Movie price: " + movieToRent.getPrice());
+        //System.out.println("Pre: " + loggedInUser.getBalance());
         try {
             PreparedStatement ps = connection.prepareStatement(SQLQuery);
-            *//*ps.setInt(1, selectedMovie.getQuantity());*//*
-            ps.executeUpdate();
-            alert("Movie successfully subtracted from quantity!", Alert.AlertType.INFORMATION);
+            if (loggedInUser.getBalance() < movieToRent.getPrice()) {
+                System.out.println("Insufficient funds");
+                setVerify(false);
+            } else if (loggedInUser.getBalance() >= movieToRent.getPrice()) {
+                loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+                //System.out.println("Post: " + loggedInUser.getBalance());
+                ps.setDouble(1, loggedInUser.getBalance());
+                ps.setInt(2, loggedInUser.getIdUser());
+                ps.executeUpdate();
+                System.out.println("Sufficient funds on user account");
+            }
+        } catch (Exception e) {
+            System.out.println("Banking error");
+            e.printStackTrace();
+        }
+    }
+
+    private void movieStockHandler() {
+        //System.out.println("Pre stockHandler: " + isVerify());
+        String SQLQuery = "UPDATE movie SET quantity = ? WHERE idMovie = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(SQLQuery);
+            if (movieToRent.getQuantity() <= 0 || loggedInUser.getBalance() < movieToRent.getPrice()) {
+                if (movieToRent.getQuantity() <= 0) {
+                    alert("Out of stock", Alert.AlertType.WARNING);
+                    setVerify(false);
+                } else if (loggedInUser.getBalance() < movieToRent.getPrice()) {
+                    alert("Balance insufficient", Alert.AlertType.WARNING);
+                    setVerify(false);
+                }
+            } else if ((loggedInUser.getBalance() >= movieToRent.getPrice()) && movieToRent.getQuantity() > 0) {
+                movieToRent.setQuantity(movieToRent.getQuantity() - 1);
+                ps.setInt(1, movieToRent.getQuantity());
+                ps.setInt(2, movieToRent.getIdMovie());
+                ps.executeUpdate();
+                alert("Movie successfully subtracted from quantity!", Alert.AlertType.CONFIRMATION);
+            }
         } catch (SQLException e) {
             System.out.println("Error when loading to database");
             e.printStackTrace();
-        } finally {
-            disconnect();
         }
-    }*/
+    }
 
     public int tableSizeMovie() {
         connect();
@@ -93,7 +179,6 @@ public class DbConnector {
             System.out.println("tableSizeMovie tracker1");
             PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
             resultSet = ps.executeQuery();
-
             if (resultSet.next()) {
                 temp = resultSet.getString("COUNT(idMovie)");
             }
@@ -148,6 +233,13 @@ public class DbConnector {
         return movie;
     }
 
+    public void retrieveCurrentBalance() throws SQLException {
+        connect();
+        PreparedStatement ps = connection.prepareStatement("SELECT balance FROM account WHERE idUser = ?");
+        ps.setInt(1, loggedInUser.getIdUser());
+        ps.execute();
+    }
+
     public void addMovieToDB(Movie movie) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO `movie`(idMovie, title, director, price, genre, releaseYear, quantity, imagePath) VALUES (?,?,?,?,?,?,?,?)");
@@ -159,7 +251,6 @@ public class DbConnector {
             ps.setString(6, movie.getReleaseYear());
             ps.setInt(7, movie.getQuantity());
             ps.setString(8, movie.getImagePath());
-
             ps.executeUpdate();
             alert("Successfully added movie!", Alert.AlertType.INFORMATION);
         } catch (SQLException e) {
@@ -195,20 +286,7 @@ public class DbConnector {
         connect();
         try {
             PreparedStatement ps = connection.prepareStatement("UPDATE " + table + " SET " + column + " = ? WHERE " + idNameInTable + " = " + id);
-            if (newData instanceof String) {
-                String temp = (String) newData;
-                ps.setString(1, temp);
-            } else if (newData instanceof Integer) {
-                int temp = (Integer) newData;
-                ps.setInt(1, temp);
-            } else if (newData instanceof Double) {
-                Double temp = (Double) newData;
-                ps.setDouble(1, temp);
-            } else if (newData instanceof Boolean) {
-                Boolean temp = (Boolean) newData;
-                ps.setBoolean(1, temp);
-            }
-            ps.executeUpdate();
+            dataHandler(newData, ps);
         } catch (SQLException e) {
             System.out.println("Could not update " + column);
             e.printStackTrace();
@@ -276,7 +354,6 @@ public class DbConnector {
         connect();
         User user = null;
         String query = "SELECT * FROM account WHERE idUser = ?";
-
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, i);
@@ -352,23 +429,8 @@ public class DbConnector {
         connect();
         try {
             String query = "UPDATE " + table + " SET " + column + " = ? WHERE " + idNameTable + " = " + iduser;
-
             PreparedStatement ps = connection.prepareStatement(query);
-            if (data instanceof String) {
-                String temp = (String) data;
-                ps.setString(1, temp);
-            } else if (data instanceof Integer) {
-                int temp = (Integer) data;
-                ps.setInt(1, temp);
-            } else if (data instanceof Double) {
-                Double temp = (Double) data;
-                ps.setDouble(1, temp);
-            } else if (data instanceof Boolean) {
-                Boolean temp = (Boolean) data;
-                ps.setBoolean(1, temp);
-            }
-            ps.executeUpdate();
-
+            dataHandler(data, ps);
         } catch (SQLException e) {
             System.out.println("Something went wrong...");
             e.printStackTrace();
@@ -377,7 +439,24 @@ public class DbConnector {
         }
     }
 
-    public void updateFirstName(int idUser, User user){
+    private <T> void dataHandler(T data, PreparedStatement ps) throws SQLException {
+        if (data instanceof String) {
+            String temp = (String) data;
+            ps.setString(1, temp);
+        } else if (data instanceof Integer) {
+            int temp = (Integer) data;
+            ps.setInt(1, temp);
+        } else if (data instanceof Double) {
+            Double temp = (Double) data;
+            ps.setDouble(1, temp);
+        } else if (data instanceof Boolean) {
+            Boolean temp = (Boolean) data;
+            ps.setBoolean(1, temp);
+        }
+        ps.executeUpdate();
+    }
+
+    public void updateFirstName(int idUser, User user) {
         connect();
         String query = "UPDATE account SET firstName = ? WHERE idUser = ?";
         try {
@@ -393,7 +472,7 @@ public class DbConnector {
         }
     }
 
-    public void updateLastName(int idUser, User user){
+    public void updateLastName(int idUser, User user) {
         connect();
         String query = "UPDATE account SET lastName = ? WHERE idUser = ?";
         try {
@@ -407,7 +486,7 @@ public class DbConnector {
         }
     }
 
-    public void updateEmail(int idUser, User user){
+    public void updateEmail(int idUser, User user) {
         connect();
         String query = "UPDATE account SET email = ? WHERE idUser = ?";
         try {
@@ -421,7 +500,7 @@ public class DbConnector {
         }
     }
 
-    public void updateAddress(int idUser, User user){
+    public void updateAddress(int idUser, User user) {
         connect();
         String query = "UPDATE account SET address = ? WHERE idUser = ?";
         try {
@@ -435,7 +514,7 @@ public class DbConnector {
         }
     }
 
-    public void updatePhoneNumber(int idUser, User user){
+    public void updatePhoneNumber(int idUser, User user) {
         connect();
         String query = "UPDATE account SET phoneNr = ? WHERE idUser = ?";
         try {
@@ -449,8 +528,10 @@ public class DbConnector {
         }
     }
 
+
     //krille
     public void updatePassword(String userMail, User user){
+
         connect();
         String query = "UPDATE account SET password = ? WHERE email = ?";
         try {
@@ -465,81 +546,34 @@ public class DbConnector {
     }
 
 
-
-/*
-    public List<Movie> searchMovieByGenre(String genre) {
+    //krille
+    public List<Account_Has_Movie> showRentals(int userid) {
         connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE genre = '" + genre + "'";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
-
-            }
-        } catch (SQLException s) {
-            s.printStackTrace();
-        }
-        System.out.println(movies);
-        return movies;
-    }
-
-    //krillepille
-    public List<Movie> getMovieTitle(String title) {
-        connect();
-        movies.clear();
-        String query = "SELECT title FROM movie WHERE title LIKE '" + title + "%' ";
+        accMovies.clear();
+        String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" + userid + "'";
         try {
             PreparedStatement preparedStmt = connection.prepareStatement(query);
             resultSet = preparedStmt.executeQuery();
 
             while (resultSet.next()) {
-                Movie movie = new Movie(0, "", "", 0, Movie.Genre.Action, "", 0, "");
-                movie.setTitle(resultSet.getString(1));
-                movies.add(movie);
+                Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
+                        resultSet.getInt("account_idUser"),
+                        resultSet.getInt("movie_idMovie"),
+                        resultSet.getString("dateRented"),
+                        resultSet.getString("estimatedDateOfReturned"),
+                        resultSet.getDouble("fee"),
+                        resultSet.getInt("returned"));
+
+                accMovies.add(accountHasMovie);
+                accMovies.toString().replace("[", "").replace("]", "");
 
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println(ex.getMessage());
             ex.printStackTrace();
         }
-        System.out.println(movies);
+        System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
         disconnect(); //do for all!
-        return movies;
-    }*/
-
-//krille
-  public List<Account_Has_Movie> showRentals(int userid) {
-    connect();
-    accMovies.clear();
-    String query = "SELECT * FROM account_has_movie WHERE account_idUser = '" +userid+"'";
-    try {
-        PreparedStatement preparedStmt = connection.prepareStatement(query);
-        resultSet = preparedStmt.executeQuery();
-
-        while (resultSet.next()) {
-            Account_Has_Movie accountHasMovie = new Account_Has_Movie(resultSet.getInt("rentalID"),
-                    resultSet.getInt("account_idUser"),
-                    resultSet.getInt("movie_idMovie"),
-                    resultSet.getString("dateRented"),
-                    resultSet.getString("estimatedDateOfReturned"),
-                    resultSet.getDouble("fee"),
-                    resultSet.getInt("returned"));
-
-            accMovies.add(accountHasMovie);
-            accMovies.toString().replace("[","").replace("]","");
-
-        }
-    } catch (SQLException | NullPointerException ex) {
-        System.out.println(ex.getMessage());
-        ex.printStackTrace();
+        return accMovies;
     }
-    System.out.println(accMovies.toString().substring(1, accMovies.toString().length() - 1));
-    disconnect(); //do for all!
-    return accMovies;
-}
-
 }

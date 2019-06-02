@@ -1,9 +1,34 @@
 package model;
 
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import javafx.scene.control.Alert;
+import scene.rentPopup.RentPopupController;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
+import javafx.util.Duration;
+import scene.rentPopup.RentPopupController;
+
 import database.DbConnector;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -12,19 +37,18 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import scene.rentPopup.RentPopupController;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 
+import static java.lang.Math.random;
 import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class Logic {
@@ -49,19 +73,61 @@ public class Logic {
         try {
             Parent parent1 = FXMLLoader.load(getClass().getResource(addressForFXML));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(parent1);
-            stage.setMaximized(maximizeScene);
-            if (maximizeScene){
-                setToFullscreen(stage);
-            }
+            Scene scene = new Scene(parent1,600,400);
             stage.setScene(scene);
+
+            /*Group root = new Group();
+            Group circles = new Group();
+            for (int i = 0; i < 30; i++) {
+                Circle circle = new Circle(150, Color.web("white", 0.05));
+                circle.setStrokeType(StrokeType.OUTSIDE);
+                circle.setStroke(Color.web("white", 0.16));
+                circle.setStrokeWidth(4);
+                circles.getChildren().add(circle);
+            }
+            Rectangle colors = new Rectangle(scene.getWidth(), scene.getHeight(),
+                    new LinearGradient(0f, 1f, 1f, 0f, true, CycleMethod.NO_CYCLE, new Stop(0, Color.web("#f8bd55")),
+                            new Stop(0.14, Color.web("#c0fe56")),
+                            new Stop(0.28, Color.web("#5dfbc1")),
+                            new Stop(0.43, Color.web("#64c2f8")),
+                            new Stop(0.57, Color.web("#be4af7")),
+                            new Stop(0.71, Color.web("#ed5fc2")),
+                            new Stop(0.85, Color.web("#ef504c")),
+                            new Stop(1, Color.web("#f2660f"))));
+            colors.widthProperty().bind(scene.widthProperty());
+            colors.heightProperty().bind(scene.heightProperty());
+            Group blendModeGroup =
+                    new Group(new Group(new Rectangle(scene.getWidth(), scene.getHeight(),
+                            Color.BLACK), circles), colors);
+            colors.setBlendMode(BlendMode.OVERLAY);
+            root.getChildren().add(blendModeGroup);
+            circles.setEffect(new BoxBlur(10, 10, 3));
+            Timeline timeline = new Timeline();
+            for (Node circle : circles.getChildren()) {
+                timeline.getKeyFrames().addAll(
+                        new KeyFrame(Duration.ZERO, // set start position at 0
+                                new KeyValue(circle.translateXProperty(), random() * 800),
+                                new KeyValue(circle.translateYProperty(), random() * 600)),
+                        new KeyFrame(new Duration(40000), // set end position at 40s
+                                new KeyValue(circle.translateXProperty(), random() * 800),
+                                new KeyValue(circle.translateYProperty(), random() * 600)));
+            }
+            // play 40s of animation
+            timeline.play();*/
+            if (maximizeScene) {
+                setToFullscreen(stage);
+                stage.setMaximized(maximizeScene);
+            }else{
+                stage.setMaximized(maximizeScene);
+            }
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void openSceneInNewWindow(String fxmlPath ,String title){
+
+    public void openSceneInNewWindow(String fxmlPath, String title) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource(fxmlPath));
@@ -75,7 +141,7 @@ public class Logic {
         }
     }
 
-    public void loadBrowsePageData(String query, TilePane tilePane){
+    public void loadBrowsePageData(String query, TilePane tilePane) {
         dbConnector.connect();
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement(query);
@@ -117,8 +183,26 @@ public class Logic {
             dbConnector.disconnect();
         }
     }
+
+    public static final String ACCOUNT_SID = "AC6f314e8681deaa0ae4d82eaf59876daa";
+    public static final String AUTH_TOKEN = "79be81f419784528cdb25a38226909df";
+
+    public static void textMessageHandler() {
+
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message
+                .creator(new PhoneNumber("+46734453860"), // to
+                        new PhoneNumber("+46769448476"), // from
+                        "Test text")
+                .create();
+
+        System.out.println(message.getSid());
+    }
+
     public  void pdf(){
-        Document document = new Document();
+        com.itextpdf.text.Document document = new Document();
+
         try
         {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("Receipt.pdf"));
@@ -128,14 +212,13 @@ public class Logic {
             document.add(new Paragraph(String.valueOf(dbConnector.showRentals(loggedInUser.getIdUser()))));
             document.close();
             writer.close();
-        } catch (DocumentException e)
-        {
+        } catch (DocumentException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
+
     // krille - work in progress
     public static String generatePassword(){
         int n = 8 ;
@@ -143,6 +226,7 @@ public class Logic {
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 + "0123456789"
                 + "abcdefghijklmnopqrstuvxyz";
+
 
         // create StringBuffer size of AlphaNumericString
         StringBuilder sb = new StringBuilder(n);

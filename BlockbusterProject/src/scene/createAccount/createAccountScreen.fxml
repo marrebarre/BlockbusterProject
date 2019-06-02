@@ -6,58 +6,63 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.createAccount.CreateAccountController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.createAccount.CreateAccountController">
    <children>
-      <Button fx:id="registerBtn" layoutX="118.0" layoutY="393.0" mnemonicParsing="false" onAction="#registerPressed" prefHeight="49.0" prefWidth="131.0" text="Register">
+      <Button fx:id="registerBtn" layoutX="122.0" layoutY="309.0" mnemonicParsing="false" onAction="#registerPressed" prefHeight="49.0" prefWidth="131.0" text="Register">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="backToLoginbtn" layoutX="1047.0" layoutY="634.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="49.0" prefWidth="174.0" text="Back to login &gt;&gt;" />
-      <TextField fx:id="firstNametxtField" layoutX="125.0" layoutY="130.0" prefHeight="25.0" prefWidth="140.0" promptText="First Name" />
-      <TextField fx:id="lastNametxtField" layoutX="279.0" layoutY="130.0" prefHeight="25.0" prefWidth="140.0" promptText="Last Name" />
-      <TextField fx:id="emailtxtField" layoutX="124.0" layoutY="166.0" prefHeight="25.0" prefWidth="297.0" promptText="E-mail Address" />
-      <TextField fx:id="passwordtxtField" layoutX="124.0" layoutY="204.0" prefHeight="25.0" prefWidth="297.0" promptText="Password" />
-      <TextField fx:id="addresstxtField" layoutX="124.0" layoutY="241.0" prefHeight="25.0" prefWidth="297.0" promptText="Address" />
-      <TextField fx:id="phonetxtField" layoutX="124.0" layoutY="276.0" prefHeight="25.0" prefWidth="297.0" promptText="Phone Number" />
-      <Label fx:id="successLabel" layoutX="125.0" layoutY="467.0" prefHeight="21.0" prefWidth="96.0" textFill="#00ff0d">
+      <Button fx:id="backToLoginbtn" layoutX="298.0" layoutY="309.0" mnemonicParsing="false" onAction="#backToLogin" prefHeight="49.0" prefWidth="174.0" text="Back to login &gt;&gt;" />
+      <TextField fx:id="firstNametxtField" layoutX="123.0" layoutY="60.0" prefHeight="25.0" prefWidth="140.0" promptText="First Name" />
+      <TextField fx:id="lastNametxtField" layoutX="277.0" layoutY="60.0" prefHeight="25.0" prefWidth="140.0" promptText="Last Name" />
+      <TextField fx:id="emailtxtField" layoutX="122.0" layoutY="96.0" prefHeight="25.0" prefWidth="297.0" promptText="E-mail Address" />
+      <TextField fx:id="passwordtxtField" layoutX="122.0" layoutY="134.0" prefHeight="25.0" prefWidth="297.0" promptText="Password" />
+      <TextField fx:id="addresstxtField" layoutX="122.0" layoutY="171.0" prefHeight="25.0" prefWidth="297.0" promptText="Address" />
+      <TextField fx:id="phonetxtField" layoutX="122.0" layoutY="206.0" prefHeight="25.0" prefWidth="297.0" promptText="Phone Number" />
+      <Label fx:id="successLabel" layoutX="123.0" layoutY="282.0" prefHeight="21.0" prefWidth="96.0" textFill="#00ff0d">
          <font>
             <Font name="SansSerif Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="firstNameError" layoutX="107.0" layoutY="130.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+      <Label fx:id="firstNameError" layoutX="105.0" layoutY="60.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="emailError" layoutX="107.0" layoutY="166.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+      <Label fx:id="emailError" layoutX="105.0" layoutY="96.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="passwordError" layoutX="107.0" layoutY="204.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+      <Label fx:id="passwordError" layoutX="105.0" layoutY="134.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="addressError" layoutX="107.0" layoutY="241.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+      <Label fx:id="addressError" layoutX="105.0" layoutY="171.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="phoneError" layoutX="107.0" layoutY="276.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+      <Label fx:id="phoneError" layoutX="105.0" layoutY="206.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="lastNameError" layoutX="267.0" layoutY="130.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
+      <Label fx:id="lastNameError" layoutX="265.0" layoutY="60.0" prefHeight="17.0" prefWidth="11.0" text="*" textFill="RED" visible="false">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Label fx:id="unfilledError" layoutX="120.0" layoutY="323.0" prefHeight="37.0" prefWidth="258.0" textFill="RED">
+      <Label fx:id="unfilledError" layoutX="116.0" layoutY="241.0" prefHeight="37.0" prefWidth="258.0" textFill="WHITE">
          <font>
             <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="122.0" text="Create Account" textFill="WHITE">
+         <font>
+            <Font size="32.0" />
          </font>
       </Label>
    </children>

@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -69,8 +70,15 @@ public class CreateAccountController {
         if (phonetxtField.getText().isEmpty()) {
             unfilledError.setText("All fields with * must be filled");
             phoneError.setVisible(true);
+        }
+        if(!emailtxtField.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Validate Email");
+            alert.setContentText("Please enter vaild Email");
+            alert.showAndWait();
+            emailError.setVisible(true);
         } else if (!firstNametxtField.getText().isEmpty() && !lastNametxtField.getText().isEmpty() && !emailtxtField.getText().isEmpty() &&
-                !passwordtxtField.getText().isEmpty() && !addresstxtField.getText().isEmpty() && !phonetxtField.getText().isEmpty()) {
+                !passwordtxtField.getText().isEmpty() && !addresstxtField.getText().isEmpty() && !phonetxtField.getText().isEmpty() && emailtxtField.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")) {
             dbConnector.connect();
             try {
                 User user = new User(emailtxtField.getText(), passwordtxtField.getText(), false, firstNametxtField.getText(),

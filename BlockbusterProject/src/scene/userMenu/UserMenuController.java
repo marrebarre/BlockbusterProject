@@ -1,7 +1,6 @@
 package scene.userMenu;
 
 import database.DbConnector;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
@@ -11,17 +10,15 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Screen;
 import model.Logic;
 import model.User;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.net.URL;
-import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
 
 public class UserMenuController implements Initializable {
     @FXML
@@ -32,6 +29,7 @@ public class UserMenuController implements Initializable {
 
     @FXML
     Button sendReceiptBtn;
+
     @FXML
     private ComboBox<String> sortBox;
 
@@ -45,15 +43,16 @@ public class UserMenuController implements Initializable {
     ScrollPane scrollPane, scrollPaneMyRentals;
 
     @FXML
-    Label lblWelcomeMessage;
+    public Label lblWelcomeMessage, currentBalance;
 
     @FXML
-    private TreeView faq;
+    private TreeView<String> faq;
 
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
     public static User loggedInUser;
+    public static DecimalFormat df = new DecimalFormat("0.00");
 
     private static String ourEmail = "thebustblocker1@gmail.com";  // Mail-name
     private static String ourEmailsPassword = "Buster!321"; // Mail password (Maybe make one just for this project team
@@ -74,26 +73,26 @@ public class UserMenuController implements Initializable {
         dbConnector.loadRentals(tilePaneMyRentals);
     }
 
-    public void handleSearchBtn(/*ActionEvent event*/) /*throws FileNotFoundException */ {
+    public void handleSearchBtn() {
         tilePaneBrowse.getChildren().clear();
         searchByTitle(searchField.getText());
     }
 
-    private void loadBrowse() {
+    public void loadBrowse() {
         tilePaneBrowse.getChildren().clear();
         String SQLQuery = "SELECT * FROM movie";
         logic.loadBrowsePageData(SQLQuery, tilePaneBrowse);
     }
 
+
     @FXML //krille
-    private void handleSendReceipt(ActionEvent event) {
+    private void handleSendReceipt() {
         logic.pdf();
         String recipent = loggedInUser.getEmail(); // instead loggedInUser.getEmail();
         String mess = "Here is your receipt";
 
         String recipientEmailString = recipent;
         String messageToBeSent = mess;
-
 
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
@@ -119,7 +118,6 @@ public class UserMenuController implements Initializable {
             for (int i = 0; i < recipientEmail.length; i++) {
                 toAddress[i] = new InternetAddress(recipientEmail[i]);
             }
-
             for (int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
@@ -142,22 +140,23 @@ public class UserMenuController implements Initializable {
             System.out.println("email sent");
             transport.close();
         } catch (AddressException ae) {
-            System.out.println( "address Exception");
+            System.out.println("address Exception");
             ae.getMessage();
             ae.printStackTrace();
         } catch (MessagingException me) {
-            System.out.println( "Message Exception");
+            System.out.println("Message Exception");
             me.getMessage();
             me.printStackTrace();
         }
-
     }
 
     public void handleSortBox(/*ActionEvent event*/) {
 //?
+
     }
 
-    public void settingsHandleUpdateBtn() throws SQLException {
+    public void settingsHandleUpdateBtn() {
+
         if (!firstNameText.getText().equals("") && !firstNameText.getText().equals(loggedInUser.getFirstName())) {
             loggedInUser.setFirstName(firstNameText.getText());
             dbConnector.updateFirstName(loggedInUser.getIdUser(), loggedInUser);
@@ -195,38 +194,37 @@ public class UserMenuController implements Initializable {
     }
 
     private void treeview() {
-        TreeItem rootItem = new TreeItem("FAQ's");
-        TreeItem q1 = new TreeItem("ABOUT US");
-        TreeItem q2 = new TreeItem("IS IT FREE?");
-        TreeItem q3 = new TreeItem("WHAT DOES THIS SERVICE OFFER?");
-        TreeItem q4 = new TreeItem("PAYMENTS?");
-        TreeItem q5 = new TreeItem("HOW DO I GET THE MOVIE/S?");
-        TreeItem q6 = new TreeItem("RETURN POLICIES?");
-        TreeItem q7 = new TreeItem("FORGOT MY PASSWORD?");
+        TreeItem<String> rootItem = new TreeItem<>("FAQ's");
+        TreeItem<String> q1 = new TreeItem<>("ABOUT US");
+        TreeItem<String> q2 = new TreeItem<>("IS IT FREE?");
+        TreeItem<String> q3 = new TreeItem<>("WHAT DOES THIS SERVICE OFFER?");
+        TreeItem<String> q4 = new TreeItem<>("PAYMENTS?");
+        TreeItem<String> q5 = new TreeItem<>("HOW DO I GET THE MOVIE/S?");
+        TreeItem<String> q6 = new TreeItem<>("RETURN POLICIES?");
+        TreeItem<String> q7 = new TreeItem<>("FORGOT MY PASSWORD?");
 
         faq.setRoot(rootItem);
         rootItem.getChildren().addAll(q1, q2, q3, q4, q5, q6, q7);
-        TreeItem a1 = new TreeItem("This is a movie rental program that allows the user to login, browse and rent movies from a store. " +
+        TreeItem<String> a1 = new TreeItem<>("This is a movie rental program that allows the user to login, browse and rent movies from a store. " +
                 "\nThe application is easy to use and displays which movies are currently in stock. When logged in, " +
                 "\nthe user is able to rent movies, check stock and choose to have the movie delivered for a small " +
                 "\nfee or to pick it up from a local store.");
         q1.getChildren().addAll(a1);
-        TreeItem a2 = new TreeItem("Renting a movie comes with a fee, but being a member to this service is free of cost.");
+        TreeItem<String> a2 = new TreeItem<>("Renting a movie comes with a fee, but being a member to this service is free of cost.");
         q2.getChildren().addAll(a2);
-        TreeItem a3 = new TreeItem("This service offers users to rent physical copies of movies.");
+        TreeItem<String> a3 = new TreeItem<>("This service offers users to rent physical copies of movies.");
         q3.getChildren().addAll(a3);
-        TreeItem a4 = new TreeItem("Every user has a economical balance which payments will be drawn from.");
+        TreeItem<String> a4 = new TreeItem<>("Every user has a economical balance which payments will be drawn from.");
         q4.getChildren().addAll(a4);
-        TreeItem a5 = new TreeItem("The movies can be aqquired by a user simply by picking it up at the designated store, " +
+        TreeItem<String> a5 = new TreeItem<>("The movies can be aqquired by a user simply by picking it up at the designated store, " +
                 "\nor a user can have the movie sent home for a small fee.");
         q5.getChildren().addAll(a5);
-        TreeItem a6 = new TreeItem("The movies are being lent out during a specific period of time. If a user overdraws " +
+        TreeItem<String> a6 = new TreeItem<>("The movies are being lent out during a specific period of time. If a user overdraws " +
                 "\ntheir lending-period, additional fees will be drawn from this user.");
         q6.getChildren().addAll(a6);
-        TreeItem a7 = new TreeItem("There is a link underneath the login-prompt. There you will be directed further");
-        q7.getChildren().addAll(a7);
+        TreeItem<String> a7 = new TreeItem<>("There is a link underneath the login-prompt. There you will be directed further");
+        q6.getChildren().addAll(a7);
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -245,6 +243,7 @@ public class UserMenuController implements Initializable {
         phoneNumberText.setText(loggedInUser.getPhoneNr());
         passwordText.setText(loggedInUser.getPassword());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
+        currentBalance.setText("Balance: " + df.format(loggedInUser.getBalance()) + "$");
         sortBox.getItems().add("Action");
         sortBox.getItems().add("Adventure");
         sortBox.getItems().add("Drama");
@@ -275,8 +274,4 @@ public class UserMenuController implements Initializable {
             }
         });
     }
-
-
 }
-
-
