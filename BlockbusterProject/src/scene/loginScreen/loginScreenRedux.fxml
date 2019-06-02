@@ -22,7 +22,7 @@
     <bottom>
         <AnchorPane prefHeight="70.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-                <Button fx:id="btnCreateAccount" layoutX="446.0" layoutY="23.0" mnemonicParsing="false" onAction="#btnPressedCreateAccount" prefHeight="41.0" prefWidth="140.0" text="Create account" />
+                <Button fx:id="btnCreateAccount" layoutX="435.0" layoutY="23.0" mnemonicParsing="false" onAction="#btnPressedCreateAccount" prefHeight="41.0" prefWidth="151.0" text="Create account" />
          </children>
       </AnchorPane>
     </bottom>

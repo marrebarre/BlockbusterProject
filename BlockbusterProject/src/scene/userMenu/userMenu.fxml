@@ -26,15 +26,19 @@
                             <content>
                                 <AnchorPane>
                                     <children>
-                                        <Button fx:id="btnLogOut" layoutX="1164.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
-                                        <ComboBox fx:id="sortBox" layoutX="971.0" layoutY="16.0" onAction="#handleSortBox" prefHeight="34.0" prefWidth="164.0" promptText="Sort By Genre" />
-                                        <TextField fx:id="searchField" layoutX="29.0" layoutY="13.0" onAction="#handleSearchBtn" prefHeight="39.0" prefWidth="307.0">
+
+                                        <Button fx:id="btnLogOut" layoutX="1255.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
+                                        <ComboBox fx:id="sortBox" layoutX="971.0" layoutY="13.0" prefHeight="34.0" prefWidth="164.0" promptText="Sort By Genre" />
+                                        <TextField fx:id="searchField" layoutX="29.0" layoutY="9.0" onAction="#handleSearchBtn" prefHeight="39.0" prefWidth="307.0">
+
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Button fx:id="btnSearch" layoutX="344.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleSearchBtn" text="Search" />
-                                        <Label fx:id="lblWelcomeMessage" layoutX="449.0" layoutY="19.0" prefHeight="30.0" prefWidth="329.0">
+
+                                        <Button fx:id="btnSearch" layoutX="344.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleSearchBtn" text="Search" />
+                                        <Label fx:id="lblWelcomeMessage" layoutX="449.0" layoutY="19.0" prefHeight="30.0" prefWidth="522.0" textFill="white">
+
                                             <font>
                                                 <Font size="20.0" />
                                             </font>
@@ -51,10 +55,13 @@
                                                 </TilePane>
                                             </content>
                                         </ScrollPane>
-                                        <Label fx:id="currentBalance" layoutX="793.0" layoutY="18.0" prefHeight="30.0" prefWidth="173.0">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font></Label>
+
+                                        <Label fx:id="currentBalance" layoutX="804.0" layoutY="20.0" textFill="white">
+                                            <font>
+                                                <Font size="20.0" />
+                                            </font>
+                                        </Label>
+
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -62,35 +69,61 @@
                         <Tab text="MY RENTALS">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <ScrollPane fx:id="scrollPaneMyRentals" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutY="-3.0" prefHeight="675.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <content>
-                                                <TilePane fx:id="tilePaneMyRentals">
-                                                    <padding>
-                                                        <Insets bottom="50" left="25" top="50" />
-                                                    </padding>
-                                                    <cursor>
-                                                        <Cursor fx:constant="DEFAULT" />
-                                                    </cursor>
-                                                </TilePane>
-                                            </content>
-                                        </ScrollPane>
-                                    </children>
-                                </AnchorPane>
+
+
+                           <children>
+                              <ScrollPane fx:id="scrollPaneMyRentals" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" layoutY="-3.0" prefHeight="675.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <content>
+                                    <TilePane fx:id="tilePaneMyRentals">
+                                       <padding>
+                                          <Insets bottom="50" left="25" top="50" />
+                                       </padding>
+                                       <cursor>
+                                          <Cursor fx:constant="DEFAULT" />
+                                       </cursor>
+                                    </TilePane>
+                                 </content>
+                              </ScrollPane>
+                              <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
+                             <Button fx:id="sendReceiptBtn" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" />
+                           </children></AnchorPane>
+
                             </content>
                         </Tab>
                         <Tab text="SETTINGS">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TextField fx:id="firstNameText" layoutX="229.0" layoutY="187.0" prefHeight="25.0" prefWidth="174.0" promptText="First name" />
-                                        <TextField fx:id="lastNameText" layoutX="229.0" layoutY="218.0" prefHeight="25.0" prefWidth="174.0" promptText="Last name" />
-                                        <TextField fx:id="emailText" layoutX="229.0" layoutY="252.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
-                                        <TextField fx:id="addressText" layoutX="229.0" layoutY="284.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
-                                        <TextField fx:id="phoneNumberText" layoutX="229.0" layoutY="317.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
-                                        <Button fx:id="updateBtn" layoutX="229.0" layoutY="380.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Update information" />
-                                        <TreeView fx:id="faq" layoutX="423.0" layoutY="85.0" prefHeight="563.0" prefWidth="855.0" />
-                                        <TextField fx:id="passwordText" layoutX="229.0" layoutY="346.0" prefHeight="25.0" prefWidth="174.0" text="Password" />
+
+                                        <TextField fx:id="firstNameText" layoutX="370.0" layoutY="258.0" prefHeight="25.0" prefWidth="72.0" promptText="First name" />
+                                        <TextField fx:id="lastNameText" layoutX="449.0" layoutY="258.0" prefHeight="25.0" prefWidth="95.0" promptText="Last name" />
+                                        <TextField fx:id="emailText" layoutX="370.0" layoutY="292.0" prefHeight="25.0" prefWidth="175.0" promptText="Email" />
+                                        <TextField fx:id="addressText" layoutX="370.0" layoutY="324.0" prefHeight="25.0" prefWidth="176.0" promptText="Address" />
+                                        <TextField fx:id="phoneNumberText" layoutX="370.0" layoutY="357.0" prefHeight="25.0" prefWidth="176.0" promptText="Phone number" />
+                                        <Button fx:id="updateBtn" layoutX="370.0" layoutY="390.0" mnemonicParsing="false" onAction="#settingsHandleUpdateBtn" prefHeight="37.0" prefWidth="177.0" text="Confirm changes" />
+                                        <TreeView fx:id="faq" layoutX="695.0" layoutY="78.0" prefHeight="563.0" prefWidth="855.0" />
+                              <Label layoutX="290.0" layoutY="258.0" text="Name" textFill="#faab04">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="290.0" layoutY="292.0" text="E-mail" textFill="#faab04">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="290.0" layoutY="325.0" text="Address" textFill="#faab04">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="290.0" layoutY="357.0" text="Phone" textFill="#faab04">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
+
                                     </children>
                                 </AnchorPane>
                             </content>

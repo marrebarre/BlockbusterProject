@@ -4,13 +4,18 @@ import database.DbConnector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
@@ -92,6 +97,12 @@ public class AdminMenuController implements Initializable {
     TextField editEmail, editUserIdTxtField, editPassword, editBalance, editFirstName, editLastName, editAddress, editPhoneNr;
     @FXML
     Pane editUserPane;
+    @FXML
+    TextField searchRentalTxt;
+    @FXML
+    Label enterLbl;
+    @FXML
+    TilePane tilePaneRentals;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -277,6 +288,81 @@ public class AdminMenuController implements Initializable {
         }
     }
 
+    public void searchRentalsByEmail(){
+        dbConnector.connect();
+        enterLbl.setVisible(false);
+        searchRentalTxt.setLayoutY(10);
+        tilePaneRentals.setVisible(true);
+        tilePaneRentals.getChildren().clear();
+        try{
+            PreparedStatement ps = dbConnector.connection.prepareStatement("SELECT * FROM account_has_movie JOIN account ON account.idUser = account_has_movie.account_idUser JOIN movie ON movie.idMovie =account_has_movie.movie_idMovie WHERE email = ? AND returned = 0");
+            ps.setString(1, searchRentalTxt.getText());
+            dbConnector.resultSet = ps.executeQuery();
+            while (dbConnector.resultSet.next()){
+                Account_Has_Movie rental = new Account_Has_Movie(dbConnector.resultSet.getInt("rentalID"),
+                        dbConnector.resultSet.getInt("account_idUser"),
+                        dbConnector.resultSet.getInt("movie_idMovie"),
+                        dbConnector.resultSet.getString("dateRented"),
+                        dbConnector.resultSet.getString("estimatedDateOfReturned"),
+                        dbConnector.resultSet.getDouble("fee"),
+                        dbConnector.resultSet.getBoolean("returned"));
+                rental.setTitle(dbConnector.resultSet.getString("title"));
+                System.out.println(rental);
+                Pane pane = new Pane();
+                Label label = new Label(rental.getTitle()+"\nRented: "+rental.getRented()+"\nReturn date: "+rental.getEstimatedReturnDate()+"\nFee: "+rental.getFee());
+                label.setFont(new Font("System",22));
+                label.setStyle("-fx-text-fill: #faab04;");
+                pane.getChildren().add(label);
+                Button button = new Button("Return");
+                button.setLayoutY(125);
+                button.setOnAction(new EventHandler<ActionEvent>(){
+
+                    @Override
+                    public void handle(ActionEvent event) {
+                        dbConnector.connect();
+                        try {
+                            PreparedStatement preparedStatement = dbConnector.connection.prepareStatement("UPDATE account_has_movie SET returned = ? WHERE rentalId = ?");
+                            preparedStatement.setInt(1,1);
+                            preparedStatement.setInt(2, rental.getRentalID());
+                            preparedStatement.executeUpdate();
+
+                            preparedStatement = dbConnector.connection.prepareStatement("SELECT * FROM movie WHERE idMovie = ?");
+                            preparedStatement.setInt(1, rental.getMovie_idMovie());
+                            dbConnector.resultSet = preparedStatement.executeQuery();
+                            int tmp=0;
+                            while (dbConnector.resultSet.next()) {
+                                tmp = dbConnector.resultSet.getInt("quantity");
+                            }
+                            preparedStatement = dbConnector.connection.prepareStatement("UPDATE movie SET quantity = ? WHERE idMovie = ?");
+                            preparedStatement.setInt(1,tmp+1);
+                            preparedStatement.setInt(2,rental.getMovie_idMovie());
+                            preparedStatement.executeUpdate();
+
+                            searchRentalsByEmail();
+                        }catch (Exception e){
+                            System.out.println("error in sql set returned 1");
+                            e.printStackTrace();
+                        }finally {
+                            dbConnector.disconnect();
+                        }
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Successfully returned "+rental.getTitle());
+                        alert.setTitle("Bustblocker");
+                        alert.setHeaderText("Success!");
+                        alert.showAndWait();
+                    }
+                });
+                pane.getChildren().add(button);
+                pane.setStyle("-fx-background-color: black;");
+                tilePaneRentals.getChildren().add(pane);
+            }
+
+        }catch (Exception e){
+
+        }finally {
+            dbConnector.disconnect();
+        }
+    }
+
     public void updateUserInfoPressed() {
         dbConnector.updateUserInfo("account", "email", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editEmail.getText());
         dbConnector.updateUserInfo("account", "password", "idUser", Integer.parseInt(editUserIdTxtField.getText()), editPassword.getText());
@@ -297,6 +383,9 @@ public class AdminMenuController implements Initializable {
             editUserPane.setVisible(false);
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-
+            tilePaneRentals.setVisible(false);
+            tilePaneRentals.setTileAlignment(Pos.CENTER);
+            tilePaneRentals.setHgap(5);
+            tilePaneRentals.setVgap(5);
         }
     }

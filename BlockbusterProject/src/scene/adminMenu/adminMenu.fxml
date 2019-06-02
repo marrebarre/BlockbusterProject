@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,6 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
 <StackPane maxHeight="2160.0" maxWidth="4160.0" minHeight="480.0" minWidth="680.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/mainTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.adminMenu.AdminMenuController">
@@ -25,22 +27,27 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField layoutX="399.0" layoutY="314.0" prefHeight="51.0" prefWidth="584.0">
+                              <TextField fx:id="searchRentalTxt" layoutX="399.0" layoutY="314.0" onAction="#searchRentalsByEmail" prefHeight="51.0" prefWidth="584.0">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </TextField>
-                              <Label layoutX="400.0" layoutY="276.0" text="Input email and press &quot;Enter&quot;." textFill="WHITE">
+                              <Label fx:id="enterLbl" layoutX="400.0" layoutY="276.0" text="Input email and press &quot;Enter&quot;." textFill="#faab04">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="30.0" layoutY="19.0" text="View Customer Rentals" textFill="WHITE">
+                              <Label layoutX="30.0" layoutY="19.0" text="View Customer Rentals" textFill="#faab04">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Label>
                               <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
+                              <ScrollPane layoutX="11.0" layoutY="89.0" prefHeight="582.0" prefWidth="1354.0">
+                                 <content>
+                                    <TilePane fx:id="tilePaneRentals" prefHeight="554.0" prefWidth="1328.0" />
+                                 </content>
+                              </ScrollPane>
                            </children></AnchorPane>
                             </content>
                         </Tab>
@@ -56,15 +63,15 @@
                                           <TextField fx:id="titleTxt" layoutX="219.0" layoutY="166.0" />
                                           <TextField fx:id="directorTxt" layoutX="219.0" layoutY="201.0" />
                                           <TextField fx:id="priceTxt" layoutX="220.0" layoutY="237.0" />
-                                          <Label layoutX="145.0" layoutY="170.0" text="Title" textFill="WHITE" />
-                                          <Label layoutX="145.0" layoutY="205.0" text="Director" textFill="WHITE" />
-                                          <Label layoutX="143.0" layoutY="241.0" text="Price" textFill="WHITE" />
-                                          <Label layoutX="144.0" layoutY="276.0" text="Genre" textFill="WHITE" />
+                                          <Label layoutX="145.0" layoutY="170.0" text="Title" textFill="#faab04" />
+                                          <Label layoutX="145.0" layoutY="205.0" text="Director" textFill="#faab04" />
+                                          <Label layoutX="143.0" layoutY="241.0" text="Price" textFill="#faab04" />
+                                          <Label layoutX="144.0" layoutY="276.0" text="Genre" textFill="#faab04" />
                                           <ComboBox fx:id="genreComboBox" layoutX="219.0" layoutY="272.0" prefWidth="150.0" visibleRowCount="6" />
                                           <TextField fx:id="releaseYearTxt" layoutX="219.0" layoutY="309.0" />
                                           <TextField fx:id="quantityTxt" layoutX="219.0" layoutY="343.0" />
-                                          <Label layoutX="144.0" layoutY="313.0" text="Release year" textFill="WHITE" />
-                                          <Label layoutX="145.0" layoutY="347.0" text="Quantity" textFill="WHITE" />
+                                          <Label layoutX="144.0" layoutY="313.0" text="Release year" textFill="#faab04" />
+                                          <Label layoutX="145.0" layoutY="347.0" text="Quantity" textFill="#faab04" />
                                           <TableView fx:id="movieTable" layoutX="568.0" layoutY="144.0" prefHeight="236.0" prefWidth="525.0">
                                              <columns>
                                                 <TableColumn fx:id="colMovieId" prefWidth="34.0" text="ID" />
@@ -76,7 +83,7 @@
                                                 <TableColumn fx:id="colMovieQuantity" prefWidth="60.0" text="Quantity" />
                                              </columns>
                                           </TableView>
-                                          <Label layoutX="29.0" layoutY="15.0" text="Edit movie information" textFill="WHITE">
+                                          <Label layoutX="27.0" layoutY="15.0" text="Edit movie information" textFill="#faab04">
                                              <font>
                                                 <Font size="30.0" />
                                              </font>
@@ -84,7 +91,7 @@
                                           <Button layoutX="1008.0" layoutY="406.0" mnemonicParsing="false" onAction="#loadMovieTable" text="Refresh" />
                                           <TextField fx:id="editMovieTxt" layoutX="568.0" layoutY="394.0" prefHeight="25.0" prefWidth="33.0" />
                                           <Button layoutX="609.0" layoutY="386.0" mnemonicParsing="false" onAction="#editMovie" prefHeight="37.0" prefWidth="79.0" text="Edit" />
-                                          <Label layoutX="515.0" layoutY="398.0" text="Movie ID:" textFill="WHITE" />
+                                          <Label layoutX="515.0" layoutY="398.0" text="Movie ID:" textFill="#faab04" />
                                           <AnchorPane fx:id="editPane" layoutX="602.0" layoutY="106.0">
                                              <children>
                                                 <TextField fx:id="editMovieTitle" layoutY="13.0" prefHeight="25.0" prefWidth="133.0" />
@@ -109,7 +116,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <Label layoutX="29.0" layoutY="12.0" prefHeight="51.0" prefWidth="368.0" text="Edit user information" textFill="#f5f5f5" textOverrun="CLIP">
+                                        <Label layoutX="31.0" layoutY="12.0" prefHeight="51.0" prefWidth="368.0" text="Edit user information" textFill="#faab04" textOverrun="CLIP">
                                             <font>
                                                 <Font size="30.0" />
                                             </font>
@@ -129,9 +136,9 @@
                                             </columns>
                                         </TableView>
                               <TextField fx:id="editUserIdTxtField" layoutX="459.0" layoutY="544.0" prefHeight="35.0" prefWidth="43.0" />
-                              <Label layoutX="396.0" layoutY="545.0" prefHeight="33.0" prefWidth="56.0" text="User ID :">
+                              <Label layoutX="396.0" layoutY="545.0" prefHeight="33.0" prefWidth="56.0" text="User ID :" textFill="#faab04">
                                  <font>
-                                    <Font name="System Bold Italic" size="14.0" />
+                                    <Font size="14.0" />
                                  </font>
                               </Label>
                               <Button layoutX="517.0" layoutY="543.0" mnemonicParsing="false" onAction="#editUserIdPressed" text="Edit User" />

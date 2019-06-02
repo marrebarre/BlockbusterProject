@@ -370,6 +370,7 @@ public class DbConnector {
         return user;
     }
 
+
     public <T> void updateUserInfo(String table, String column, String idNameTable, int iduser, T data) {
         connect();
         try {
@@ -378,7 +379,6 @@ public class DbConnector {
             dataHandler(data, ps);
         } catch (SQLException e) {
             System.out.println("Something went wrong...");
-            e.printStackTrace();
         } finally {
             disconnect();
         }
@@ -517,6 +517,7 @@ public class DbConnector {
                         resultSet.getString("estimatedDateOfReturned"),
                         resultSet.getDouble("fee"),
                         resultSet.getBoolean("returned"));
+
                 accMovies.add(accountHasMovie);
                 accMovies.toString().replace("[", "").replace("]", "");
 
