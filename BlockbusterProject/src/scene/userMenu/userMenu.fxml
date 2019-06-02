@@ -26,7 +26,7 @@
                             <content>
                                 <AnchorPane>
                                     <children>
-                                        <Button fx:id="btnLogOut" layoutX="1255.0" mnemonicParsing="false" onMouseClicked="#btnPressedLogOut" text="Log out" />
+                                        <Button fx:id="btnLogOut" layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
                                         <ComboBox fx:id="sortBox" layoutX="971.0" layoutY="13.0" prefHeight="34.0" prefWidth="164.0" promptText="Sort By Genre" />
                                         <TextField fx:id="searchField" layoutX="29.0" layoutY="9.0" onAction="#handleSearchBtn" prefHeight="39.0" prefWidth="307.0">
                                             <font>

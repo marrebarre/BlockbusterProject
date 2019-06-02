@@ -175,6 +175,7 @@ public class Logic {
                         resultSetRental.getDouble("fee"),
                         resultSetRental.getBoolean("returned")
                 );
+                account_has_movie.setTitle(resultSetRental.getString("title"));
                 TilePane tempTilePane = new TilePane();
                 tempTilePane.setPrefColumns(1);
                 tempTilePane.setPrefRows(5);

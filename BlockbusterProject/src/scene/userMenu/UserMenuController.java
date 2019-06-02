@@ -52,7 +52,7 @@ public class UserMenuController implements Initializable {
     private static String ourEmailsPassword = "Buster!321"; // Mail password (Maybe make one just for this project team
     private static String emailTitle = "Bust Blocker"; // Add the title of the e-mail here.
 
-    public void btnPressedLogOut(MouseEvent event) {
+    public void btnPressedLogOut(ActionEvent event) {
         String logOutFXML = "/scene/loginScreen/loginScreenRedux.fxml";
         logic.changeSceneHandler(event, logOutFXML, false);
         if (!dbConnector.users.isEmpty()) {
