@@ -1,24 +1,24 @@
 package model;
 
 
-public class Account_Has_Movie {
+public class Account_Has_Movie extends Movie{
     private int rentalID;
     private int account_idUser;
     private int movie_idMovie;
     private String rented;
     private String estimatedReturnDate;
     private double fee;
-    private int returned;
+    private boolean returned;
 
-
-    public Account_Has_Movie(int rentalID, int account_idUser, int movie_idMovie, String rented, String estimatedReturnDate, double aDouble, double fee) {
+    public Account_Has_Movie(int idMovie, String title, String director, double price, Genre genre, String releaseYear, int quantity, String imagePath, int rentalID, int account_idUser, int movie_idMovie, String rented, String estimatedReturnDate, double fee, boolean returned) {
+        super(idMovie, title, director, price, genre, releaseYear, quantity, imagePath);
         this.rentalID = rentalID;
         this.account_idUser = account_idUser;
         this.movie_idMovie = movie_idMovie;
         this.rented = rented;
         this.estimatedReturnDate = estimatedReturnDate;
         this.fee = fee;
-
+        this.returned = returned;
     }
 
     public void setAccount_idUser(int account_idUser) {
@@ -45,7 +45,7 @@ public class Account_Has_Movie {
         this.fee = fee;
     }
 
-    public void setReturned(int returned) {
+    public void setReturned(boolean returned) {
         this.returned = returned;
     }
 
@@ -73,7 +73,7 @@ public class Account_Has_Movie {
         return fee;
     }
 
-    public int getReturned() {
+    public boolean getReturned() {
         return returned;
     }
 
