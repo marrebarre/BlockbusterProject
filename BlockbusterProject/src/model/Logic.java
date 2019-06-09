@@ -150,7 +150,7 @@ public class Logic {
 
     public void loadRentals(TilePane tilePane) {
         dbConnector.connect();
-        String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ?";
+        String SQLQuery = "SELECT * from movie INNER JOIN account_has_movie ON movie.idMovie = account_has_movie.movie_idMovie WHERE account_has_movie.account_idUser = ? AND returned = 0";
         ResultSet resultSetRental;
         try {
             PreparedStatement ps = dbConnector.connection.prepareStatement(SQLQuery);

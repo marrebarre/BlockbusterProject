@@ -72,17 +72,14 @@ public class CreateAccountController {
             phoneError.setVisible(true);
         }
         if(!emailtxtField.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")){
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Validate Email");
-            alert.setContentText("Please enter vaild Email");
-            alert.showAndWait();
+
             emailError.setVisible(true);
         } else if (!firstNametxtField.getText().isEmpty() && !lastNametxtField.getText().isEmpty() && !emailtxtField.getText().isEmpty() &&
                 !passwordtxtField.getText().isEmpty() && !addresstxtField.getText().isEmpty() && !phonetxtField.getText().isEmpty() && emailtxtField.getText().matches("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+")) {
             dbConnector.connect();
             try {
                 User user = new User(emailtxtField.getText(), passwordtxtField.getText(), false, firstNametxtField.getText(),
-                        lastNametxtField.getText(), 0, addresstxtField.getText(), phonetxtField.getText(), dbConnector.tableSizeAccount() + 1);
+                        lastNametxtField.getText(), 20, addresstxtField.getText(), phonetxtField.getText(), dbConnector.tableSizeAccount() + 1);
                 dbConnector.addUserToDb(user);
 
 

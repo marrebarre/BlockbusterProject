@@ -16,5 +16,10 @@
          </font>
       </Label>
       <Button fx:id="btnReturnToLogin" layoutX="452.0" layoutY="349.0" mnemonicParsing="false" onMouseClicked="#btnPressedReturnToLogin" text="Return to login" />
+      <Label layoutX="26.0" layoutY="174.0" text="Enter email">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

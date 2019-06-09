@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import model.*;
+import org.joda.time.Days;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +30,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.sql.PreparedStatement;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AdminMenuController implements Initializable {
@@ -103,6 +108,8 @@ public class AdminMenuController implements Initializable {
     Label enterLbl;
     @FXML
     TilePane tilePaneRentals;
+    @FXML
+    ScrollPane scrollPaneRentals;
 
     private DbConnector dbConnector = new DbConnector();
     private Logic logic = new Logic();
@@ -289,9 +296,11 @@ public class AdminMenuController implements Initializable {
     }
 
     public void searchRentalsByEmail(){
+        LocalDate todayDate = LocalDate.now();
         dbConnector.connect();
         enterLbl.setVisible(false);
         searchRentalTxt.setLayoutY(10);
+        scrollPaneRentals.setLayoutY(89);
         tilePaneRentals.setVisible(true);
         tilePaneRentals.getChildren().clear();
         try{
@@ -318,7 +327,14 @@ public class AdminMenuController implements Initializable {
                 rental.setTitle(dbConnector.resultSet.getString("title"));
                 System.out.println(rental);
                 Pane pane = new Pane();
-                Label label = new Label(rental.getTitle()+"\nRented: "+rental.getRented()+"\nReturn date: "+rental.getEstimatedReturnDate()+"\nFee: "+rental.getFee());
+
+                LocalDate returnDate = LocalDate.parse(rental.getEstimatedReturnDate());
+                long daysBetween = ChronoUnit.DAYS.between(todayDate,returnDate);
+                if (returnDate.isAfter(todayDate)){
+                    rental.setFee(daysBetween);
+                }
+
+                Label label = new Label(rental.getTitle()+"\nRented: "+rental.getRented()+"\nReturn date: "+rental.getEstimatedReturnDate()+"\nFee: "+rental.getFee()+"$");
                 label.setFont(new Font("System",22));
                 label.setStyle("-fx-text-fill: #faab04;");
                 pane.getChildren().add(label);
@@ -396,5 +412,6 @@ public class AdminMenuController implements Initializable {
             tilePaneRentals.setTileAlignment(Pos.CENTER);
             tilePaneRentals.setHgap(5);
             tilePaneRentals.setVgap(5);
+            scrollPaneRentals.setLayoutY(370);
         }
     }

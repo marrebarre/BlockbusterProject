@@ -20,6 +20,7 @@ import java.util.List;
 
 import static model.Logic.alert;
 import static scene.rentPopup.RentPopupController.movieToRent;
+import static scene.rentPopup.RentPopupController.tmpPrice;
 import static scene.userMenu.UserMenuController.loggedInUser;
 
 public class DbConnector {
@@ -86,7 +87,7 @@ public class DbConnector {
                 ps.setInt(2, movieToRent.getIdMovie());
                 ps.setDate(3, dateRented);
                 ps.setDate(4, dateReturned);
-                ps.setDouble(5, movieToRent.getPrice());
+                ps.setDouble(5,0);
                 ps.setBoolean(6, false);
                 ps.executeUpdate();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -130,8 +131,8 @@ public class DbConnector {
             if (loggedInUser.getBalance() < movieToRent.getPrice()) {
                 System.out.println("Insufficient funds");
                 setVerify(false);
-            } else if (loggedInUser.getBalance() >= movieToRent.getPrice()) {
-                loggedInUser.setBalance(loggedInUser.getBalance() - movieToRent.getPrice());
+            } else if (loggedInUser.getBalance() >= tmpPrice) {
+                loggedInUser.setBalance(loggedInUser.getBalance() - tmpPrice);
                 //System.out.println("Post: " + loggedInUser.getBalance());
                 ps.setDouble(1, loggedInUser.getBalance());
                 ps.setInt(2, loggedInUser.getIdUser());
@@ -143,6 +144,7 @@ public class DbConnector {
             e.printStackTrace();
         }
     }
+
 
     private void movieStockHandler() {
         //System.out.println("Pre stockHandler: " + isVerify());
@@ -175,10 +177,10 @@ public class DbConnector {
         String temp = null;
         try {
             System.out.println("tableSizeMovie tracker1");
-            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(idMovie) FROM movie");
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(idMovie) FROM movie");
             resultSet = ps.executeQuery();
             if (resultSet.next()) {
-                temp = resultSet.getString("COUNT(idMovie)");
+                temp = resultSet.getString("MAX(idMovie)");
             }
         } catch (SQLException e) {
             System.out.println("Table Empty or does not exist.");
@@ -192,10 +194,10 @@ public class DbConnector {
     public int tableSizeAccount() {
         String temp = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(idUser) FROM account");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT MAX(idUser) FROM account");
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                temp = resultSet.getString("COUNT(idUser)");
+                temp = resultSet.getString("MAX(idUser)");
             }
         } catch (SQLException e) {
             System.out.println("Wrong insert");

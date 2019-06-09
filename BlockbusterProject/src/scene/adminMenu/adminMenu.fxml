@@ -43,7 +43,7 @@
                                  </font>
                               </Label>
                               <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
-                              <ScrollPane layoutX="11.0" layoutY="89.0" prefHeight="582.0" prefWidth="1354.0">
+                              <ScrollPane fx:id="scrollPaneRentals" layoutX="11.0" layoutY="89.0" prefHeight="582.0" prefWidth="1354.0">
                                  <content>
                                     <TilePane fx:id="tilePaneRentals" prefHeight="554.0" prefWidth="1328.0" />
                                  </content>

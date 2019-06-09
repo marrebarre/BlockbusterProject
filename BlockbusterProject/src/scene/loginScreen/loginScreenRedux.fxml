@@ -13,7 +13,7 @@
         <AnchorPane prefHeight="270.0" prefWidth="450.0" BorderPane.alignment="CENTER">
             <children>
                 <TextField fx:id="username" layoutX="104.0" layoutY="163.0" prefHeight="25.0" prefWidth="322.0" promptText="Email" />
-            <PasswordField fx:id="password" layoutX="103.0" layoutY="197.0" onAction="#handleLogin" prefHeight="25.0" prefWidth="324.0" promptText="Password" />
+            <PasswordField fx:id="password" layoutX="104.0" layoutY="197.0" onAction="#handleLogin" prefHeight="25.0" prefWidth="322.0" promptText="Password" />
                 <Label fx:id="forgotPW" layoutX="103.0" layoutY="229.0" onMouseClicked="#btnPressedForgotPW" text="Forgotten your password?" />
             <ImageView fx:id="logo" fitHeight="164.0" fitWidth="447.0" pickOnBounds="true" preserveRatio="true">
             </ImageView>

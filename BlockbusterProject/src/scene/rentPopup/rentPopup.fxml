@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="850.0" stylesheets="@../../css/darkTheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scene.rentPopup.RentPopupController">
    <children>
-      <Button layoutX="670.0" layoutY="256.0" mnemonicParsing="false" onAction="#rentalHandler" prefHeight="65.0" prefWidth="124.0" text="Rent movie" />
+      <Button layoutX="665.0" layoutY="472.0" mnemonicParsing="false" onAction="#rentalHandler" prefHeight="65.0" prefWidth="124.0" text="Rent movie" />
       <Button layoutX="14.0" layoutY="539.0" mnemonicParsing="false" onAction="#close" prefHeight="47.0" prefWidth="100.0" text="Close" />
       <ImageView fx:id="rentImageView" fitHeight="440.0" fitWidth="346.0" layoutX="12.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="infoLbl" layoutX="358.0" layoutY="14.0" prefHeight="242.0" prefWidth="436.0" text="Info">
@@ -18,8 +18,14 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="infoDates" layoutX="358.0" layoutY="256.0" prefHeight="65.0" prefWidth="134.0" text="Choose amount of days: " />
-      <TextField fx:id="enterDaysOfRental" layoutX="492.0" layoutY="276.0" prefHeight="25.0" prefWidth="37.0" />
-      <CheckBox fx:id="smsCheck" layoutX="665.0" layoutY="330.0" mnemonicParsing="false" text="Revieve SMS receipt?" textFill="WHITE" />
+      <Label fx:id="infoDates" layoutX="441.0" layoutY="471.0" prefHeight="65.0" prefWidth="134.0" text="Choose amount of days: " />
+      <TextField fx:id="enterDaysOfRental" layoutX="575.0" layoutY="491.0" onKeyTyped="#updatePrice" prefHeight="25.0" prefWidth="37.0" />
+      <CheckBox fx:id="smsCheck" layoutX="660.0" layoutY="546.0" mnemonicParsing="false" text="Revieve SMS receipt?" textFill="WHITE" />
+      <Label fx:id="myBalance" layoutX="665.0" layoutY="433.0" text="balance" />
+      <Label fx:id="priceTag" layoutX="665.0" layoutY="365.0" text="Price: ">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

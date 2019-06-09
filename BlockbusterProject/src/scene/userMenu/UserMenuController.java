@@ -229,6 +229,7 @@ public class UserMenuController implements Initializable {
         passwordText.setText(loggedInUser.getPassword());
         lblWelcomeMessage.setText("Welcome, " + loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "!");
         currentBalance.setText("Balance: " + df.format(loggedInUser.getBalance()) + "$");
+        currentBalance.setVisible(false);
         sortBox.getItems().add("Horror");
         sortBox.getItems().add("Scifi");
         sortBox.getItems().add("Action");

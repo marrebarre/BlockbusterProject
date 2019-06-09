@@ -80,8 +80,8 @@
                                     </TilePane>
                                  </content>
                               </ScrollPane>
+                             <Button fx:id="sendReceiptBtn" layoutX="1120.0" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" visible="false" />
                               <Button layoutX="1255.0" mnemonicParsing="false" onAction="#btnPressedLogOut" text="Log out" />
-                             <Button fx:id="sendReceiptBtn" mnemonicParsing="false" onAction="#handleSendReceipt" text="Send Receipt" />
                            </children></AnchorPane>
                             </content>
                         </Tab>

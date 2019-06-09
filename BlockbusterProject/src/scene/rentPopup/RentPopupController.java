@@ -12,6 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Movie;
+import scene.userMenu.UserMenuController;
+
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -29,6 +31,12 @@ public class RentPopupController implements Initializable {
     TextField enterDaysOfRental;
     @FXML
     public CheckBox smsCheck;
+    @FXML
+    public Label myBalance;
+    @FXML
+    public Label priceTag;
+
+    public static double tmpPrice;
 
     private LocalDate localDate = LocalDate.now();
 
@@ -51,6 +59,16 @@ public class RentPopupController implements Initializable {
     public void close(ActionEvent event){
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public void updatePrice(){
+        try {
+            tmpPrice = movieToRent.getPrice() + 0.2 * Double.parseDouble(enterDaysOfRental.getText());
+            myBalance.setText("Current balance: "+String.valueOf(UserMenuController.df.format(UserMenuController.loggedInUser.getBalance()))+"$\nAfter purchase:  "+UserMenuController.df.format(UserMenuController.loggedInUser.getBalance()-tmpPrice)+"$");
+            priceTag.setText("Price: " + String.valueOf(UserMenuController.df.format(movieToRent.getPrice() + 0.2 * Double.parseDouble(enterDaysOfRental.getText()))));
+        }catch (Exception e){
+
+        }
     }
 
     public void rentalHandler(ActionEvent event){
@@ -82,10 +100,11 @@ public class RentPopupController implements Initializable {
                         "\nDirector: " + movieToRent.getDirector() +
                         "\nGenre: " + movieToRent.getGenreAsString() +
                         "\nRelease Year: " + movieToRent.getReleaseYear() +
-                        "\n\n" + "Amount: " +  inStock +
-                        "\n\nPrice: " + movieToRent.getPrice() +"$"
+                        "\n\n" + "Amount in stock: " +  inStock
         );
+        priceTag.setText("Price: "+String.valueOf(UserMenuController.df.format(movieToRent.getPrice())));
         Image image = new Image(movieToRent.getImagePath());
         rentImageView.setImage(image);
+        myBalance.setText("Current balance: "+String.valueOf(UserMenuController.df.format(UserMenuController.loggedInUser.getBalance()))+"$\nAfter purchase:  "+UserMenuController.df.format(UserMenuController.loggedInUser.getBalance()-tmpPrice)+"$");
     }
 }
